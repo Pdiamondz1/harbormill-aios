@@ -44,7 +44,8 @@ Edge functions (`supabase/functions/*`) are Deno — NOT covered by the above; v
 
 ## Docs
 `docs/client-setup.md` (deploy) · `docs/white-label.md` (rebrand) · `docs/extending.md` (add tools/metrics/pages) ·
-`docs/per-client-workflow.md` (clone-per-client + upstream-merge discipline).
+`docs/per-client-workflow.md` (clone-per-client + upstream-merge discipline) ·
+`docs/sync-aria.md` (load the `docs/wiki/` knowledge base into Aria's RAG via `npm run sync:wiki`).
 
 ## Conventions
 - Customize in the config/data seams; don't fork the shared engine (see per-client-workflow.md).

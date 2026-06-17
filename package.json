@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "sync:wiki": "node scripts/sync-wiki.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
