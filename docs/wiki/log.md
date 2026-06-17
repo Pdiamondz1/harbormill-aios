@@ -1,5 +1,59 @@
 # Wiki Log
 
+## [2026-06-17] autoresearch loop | budget 8 (run 3) — 8 gaps closed
+
+Third `/autoresearch loop 8`, targeting the dev/ops, design-system, content, and
+identity layers. 8 kept (all repo/internal-grounded with file paths; Damon Williams
+also cites LinkedIn). 0 discarded, 0 contradictions. Wiki grew 23 → 31 pages.
+Two coverage observations flagged (Testing Setup; carried Ladder flag).
+
+### Iteration 1 | Design Tokens & Theming (concept)
+Status: kept · Domain: technical
+Sources: src/index.css, tailwind.config.ts
+Pages created: [[Design Tokens & Theming]]
+
+### Iteration 2 | Build & Verification Gate (concept)
+Status: kept · Domain: technical
+Sources: package.json, .github/workflows/ci.yml, vite.config.ts
+Pages created: [[Build & Verification Gate]]
+
+### Iteration 3 | Testing Setup (concept)
+Status: kept · Domain: technical
+Sources: vite.config.ts, src/test/setup.ts, src/config/brand.test.ts
+Pages created: [[Testing Setup]]
+Note: coverage observation — only 1 test file (brand contract); harness ready for hooks/route/ingest tests.
+
+### Iteration 4 | Extending AIOS (concept)
+Status: kept · Domain: technical
+Sources: docs/extending.md + the four seams (tools.ts, report-ingest, knowledge-sync, App.tsx/AppLayout.tsx)
+Pages created: [[Extending AIOS]]
+
+### Iteration 5 | Strategy Knowledge Library (concept)
+Status: kept · Domain: technical
+Sources: migrations/...operating_deck.sql (documents), src/pages/Strategy.tsx, src/hooks/useDocuments.ts, knowledge-sync
+Pages created: [[Strategy Knowledge Library]]
+
+### Iteration 6 | Demo Seed Data (concept)
+Status: kept · Domain: technical
+Sources: supabase/seed.sql
+Pages created: [[Demo Seed Data]]
+
+### Iteration 7 | Calendly Booking Flow (concept)
+Status: kept · Domain: technical
+Sources: website/src/lib/calendly.ts, website/src/sections/Booking.tsx, website/src/components/CalendlyButton.tsx, website/src/config/site.ts
+Pages created: [[Calendly Booking Flow]]
+
+### Iteration 8 | Damon Williams (entity)
+Status: kept · Domain: identity
+Sources: docs/PROJECT_CONTEXT.md, website/src/config/site.ts; external — linkedin.com/in/damon-w-67882768
+Pages created: [[Damon Williams]]
+
+### Budget exhausted (8/8). Wiki at 31 pages. Remaining thinner gaps: the _shared
+### edge utilities, the brand.ts config surface in depth, and the Workspace OAuth
+### state/HMAC flow. Wiki now broadly covers product, backend, frontend, dev-ops,
+### GTM, and identity — diminishing returns; a query-driven (not loop) approach
+### fits better from here.
+
 ## [2026-06-17] autoresearch loop | budget 8 (run 2) — 8 gaps closed
 
 Second `/autoresearch loop 8`. Lint showed the wiki was backend-heavy; targeted
