@@ -55,3 +55,6 @@ the pluggable AI tool registry ([[Aria]]), and per-client env-only deploy.
 - [[Access Model]]
 - [[Per-Client Deployment]]
 - [[The Harbormill Ladder]]
+- [[AIOS App Shell]]
+- [[AIOS Pages]]
+- [[Marketing Site]]
