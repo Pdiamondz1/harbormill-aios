@@ -24,12 +24,16 @@ export function LeadMagnetForm() {
   async function onSubmit({ email }: FormValues) {
     try {
       if (FORM_ENDPOINT) {
-        const res = await fetch(FORM_ENDPOINT, {
+        // Google Apps Script web app: send a "simple" request (text/plain + no-cors)
+        // so the browser skips the CORS preflight the script can't answer. The
+        // response is opaque, so a resolved fetch means the request was delivered;
+        // only a network failure rejects and lands in catch.
+        await fetch(FORM_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ email, source: "harbormill.net guide" }),
         });
-        if (!res.ok) throw new Error("Request failed");
       } else {
         // No provider wired yet — fall back to a mailto capture so the site still ships.
         const subject = encodeURIComponent("Send me the AI prompt guide");
