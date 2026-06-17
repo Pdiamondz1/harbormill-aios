@@ -6,6 +6,10 @@ import {
   GraduationCap,
   LayoutDashboard,
   Workflow,
+  FileText,
+  ListChecks,
+  Bell,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 
@@ -17,6 +21,10 @@ const ICONS: Record<string, LucideIcon> = {
   GraduationCap,
   LayoutDashboard,
   Workflow,
+  FileText,
+  ListChecks,
+  Bell,
+  Sparkles,
 };
 
 /** Renders a lucide icon by name (used for config-driven service/problem cards). */

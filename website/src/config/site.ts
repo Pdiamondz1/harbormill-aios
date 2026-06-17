@@ -82,6 +82,34 @@ export const site = {
     subtitle:
       "The signature build: one place to see your live metrics, read an AI-written weekly brief, and ask an assistant that actually knows your business. Take the tour.",
     note: "Illustrative sample data — not a live client account.",
+    featuresTitle: "More than a dashboard",
+    features: [
+      {
+        icon: "LayoutDashboard",
+        title: "Live metrics & weekly briefings",
+        body: "Your KPIs at a glance with status colors, plus an AI-written weekly brief that tells you what actually changed and what to do about it.",
+      },
+      {
+        icon: "FileText",
+        title: "Meeting transcripts → action steps",
+        body: "Hand AIOS a meeting transcript and get back a clean summary and concrete next action steps for the business — nothing lost after the call.",
+      },
+      {
+        icon: "ListChecks",
+        title: "Your top priorities, daily",
+        body: "AIOS reads your day-to-day operations and surfaces the top priorities to focus on — so you start every morning knowing what matters most.",
+      },
+      {
+        icon: "Bell",
+        title: "What to act on now",
+        body: "It flags the emails, messages, DMs, and meetings worth your attention based on your business's environment — signal over noise.",
+      },
+      {
+        icon: "Sparkles",
+        title: "Ask Aria, anything",
+        body: "A business-aware assistant grounded in your live metrics, briefs, and knowledge base — ask in plain language, get grounded answers.",
+      },
+    ],
   },
 
   services: {
@@ -129,35 +157,31 @@ export const site = {
       "Start small and low-risk. We climb only as results prove out — you're never committing to a big build before you've seen ROI.",
     rungs: [
       {
-        rung: "Rung 0",
         name: "Get started",
-        price: "$100–$500",
-        unit: "per session",
-        body: "One-on-one working sessions — get your Claude setup running, solve a real problem, learn the ropes. We build the relationship before anything bigger.",
+        price: "$100",
+        unit: "per hour",
+        body: "One-on-one consulting sessions — get your Claude setup running, solve a real problem, learn the ropes. We build the relationship before anything bigger.",
       },
       {
-        rung: "Rung 1",
         name: "Paid audit",
         price: "$500–$2,500",
         unit: "fixed scope",
         body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue.",
       },
       {
-        rung: "Rung 2",
         name: "Focused project",
         price: "$2,500–$10,000",
         unit: "per project",
         body: "We ship one workflow end to end and prove the ROI on something that matters — reporting, lead intake, AR follow-up, support triage.",
       },
       {
-        rung: "Rung 3",
         name: "Retainer",
         price: "$3,000–$10,000",
         unit: "per month",
         body: "Ongoing automation and support — but only after trust and results. We expand what's working and keep your systems sharp.",
       },
     ],
-    footnote: "Every climb starts with a free 30-minute intro. Consulting beyond Rung 0 is $100/hr.",
+    footnote: "Every engagement starts with a free 30-minute intro. One-on-one consulting is $100/hour.",
   },
 
   about: {
@@ -177,7 +201,7 @@ export const site = {
   faqs: [
     {
       q: "How much does this cost?",
-      a: "It starts low and stays proportional to results. Rung 0 working sessions run $100–$500, and you only climb to larger projects once we've proven value. Consulting beyond the first session is $100/hr. The intro call is free.",
+      a: "It starts low and stays proportional to results. One-on-one consulting is $100/hour, and you only move to larger fixed-scope projects once we've proven value together. The intro call is always free.",
     },
     {
       q: "Will AI replace my staff?",
@@ -185,7 +209,7 @@ export const site = {
     },
     {
       q: "How long does it take to see results?",
-      a: "A Rung 0 session can solve a real problem the same day. A focused project (Rung 2) typically ships one working automation in a few weeks — deliberately scoped small so you see ROI fast.",
+      a: "A one-on-one session can solve a real problem the same day. A focused project typically ships one working automation in a few weeks — deliberately scoped small so you see ROI fast.",
     },
     {
       q: "Is my business data safe?",
@@ -222,3 +246,4 @@ export const site = {
 export type ServiceItem = (typeof site.services.items)[number];
 export type LadderRungItem = (typeof site.ladder.rungs)[number];
 export type ProblemItem = (typeof site.problem.items)[number];
+export type AiosFeature = (typeof site.aios.features)[number];

@@ -16,7 +16,7 @@ export function Ladder() {
 
       <div className="mx-auto mt-12 max-w-3xl space-y-4">
         {site.ladder.rungs.map((rung, i) => (
-          <Reveal key={rung.rung} delay={i * 0.06}>
+          <Reveal key={rung.name} delay={i * 0.06}>
             <div
               className="rounded-xl border border-border bg-card p-5 shadow-card-sm sm:p-6"
               style={{ marginLeft: `${i * 1.5}rem` }}
@@ -29,12 +29,9 @@ export function Ladder() {
                       i === 0 ? "bg-primary text-primary-foreground" : "bg-primary/15 text-primary"
                     )}
                   >
-                    {i}
+                    {i + 1}
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      {rung.rung}
-                    </p>
                     <h3 className="text-lg font-semibold">{rung.name}</h3>
                   </div>
                 </div>
