@@ -7,6 +7,13 @@
 //
 // Phase 4 adds Google Workspace tools (export_to_drive, list_drive_files).
 
+import {
+  GoogleWorkspaceError,
+  driveCtx,
+  exportMarkdownToDoc,
+  listFiles,
+} from "../_shared/google-workspace.ts";
+
 const EMBED_MODEL = "text-embedding-3-small";
 
 export interface ToolContext {
@@ -121,6 +128,60 @@ export const TOOLS: Tool[] = [
         .single();
       if (error) throw error;
       return { id: data.id, created: true };
+    },
+  },
+  {
+    definition: {
+      name: "export_to_drive",
+      description:
+        "Export a complete markdown document as a Google Doc in the user's Drive folder. Compose the FULL document first (headings + the actual content/numbers), then call this once. Returns the doc link. Only works if the user has connected Google on the Workspace page.",
+      input_schema: {
+        type: "object",
+        properties: {
+          title: { type: "string", description: "Document title" },
+          markdown: { type: "string", description: "The complete, self-contained markdown document — never a placeholder." },
+        },
+        required: ["title", "markdown"],
+      },
+    },
+    execute: async (args, ctx) => {
+      const markdown = String(args.markdown ?? "").trim();
+      if (markdown.length < 200 || !markdown.includes("#")) {
+        return {
+          error:
+            "markdown rejected: it must be the COMPLETE document (headings + the full content). Compose the whole document now and call export_to_drive again.",
+        };
+      }
+      try {
+        const { token, folderId } = await driveCtx(ctx.supabase, ctx.userId);
+        const file = await exportMarkdownToDoc(token, folderId, String(args.title).trim() || "Untitled", markdown);
+        return { id: file.id, name: file.name, link: file.webViewLink };
+      } catch (err) {
+        if (err instanceof GoogleWorkspaceError && (err.code === "not_connected" || err.code === "needs_reconnect")) {
+          return { message: "Google isn't connected for this account — connect it on the Workspace page, then ask again." };
+        }
+        throw err;
+      }
+    },
+  },
+  {
+    definition: {
+      name: "list_drive_files",
+      description: "List the files in the user's Drive folder (docs, sheets, slides). Only works if Google is connected.",
+      input_schema: { type: "object", properties: {} },
+    },
+    execute: async (_args, ctx) => {
+      try {
+        const { token, folderId } = await driveCtx(ctx.supabase, ctx.userId);
+        const files = await listFiles(token, folderId);
+        // deno-lint-ignore no-explicit-any
+        return files.map((f: any) => ({ id: f.id, name: f.name, mimeType: f.mimeType, link: f.webViewLink }));
+      } catch (err) {
+        if (err instanceof GoogleWorkspaceError && (err.code === "not_connected" || err.code === "needs_reconnect")) {
+          return { message: "Google isn't connected for this account — connect it on the Workspace page." };
+        }
+        throw err;
+      }
     },
   },
 ];

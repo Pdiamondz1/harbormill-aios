@@ -11,6 +11,7 @@ import Briefings from "@/pages/Briefings";
 import Findings from "@/pages/Findings";
 import Strategy from "@/pages/Strategy";
 import Workspace from "@/pages/Workspace";
+import WorkspaceCallback from "@/pages/WorkspaceCallback";
 import Assistant from "@/pages/Assistant";
 
 const queryClient = new QueryClient({
@@ -46,6 +47,7 @@ export default function App() {
               />
               <Route path="strategy" element={<Strategy />} />
               <Route path="workspace" element={<Workspace />} />
+              <Route path="workspace/callback" element={<WorkspaceCallback />} />
               <Route path="assistant" element={<Assistant />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
