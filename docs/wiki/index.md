@@ -8,6 +8,7 @@
 
 - [[AI Providers]](entities/ai-providers.md) — Anthropic (claude-sonnet-4-6, chat) + OpenAI (text-embedding-3-small, RAG); per-client keys
 - [[Aria]](entities/aria.md) — The operator's AI co-pilot; pluggable tool registry in assistant-chat/tools.ts
+- [[Damon Williams]](entities/damon-williams.md) — Founder & AI Solutions Engineer; 15 yrs enterprise IT; education-first
 - [[Edge Functions]](entities/edge-functions.md) — The four Deno functions: report-ingest, assistant-chat, knowledge-sync, google-workspace-proxy
 - [[Google Workspace Bridge]](entities/google-workspace-bridge.md) — Per-user OAuth gateway to Drive/Sheets; tokens stay server-side
 - [[Harbormill AIOS]](entities/harbormill-aios.md) — The white-label AI operating-deck product
@@ -21,13 +22,20 @@
 - [[AIOS App Shell]](concepts/aios-app-shell.md) — Front-end: React Router, AppLayout, AuthContext, ProtectedRoute, env-only client, data hooks
 - [[AIOS Pages]](concepts/aios-pages.md) — The user-facing surfaces: Overview, Briefings, Findings, Strategy, Assistant, Workspace, Login
 - [[Assistant Chat Loop]](concepts/assistant-chat-loop.md) — Aria's agentic loop: history, 8 tool rounds, model, injection defense, cost logging
+- [[Build & Verification Gate]](concepts/build-and-verification-gate.md) — npm scripts + CI (Node 22, npm install vs ci/EBADPLATFORM); Deno excluded
+- [[Calendly Booking Flow]](concepts/calendly-booking-flow.md) — Free 30-min intro via Calendly (Google Meet); popup + inline embed; lead funnel
 - [[Cost Ledger]](concepts/cost-ledger.md) — Per-user × model × function AI-spend accounting; best-effort logCost
+- [[Demo Seed Data]](concepts/demo-seed-data.md) — seed.sql: 8 KPIs, 2 briefings, 2 findings, 2 docs; powers a fresh clone + the demo tour
+- [[Design Tokens & Theming]](concepts/design-tokens-and-theming.md) — The HSL palette/utilities (azure/amber, Inter, .glow/.glass); dark-first
 - [[Education-First Philosophy]](concepts/education-first-philosophy.md) — Teach AI first, then automate; the differentiator, externally evidenced
+- [[Extending AIOS]](concepts/extending-aios.md) — Add metrics/tools/knowledge/pages in the seams; never fork the engine
 - [[Knowledge & RAG]](concepts/knowledge-and-rag.md) — knowledge table (pgvector 1536 + tsvector hybrid), match_knowledge, knowledge-sync
 - [[Operating Deck Data Model]](concepts/operating-deck-data-model.md) — The three generic tables: metric_snapshots, briefings, findings
 - [[Per-Client Deployment]](concepts/per-client-deployment.md) — Clone-per-client off the template; upstream-merge discipline; config/data seams
 - [[Report-Ingest Seam]](concepts/report-ingest-seam.md) — One service-role ingest endpoint; the deck never queries client tables
 - [[Self-Improving App]](concepts/self-improving-app.md) — The autoresearch loop grows the wiki (+ later Aria's RAG); 5-phase smart-app roadmap
+- [[Strategy Knowledge Library]](concepts/strategy-knowledge-library.md) — documents table + Strategy page; the human-authored side feeding Aria's RAG
+- [[Testing Setup]](concepts/testing-setup.md) — Vitest + testing-library + jsdom; one brand-contract test today; harness ready
 - [[The Harbormill Ladder]](concepts/harbormill-ladder.md) — Land-and-expand engagement + pricing ladder; externally benchmarked
 - [[White-Label Architecture]](concepts/white-label-architecture.md) — One config (brand.ts + CSS vars) rebrands everything; per-client clone
 
