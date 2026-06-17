@@ -5,7 +5,8 @@ template; client deployments are separate repos cloned from it (see `docs/per-cl
 
 **Project context & knowledge wiki:** the canonical identity, strategy, and architecture live in
 @docs/PROJECT_CONTEXT.md (auto-imported). The knowledge wiki is at `docs/wiki/` — query or extend it
-with the `wiki-ops` skill; pull external research with the `search` skill.
+with the `wiki-ops` skill, and grow it autonomously with the `autoresearch` skill (built on the
+built-in `deep-research` harness).
 
 ## Stack
 React 18 + Vite + TypeScript (strict) · Tailwind + shadcn/ui · TanStack Query · React Router ·

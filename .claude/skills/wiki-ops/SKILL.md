@@ -95,7 +95,8 @@ At the end of a working session, when the user asks to update the wiki:
 
 ## Pairs with
 
-- The **search** skill — for pulling external research into `raw/external/`
-  before ingesting it into the wiki.
+- The **autoresearch** skill — an autonomous loop (built on the built-in
+  `deep-research` harness) that researches gaps and files verified pages through
+  this skill's ingest flow.
 - `docs/PROJECT_CONTEXT.md` — the canonical project identity the wiki mirrors
   at `docs/wiki/sources/project-context.md`.
