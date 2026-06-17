@@ -1,46 +1,58 @@
-import { brand } from "@/config/brand";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AppLayout } from "@/components/layout/AppLayout";
+import { Toaster } from "@/components/ui/sonner";
 
-/**
- * Phase 0 placeholder splash — proves the theme + white-label config render.
- * Replaced by the router + app shell in Phase 1.
- */
+import Login from "@/pages/Login";
+import Overview from "@/pages/Overview";
+import Briefings from "@/pages/Briefings";
+import Findings from "@/pages/Findings";
+import Strategy from "@/pages/Strategy";
+import Workspace from "@/pages/Workspace";
+import Assistant from "@/pages/Assistant";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: false },
+  },
+});
+
 export default function App() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-6">
-      <div className="max-w-xl text-center animate-fade-in-up">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-          {brand.company.name}
-        </p>
-        <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-gradient">
-          {brand.productName}
-        </h1>
-        <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-          {brand.tagline}
-        </p>
-
-        <div className="mt-10 flex items-center justify-center gap-3">
-          <span className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground glow">
-            Scaffold online
-          </span>
-          <span className="inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-card-foreground">
-            {brand.assistantName} standing by
-          </span>
-        </div>
-
-        <div className="mt-12 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
-          {["Metrics", "Briefs", "Findings", brand.assistantName].map((label) => (
-            <div
-              key={label}
-              className="rounded-lg border border-border bg-card p-4 shadow-card-sm"
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/auth" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
             >
-              <div className="tnum text-2xl font-bold text-foreground">—</div>
-              <div className="mt-1 text-xs font-medium text-muted-foreground">
-                {label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </main>
+              <Route index element={<Overview />} />
+              <Route path="briefings" element={<Briefings />} />
+              <Route
+                path="findings"
+                element={
+                  <ProtectedRoute tier="admin">
+                    <Findings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="strategy" element={<Strategy />} />
+              <Route path="workspace" element={<Workspace />} />
+              <Route path="assistant" element={<Assistant />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
