@@ -31,3 +31,11 @@ dist-ssr
 # Supabase local state
 supabase/.temp
 supabase/.branches
+
+# Local Claude Code tooling — commit the shared skills, ignore local state
+# (worktrees, settings.local.json, handoffs, etc.)
+.claude/*
+!.claude/skills/
+
+# Knowledge wiki: user-dropped external sources stay local-only
+docs/wiki/raw/external/
