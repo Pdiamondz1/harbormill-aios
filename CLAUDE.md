@@ -3,6 +3,10 @@
 A **white-label AI operating-deck template** Harbormill clones per client. This is the base
 template; client deployments are separate repos cloned from it (see `docs/per-client-workflow.md`).
 
+**Project context & knowledge wiki:** the canonical identity, strategy, and architecture live in
+@docs/PROJECT_CONTEXT.md (auto-imported). The knowledge wiki is at `docs/wiki/` — query or extend it
+with the `wiki-ops` skill; pull external research with the `search` skill.
+
 ## Stack
 React 18 + Vite + TypeScript (strict) · Tailwind + shadcn/ui · TanStack Query · React Router ·
 Supabase (Postgres + RLS + Deno edge functions) · Anthropic chat (default `claude-sonnet-4-6`) +
