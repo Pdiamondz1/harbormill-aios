@@ -75,9 +75,14 @@ export const DEMO_EXCHANGES: DemoExchange[] = [
       "Two enterprise accounts are flagged at-risk, which is what pushed **churn to 3.1%** (target is under 2.5%). It's concentrated, not broad — the rest of the base is steady. I'd prioritize a direct save conversation with both this week and loop in the success team as owner.",
   },
   {
-    prompt: "What should I focus on?",
+    prompt: "What are my top priorities today?",
     answer:
-      "Based on this week's brief, two things:\n\n1. **Save the two at-risk accounts** before Thursday — that's the fastest churn lever.\n2. **Tighten the proposal-to-close step** — pipeline is healthy, so closing rate is where the MRR gap is.\n\nWant me to draft talking points for the at-risk account calls?",
+      "Reading today's operations, three things rise to the top:\n\n1. **Save the two at-risk enterprise accounts** — churn is the biggest revenue risk right now.\n2. **Follow up on the two stalled proposals** in the $112k pipeline — they're past the close step.\n3. **Clear the 8 open support tickets** before any age past SLA.\n\nThe emails and meetings worth your time today all ladder up to #1. Want me to draft the outreach?",
+  },
+  {
+    prompt: "Summarize my last meeting",
+    answer:
+      "**Weekly ops sync — summary**\n\n- Revenue is ~$11.8k under target; the team agreed it's a close-rate issue, not lead flow.\n- Two enterprise accounts flagged at-risk; success team owns the save plays.\n- Reporting export shipped on schedule.\n\n**Next action steps**\n1. Success — save calls with both at-risk accounts by Thursday.\n2. Sales — tighten the proposal-to-close step.\n3. Ops — watch support volume as the new cohort ramps.",
   },
   {
     prompt: "What's our positioning?",
