@@ -45,6 +45,13 @@ the pluggable AI tool registry ([[Aria]]), and per-client env-only deploy.
 
 - [[Project Context]]
 - [[Aria]]
+- [[Supabase]]
+- [[Edge Functions]]
+- [[AI Tool Registry]]
+- [[Operating Deck Data Model]]
+- [[Google Workspace Bridge]]
 - [[White-Label Architecture]]
 - [[Report-Ingest Seam]]
 - [[Access Model]]
+- [[Per-Client Deployment]]
+- [[The Harbormill Ladder]]
