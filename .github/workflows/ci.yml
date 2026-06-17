@@ -15,7 +15,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # `npm install` (not `npm ci`): esbuild ships per-platform optional packages,
+      # and a lockfile generated on one OS can list another OS's sibling in a way
+      # that makes the strict `npm ci` check fail EBADPLATFORM on the CI runner.
+      - run: npm install --no-audit --no-fund
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
