@@ -109,6 +109,11 @@ export const site = {
         title: "Ask Aria, anything",
         body: "A business-aware assistant grounded in your live metrics, briefs, and knowledge base — ask in plain language, get grounded answers.",
       },
+      {
+        icon: "Puzzle",
+        title: "Integrations & plugins",
+        body: "AIOS plugs into the business software you already use — CRM, accounting, support, messaging, and more. If it has an API, we can wire it in.",
+      },
     ],
   },
 

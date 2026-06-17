@@ -10,6 +10,7 @@ import {
   ListChecks,
   Bell,
   Sparkles,
+  Puzzle,
   type LucideIcon,
 } from "lucide-react";
 
@@ -25,6 +26,7 @@ const ICONS: Record<string, LucideIcon> = {
   ListChecks,
   Bell,
   Sparkles,
+  Puzzle,
 };
 
 /** Renders a lucide icon by name (used for config-driven service/problem cards). */
