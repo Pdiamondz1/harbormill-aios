@@ -1,0 +1,13 @@
+{
+  "name": "Harbormill Automation",
+  "short_name": "Harbormill",
+  "description": "Custom AI automation for small business.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e1726",
+  "theme_color": "#0e1726",
+  "icons": [
+    { "src": "/emblem.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
