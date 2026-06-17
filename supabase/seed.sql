@@ -1,41 +1,41 @@
--- Demo seed so a fresh clone renders a live-looking deck before a client wires
--- their own agents. Safe to delete. Runs as the service role on `supabase db reset`.
+-- Demo seed for the "Mise" restaurant-group skin. A fictional 4-location group.
+-- Safe to delete. Runs as the service role on `supabase db reset`.
 
 insert into public.metric_snapshots (key, label, value, unit, target, status) values
-  ('mrr',            'MRR',              '$48,200', null, '$60,000', 'at_risk'),
-  ('active_clients', 'Active clients',   '37',      null, '40',      'on_track'),
-  ('nps',            'NPS',              '62',      null, '60',      'on_track'),
-  ('churn',          'Churn (30d)',      '3.1',     '%',  '< 2.5%',  'off_track'),
-  ('pipeline',       'Pipeline',         '$112k',   null, null,      'on_track'),
-  ('tickets_open',   'Open tickets',     '8',       null, '< 10',    'on_track'),
-  ('uptime',         'Uptime (30d)',     '99.96',   '%',  '99.9%',   'on_track'),
-  ('csat',           'CSAT',             '4.7',     '★',  '4.5',     'on_track');
+  ('covers_week',  'Covers (wk)',      '3,180',  null, '3,400',   'at_risk'),
+  ('avg_check',    'Avg check',        '$41.20', null, '$40.00',  'on_track'),
+  ('food_cost',    'Food cost',        '31.4',   '%',  '< 30%',   'off_track'),
+  ('labor_cost',   'Labor',            '28.1',   '%',  '< 29%',   'on_track'),
+  ('table_turns',  'Table turns',      '2.7',    null, '3.0',     'at_risk'),
+  ('google_rating','Google rating',    '4.6',    '★',  '4.5',     'on_track'),
+  ('no_show',      'No-show rate',     '4.2',    '%',  '< 5%',    'on_track'),
+  ('comps',        'Comps / voids',    '2.9',    '%',  '< 2%',    'off_track');
 
 insert into public.briefings (week_start, title, body_md, kpis, generated_by, published_at) values
   (
     date_trunc('week', now())::date,
-    'Weekly operating brief',
-    E'## Where we stand\n\nRevenue is tracking just under target while retention holds. Two items need attention this week.\n\n### Highlights\n- **Active clients** crossed 37, on pace for the Q-target.\n- **Uptime** held at 99.96% through the deploy window.\n\n### Watch\n- **Churn** ticked to 3.1% — two enterprise accounts flagged at-risk. Owner: success team.\n- **MRR** is $11.8k under target; pipeline coverage is healthy, so this is a close-rate problem, not a top-of-funnel one.\n\n### Recommended focus\n1. Save play on the two at-risk accounts before Thursday.\n2. Tighten the proposal-to-close step — that''s where the gap is.',
-    '[{"key":"mrr","label":"MRR","value":"$48,200","target":"$60,000","status":"at_risk"},{"key":"churn","label":"Churn","value":"3.1%","target":"<2.5%","status":"off_track"},{"key":"nps","label":"NPS","value":"62","target":"60","status":"on_track"}]'::jsonb,
+    'Weekly service brief',
+    E'## Where the group stands\n\nSolid weekend, but two cost lines need a GM''s attention before they bite the P&L.\n\n### Highlights\n- **Avg check** up to $41.20 — the new shareable apps are landing.\n- **Reviews** holding at 4.6★ across all four rooms.\n\n### Watch\n- **Food cost** at 31.4% (target <30%). Protein waste at the Harbor St. location is the outlier — check the line on prep par levels.\n- **Comps** at 2.9% — mostly comped entrées on Friday dinner. Worth a look at ticket times that night.\n\n### Recommended focus\n1. Harbor St. line check on protein par + waste log, this week.\n2. Pull Friday dinner ticket times — comps track with the 7–9pm slam.',
+    '[{"key":"food_cost","label":"Food cost","value":"31.4%","target":"<30%","status":"off_track"},{"key":"covers_week","label":"Covers","value":"3,180","target":"3,400","status":"at_risk"},{"key":"google_rating","label":"Rating","value":"4.6","target":"4.5","status":"on_track"}]'::jsonb,
     'weekly-brief-agent',
     now()
   ),
   (
     (date_trunc('week', now()) - interval '7 days')::date,
-    'Weekly operating brief',
-    E'## Last week\n\nA quieter week. Onboarded three new clients and shipped the reporting export.\n\n### Highlights\n- Three new logos signed.\n- Reporting export shipped on schedule.\n\n### Watch\n- Support volume rose with the new cohort — staffing looks adequate for now.',
-    '[{"key":"active_clients","label":"Active clients","value":"34","target":"40","status":"on_track"}]'::jsonb,
+    'Weekly service brief',
+    E'## Last week\n\nStrong covers, clean kitchen. Onboarded the new brunch menu at two locations.\n\n### Highlights\n- Brunch attach rate beat plan at Pier 9.\n- Labor held at 27.6% despite the holiday weekend.',
+    '[{"key":"labor_cost","label":"Labor","value":"27.6%","target":"<29%","status":"on_track"}]'::jsonb,
     'weekly-brief-agent',
     null
   )
 on conflict (week_start) do nothing;
 
 insert into public.findings (severity, title, summary_md, evidence, source, status, fingerprint, occurrences) values
-  ('high', 'Checkout latency spike on mobile', E'p95 checkout latency rose to **2.4s** on mobile after the Tuesday deploy. Desktop unaffected.\n\nLikely the new analytics call on the payment step blocking render.', '{"p95_ms": 2400, "platform": "mobile", "since": "deploy-tue"}'::jsonb, 'sweep-agent', 'open', 'perf:checkout:mobile-p95', 3),
-  ('low', 'Stale cache header on /pricing', E'The `/pricing` page ships a 1-year `max-age` but changes weekly, so edits lag for returning visitors.', '{}'::jsonb, 'sweep-agent', 'acknowledged', 'cache:pricing:max-age', 1)
+  ('high', 'POS sync gap during Friday dinner', E'Toast → deck sync dropped **47 tickets** between 7:10–8:05pm Friday at Harbor St. Covers and comps under-reported for that window.', '{"location": "Harbor St", "window": "Fri 19:10-20:05", "missing_tickets": 47}'::jsonb, 'sweep-agent', 'open', 'pos:sync:harbor-fri-dinner', 2),
+  ('medium', '86''d item still bookable online', E'"Branzino" was 86''d on the line but stayed orderable on the online menu for ~2 hours, generating 6 refunded orders.', '{}'::jsonb, 'sweep-agent', 'acknowledged', 'menu:86:online-sync', 1)
 on conflict (fingerprint) do nothing;
 
 insert into public.documents (path, title, content_md, tags) values
-  ('strategy/positioning', 'Positioning', E'# Positioning\n\nWe sell **operational clarity** to mid-market operators who are flying blind between their tools.\n\n- **Who:** 20–200 person services & SaaS businesses.\n- **Wedge:** the weekly brief — the one artifact a busy operator actually reads.\n- **Moat:** the assistant gets smarter on their data over time.', '{"strategy","gtm"}'),
-  ('playbooks/onboarding', 'Client onboarding', E'# Client onboarding\n\n1. Provision the deck (clone, env, migrations, functions).\n2. Seed the first admin and invite stakeholders.\n3. Wire their metric/brief/finding agents to `report-ingest`.\n4. Connect Google Workspace for exports.\n5. Load their strategy docs so the assistant has context.', '{"playbook","ops"}')
+  ('strategy/positioning', 'Group positioning', E'# Positioning\n\nApproachable neighborhood dining at a notch above casual — **the reliable special-occasion-and-also-Tuesday** spot.\n\n- **Who:** repeat locals, 30–55, who value consistency over novelty.\n- **Edge:** the same warm room and menu execution across every location.\n- **Cost discipline:** food cost is the daily battle — par levels + waste logs win it.', '{"strategy","ops"}'),
+  ('playbooks/line-check', 'Opening line check', E'# Opening line check\n\n1. Walk-in temps logged, FIFO rotation verified.\n2. Prep pars hit for the day''s covers forecast (pull from the deck).\n3. 86 board cleared and synced to the online menu.\n4. Station mise complete, ticket printer tested.\n5. Comp/void log from last night reviewed with the closing manager.', '{"playbook","kitchen"}')
 on conflict (path) do nothing;

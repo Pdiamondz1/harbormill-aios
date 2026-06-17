@@ -2,48 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Harbormill AIOS — Theme tokens ──────────────────────────────────────────
-   This block is the single source of truth for the product's color palette.
-   To re-theme for a client: edit the HSL values below (and the words/logos in
-   src/config/brand.ts). No component code needs to change.
-
-   The app ships dark-first (<html class="dark">). :root holds the light palette
-   for clients who prefer it.                                                    */
+/* ── Mise (restaurant-ops demo skin) — Theme tokens ──────────────────────────
+   Single source of truth for the palette. To re-theme: edit the HSL values here
+   (and the words/logos in src/config/brand.ts). No component code changes.
+   Dark-first (<html class="dark">); :root holds the light palette.            */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 30% 12%;
+    --background: 36 33% 99%;
+    --foreground: 20 20% 14%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 30% 12%;
+    --card-foreground: 20 20% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 30% 12%;
+    --popover-foreground: 20 20% 14%;
 
-    /* Azure primary — the one confident accent */
-    --primary: 205 90% 46%;
+    /* Terracotta primary */
+    --primary: 16 75% 48%;
     --primary-foreground: 0 0% 100%;
 
-    /* Amber secondary — highlights & "go" status */
-    --secondary: 38 92% 50%;
-    --secondary-foreground: 38 60% 12%;
+    /* Herb-green secondary */
+    --secondary: 142 45% 40%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 40%;
+    --muted: 36 20% 95%;
+    --muted-foreground: 28 12% 42%;
 
-    --accent: 205 90% 95%;
-    --accent-foreground: 205 90% 30%;
+    --accent: 16 80% 94%;
+    --accent-foreground: 16 75% 30%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 152 56% 38%;
-    --warning: 38 92% 45%;
+    --success: 142 50% 36%;
+    --warning: 38 90% 45%;
 
-    --border: 214 20% 90%;
-    --input: 214 20% 90%;
-    --ring: 205 90% 46%;
+    --border: 30 20% 88%;
+    --input: 30 20% 88%;
+    --ring: 16 75% 48%;
 
     --radius: 0.75rem;
 
@@ -51,60 +48,60 @@
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
 
-    --sidebar-background: 210 20% 98%;
-    --sidebar-foreground: 222 20% 25%;
-    --sidebar-primary: 205 90% 46%;
+    --sidebar-background: 36 24% 97%;
+    --sidebar-foreground: 20 18% 25%;
+    --sidebar-primary: 16 75% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 205 90% 95%;
-    --sidebar-accent-foreground: 205 90% 30%;
-    --sidebar-border: 214 20% 90%;
-    --sidebar-ring: 205 90% 46%;
+    --sidebar-accent: 16 80% 94%;
+    --sidebar-accent-foreground: 16 75% 30%;
+    --sidebar-border: 30 20% 88%;
+    --sidebar-ring: 16 75% 48%;
   }
 
   .dark {
-    --background: 222 28% 9%;
-    --foreground: 210 20% 96%;
+    --background: 20 18% 9%;
+    --foreground: 30 15% 95%;
 
-    --card: 222 24% 13%;
-    --card-foreground: 210 20% 96%;
+    --card: 20 16% 13%;
+    --card-foreground: 30 15% 95%;
 
-    --popover: 222 24% 12%;
-    --popover-foreground: 210 20% 96%;
+    --popover: 20 16% 12%;
+    --popover-foreground: 30 15% 95%;
 
-    --primary: 205 90% 56%;
-    --primary-foreground: 222 45% 9%;
+    --primary: 16 82% 58%;
+    --primary-foreground: 20 30% 10%;
 
-    --secondary: 38 92% 58%;
-    --secondary-foreground: 38 60% 10%;
+    --secondary: 142 46% 52%;
+    --secondary-foreground: 142 50% 8%;
 
-    --muted: 222 16% 20%;
-    --muted-foreground: 215 16% 64%;
+    --muted: 20 12% 20%;
+    --muted-foreground: 28 10% 64%;
 
-    --accent: 205 50% 20%;
-    --accent-foreground: 205 90% 78%;
+    --accent: 16 45% 20%;
+    --accent-foreground: 16 82% 78%;
 
-    --destructive: 0 62% 48%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 30 15% 96%;
 
-    --success: 152 52% 50%;
-    --warning: 38 92% 58%;
+    --success: 142 46% 52%;
+    --warning: 38 90% 58%;
 
-    --border: 222 16% 22%;
-    --input: 222 16% 22%;
-    --ring: 205 90% 56%;
+    --border: 20 14% 22%;
+    --input: 20 14% 22%;
+    --ring: 16 82% 58%;
 
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
 
-    --sidebar-background: 222 30% 7%;
-    --sidebar-foreground: 210 16% 80%;
-    --sidebar-primary: 205 90% 56%;
-    --sidebar-primary-foreground: 222 45% 9%;
-    --sidebar-accent: 222 22% 16%;
-    --sidebar-accent-foreground: 210 16% 90%;
-    --sidebar-border: 222 18% 18%;
-    --sidebar-ring: 205 90% 56%;
+    --sidebar-background: 20 22% 7%;
+    --sidebar-foreground: 30 12% 80%;
+    --sidebar-primary: 16 82% 58%;
+    --sidebar-primary-foreground: 20 30% 10%;
+    --sidebar-accent: 20 16% 16%;
+    --sidebar-accent-foreground: 30 12% 90%;
+    --sidebar-border: 20 14% 18%;
+    --sidebar-ring: 16 82% 58%;
   }
 }
 
@@ -134,24 +131,17 @@
 }
 
 @layer utilities {
-  /* Tabular figures for metrics/KPIs */
   .tnum {
     font-variant-numeric: tabular-nums;
   }
 
-  /* Primary→secondary gradient text, for the wordmark/hero */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(
-      120deg,
-      hsl(var(--primary)) 0%,
-      hsl(var(--secondary)) 100%
-    );
+    background-image: linear-gradient(120deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
   }
 
   .glow {
-    box-shadow: 0 0 24px hsl(var(--primary) / 0.18),
-      0 0 60px hsl(var(--primary) / 0.06);
+    box-shadow: 0 0 24px hsl(var(--primary) / 0.18), 0 0 60px hsl(var(--primary) / 0.06);
   }
 
   .glass {

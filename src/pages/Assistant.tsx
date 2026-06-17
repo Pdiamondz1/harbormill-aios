@@ -7,10 +7,10 @@ import { ChatInput } from "@/components/assistant/ChatInput";
 import { TypingIndicator } from "@/components/assistant/TypingIndicator";
 
 const QUICK_PROMPTS = [
-  "How are we doing this week?",
-  "What are our current metrics?",
-  "Summarize the latest brief",
-  "What's our positioning?",
+  "How were covers this week?",
+  "Why is food cost over target?",
+  "Summarize this week's service brief",
+  "What's the group's positioning?",
 ];
 
 export default function Assistant() {
