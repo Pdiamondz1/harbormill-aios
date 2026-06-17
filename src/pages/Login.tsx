@@ -173,7 +173,7 @@ export default function Login() {
             </Button>
 
             <p className="mt-5 text-center text-[11px] leading-relaxed text-muted-foreground">
-              Access is provisioned by an {brand.tiers.admin.toLowerCase()} — there is no signup.
+              Access is provisioned by your {brand.tiers.admin} — there is no signup.
             </p>
           </form>
         </section>
