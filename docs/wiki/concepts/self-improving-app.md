@@ -23,7 +23,7 @@ each iteration. It orchestrates two skills and reimplements neither:
 
 - **`deep-research`** (built-in) — web search, fetch, adversarial verification,
   cited synthesis. Replaced the old Exa `search` skill — no external account.
-- **[[wiki-ops]]** — the ingest / query / lint flow over the wiki.
+- **`wiki-ops`** (skill) — the ingest / query / lint flow over the wiki.
 
 ## Acceptance gate (the `val_bpb` analog)
 
