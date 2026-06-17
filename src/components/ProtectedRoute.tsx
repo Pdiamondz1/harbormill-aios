@@ -60,7 +60,7 @@ function AccessDenied() {
         </h1>
         <p className="mb-2 text-sm text-muted-foreground">
           This deck is provisioned per account. If you believe you should have
-          access, ask an {brand.tiers.admin.toLowerCase()} to grant it.
+          access, ask your {brand.tiers.admin} to grant it.
         </p>
         {user?.email && (
           <p className="mb-6 text-xs text-muted-foreground">
