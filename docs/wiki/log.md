@@ -1,5 +1,56 @@
 # Wiki Log
 
+## [2026-06-17] autoresearch loop | budget 8 (run 2) — 8 gaps closed
+
+Second `/autoresearch loop 8`. Lint showed the wiki was backend-heavy; targeted
+the front-end + remaining cross-cutting systems + the marketing/strategy layer.
+8 kept (7 repo-grounded with file paths, 1 — Education-First — internal + ≥2
+external sources). 0 discarded, 0 contradictions. Wiki grew 15 → 23 pages.
+
+### Iteration 1 | AIOS App Shell (concept)
+Status: kept · Domain: technical
+Sources: src/App.tsx, src/main.tsx, src/components/layout/AppLayout.tsx, src/contexts/AuthContext.tsx, src/components/ProtectedRoute.tsx, src/hooks/useAccess.ts, src/integrations/supabase/client.ts
+Pages created: [[AIOS App Shell]]
+
+### Iteration 2 | AIOS Pages (concept)
+Status: kept · Domain: technical
+Sources: src/pages/* (Overview, Briefings, Findings, Strategy, Assistant, Workspace, WorkspaceCallback, Login)
+Pages created: [[AIOS Pages]]
+
+### Iteration 3 | Knowledge & RAG (concept)
+Status: kept · Domain: technical
+Sources: supabase/migrations/20260617000200_assistant.sql, supabase/functions/knowledge-sync/index.ts, assistant-chat/tools.ts
+Pages created: [[Knowledge & RAG]]
+
+### Iteration 4 | Assistant Chat Loop (concept)
+Status: kept · Domain: technical
+Sources: supabase/functions/assistant-chat/index.ts, migrations/...assistant.sql, src/hooks/useAssistant.ts
+Pages created: [[Assistant Chat Loop]]
+
+### Iteration 5 | Cost Ledger (concept)
+Status: kept · Domain: technical
+Sources: supabase/migrations/20260617000200_assistant.sql, supabase/functions/_shared/cost-ledger.ts
+Pages created: [[Cost Ledger]]
+
+### Iteration 6 | AI Providers (entity)
+Status: kept · Domain: technical
+Sources: assistant-chat/index.ts + tools.ts, knowledge-sync/index.ts, CLAUDE.md
+Pages created: [[AI Providers]]
+
+### Iteration 7 | Marketing Site (entity)
+Status: kept · Domain: technical
+Sources: website/, website/src/config/site.ts, website/vercel.json, website/scripts/lead-capture.gs
+Pages created: [[Marketing Site]]
+
+### Iteration 8 | Education-First Philosophy (concept)
+Status: kept · Domain: strategy
+Sources: docs/PROJECT_CONTEXT.md, website/src/config/site.ts; external — grantthornton.com (70% of programs fall short on capability), vinsys.com / iternal.ai ($3.70/$1, 2.7x proficiency), salesforce.com (SMB hands-on) (≥2 independent)
+Pages created: [[Education-First Philosophy]]
+
+### Budget exhausted (8/8). Wiki at 23 pages. Suggested next gaps: the brand/theming
+### token system detail, the Strategy/knowledge-library workflow, CI/CD + the gate
+### (npm scripts), and an "Aria tools — extending" how-to.
+
 ## [2026-06-17] autoresearch loop | budget 8 — 8 gaps closed
 
 Ran `/autoresearch loop 8`. Lint of the seed wiki found core systems with no
