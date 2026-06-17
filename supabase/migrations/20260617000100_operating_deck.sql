@@ -36,8 +36,9 @@ create policy "metrics readable by access tier"
   on public.metric_snapshots for select to authenticated
   using (public.has_access());
 
--- Latest snapshot per key — what the Overview renders.
-create view public.metric_latest as
+-- Latest snapshot per key — what the Overview renders. security_invoker so the
+-- view enforces the base table's RLS as the querying user (not the view owner).
+create view public.metric_latest with (security_invoker = true) as
   select distinct on (key) id, key, label, value, unit, target, status, captured_at
   from public.metric_snapshots
   order by key, captured_at desc;
