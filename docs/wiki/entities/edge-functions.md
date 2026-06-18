@@ -27,8 +27,10 @@ user-authenticated.
   See [[AI Tool Registry]].
 - **`knowledge-sync`** *(service-role only)* — embeds documents for RAG via OpenAI
   `text-embedding-3-small` (1536-dim) and **idempotently upserts** the `knowledge`
-  table keyed on `metadata.source_id` (1–100 items/call). This is the function the
-  autoresearch `sync-aria` phase would target (see [[Self-Improving App]]).
+  table keyed on `metadata.source_id` (1–100 items/call). [[Wiki-to-Aria Sync]]
+  drives it to load `docs/wiki/` into RAG (`npm run sync:wiki`). Auth is an exact
+  Bearer match against the injected `SUPABASE_SERVICE_ROLE_KEY` — on new-key-system
+  projects that is the `sb_secret_…` key, not the legacy JWT.
 - **`google-workspace-proxy`** *(user JWT or service mode)* — the single audited
   gateway to Google Drive/Sheets; tokens never leave the server. See
   [[Google Workspace Bridge]].

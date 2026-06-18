@@ -1,5 +1,24 @@
 # Wiki Log
 
+## [2026-06-18] ship | sync-aria — wiki → Aria's RAG (Self-Improving App Phase 2)
+
+Shipped Phase 2 of the [[Self-Improving App]] roadmap: the wiki now feeds the
+product's RAG. Built `scripts/sync-wiki.mjs` + `npm run sync:wiki` (zero-dep Node;
+reads `docs/wiki/`, skips index/log, strips frontmatter, idempotent on
+`source_id = "wiki:<path>"`), docs at `docs/sync-aria.md`. Deployed the
+`knowledge-sync` edge function to the live demo project and **embedded all 31 wiki
+pages** into `public.knowledge` (`metadata.origin = wiki`); verified retrieval and
+a grounded Aria answer in the deck.
+
+Operational finding (generalized into the wiki): on Supabase's **new API-key
+system**, service-role functions authenticate against the injected
+`SUPABASE_SERVICE_ROLE_KEY` = the **`sb_secret_…`** key, not the legacy `eyJ…`
+service_role JWT (the legacy JWT 401s despite decoding to `role=service_role`).
+
+Pages created: [[Wiki-to-Aria Sync]] (concept).
+Pages updated: [[Knowledge & RAG]], [[Self-Improving App]], [[Edge Functions]],
+index.md (1 new concept entry). Wiki at 32 pages.
+
 ## [2026-06-17] autoresearch loop | budget 8 (run 3) — 8 gaps closed
 
 Third `/autoresearch loop 8`, targeting the dev/ops, design-system, content, and

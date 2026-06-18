@@ -38,6 +38,7 @@
 - [[Testing Setup]](concepts/testing-setup.md) — Vitest + testing-library + jsdom; one brand-contract test today; harness ready
 - [[The Harbormill Ladder]](concepts/harbormill-ladder.md) — Land-and-expand engagement + pricing ladder; externally benchmarked
 - [[White-Label Architecture]](concepts/white-label-architecture.md) — One config (brand.ts + CSS vars) rebrands everything; per-client clone
+- [[Wiki-to-Aria Sync]](concepts/wiki-to-aria-sync.md) — `npm run sync:wiki` loads docs/wiki/ into Aria's RAG via knowledge-sync; idempotent; sb_secret_ key on new projects
 
 ## Analyses
 
