@@ -26,8 +26,9 @@ returns the nearest chunks (default 5).
 `text-embedding-3-small` (1536-dim)** and **idempotently upserts** the `knowledge`
 table keyed on `metadata.source_id` (1–100 items/call) — re-syncing updates rather
 than duplicating. The Strategy page's `documents` are the typical input
-(`source_id: "doc:" + path`). This is the function the autoresearch `sync-aria`
-phase targets to teach Aria from the wiki ([[Self-Improving App]]).
+(`source_id: "doc:" + path`). The `docs/wiki/` pages are loaded through this same
+function by [[Wiki-to-Aria Sync]] — the shipped `sync-aria` phase
+([[Self-Improving App]]).
 
 ## Retrieval at query time
 
@@ -39,5 +40,6 @@ returns the top chunks for Aria to cite. See [[AI Providers]].
 - [[Aria]]
 - [[AI Tool Registry]]
 - [[AI Providers]]
+- [[Wiki-to-Aria Sync]]
 - [[Self-Improving App]]
 - [[Supabase]]

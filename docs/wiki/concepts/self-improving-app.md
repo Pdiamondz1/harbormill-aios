@@ -36,10 +36,11 @@ what stops the loop from polluting the wiki.
 ## Roadmap
 
 1. **Phase 1 (now):** grow the wiki across technical, competitive, and strategy domains.
-2. **Phase 2 — Aria learns:** `sync-aria` pushes verified pages into the AIOS
-   knowledge base (RAG via OpenAI embeddings, behind the `knowledge-sync` edge
-   function) so [[Aria]] reasons over them. One loop, two outputs: wiki for humans,
-   RAG for the product.
+2. **Phase 2 — Aria learns *(shipped)*:** `sync-aria` pushes verified pages into
+   the AIOS knowledge base (RAG via OpenAI embeddings, behind the `knowledge-sync`
+   edge function) so [[Aria]] reasons over them. One loop, two outputs: wiki for
+   humans, RAG for the product. Implemented as [[Wiki-to-Aria Sync]]
+   (`npm run sync:wiki`).
 3. **Phase 3 — telemetry→wiki bridge:** `findings` (from the [[Report-Ingest Seam]]),
    error logs, and Supabase advisors drive gap detection.
 4. **Phase 4 — fix proposals:** verified-issue remediation specs / draft PRs,
@@ -57,5 +58,6 @@ claims for in-place verification rather than asserting them in codebase docs.
 
 - [[Harbormill AIOS]]
 - [[Aria]]
+- [[Wiki-to-Aria Sync]]
 - [[Report-Ingest Seam]]
 - [[Project Context]]
