@@ -2,10 +2,14 @@ import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { LogOut, Menu, X } from "lucide-react";
 import { brand } from "@/config/brand";
+import { features, type FeatureKey } from "@/config/features";
 import { useAuth } from "@/hooks/useAuth";
 import { useAccess } from "@/hooks/useAccess";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { AriaProvider } from "@/contexts/AriaProvider";
+import { AriaPanel } from "@/components/assistant/AriaPanel";
+import { AriaLauncher } from "@/components/assistant/AriaLauncher";
 
 interface NavItem {
   to: string;
@@ -13,15 +17,19 @@ interface NavItem {
   end?: boolean;
   /** When true, only the admin tier sees this item. */
   adminOnly?: boolean;
+  /** When set, the item shows only if this feature flag is enabled. */
+  feature?: FeatureKey;
 }
 
 const NAV: NavItem[] = [
   { to: "/", label: "Overview", end: true },
-  { to: "/briefings", label: "Briefings" },
-  { to: "/findings", label: "Findings", adminOnly: true },
-  { to: "/strategy", label: "Strategy" },
-  { to: "/workspace", label: "Workspace" },
-  { to: "/assistant", label: brand.assistantName },
+  { to: "/projects", label: "Projects", feature: "projects" },
+  { to: "/calendar", label: "Calendar", feature: "calendar" },
+  { to: "/briefings", label: "Briefings", feature: "briefings" },
+  { to: "/findings", label: "Findings", adminOnly: true, feature: "findings" },
+  { to: "/strategy", label: "Strategy", feature: "strategy" },
+  { to: "/workspace", label: "Workspace", feature: "workspace" },
+  { to: "/assistant", label: brand.assistantName, feature: "assistant" },
 ];
 
 export function AppLayout() {
@@ -31,7 +39,9 @@ export function AppLayout() {
   const [signingOut, setSigningOut] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = NAV.filter((item) => isAdmin || !item.adminOnly);
+  const navItems = NAV.filter(
+    (item) => (isAdmin || !item.adminOnly) && (!item.feature || features[item.feature])
+  );
 
   const handleSignOut = async () => {
     if (signingOut) return;
@@ -44,6 +54,7 @@ export function AppLayout() {
   };
 
   return (
+    <AriaProvider>
     <div className="relative min-h-screen bg-background">
       {/* Atmosphere: primary glow top-left, secondary ember bottom-right, blueprint grid */}
       <div aria-hidden className="pointer-events-none fixed inset-0">
@@ -122,7 +133,11 @@ export function AppLayout() {
       <main className="relative z-10 mx-auto w-full max-w-6xl p-4 lg:p-8">
         <Outlet />
       </main>
+
+      <AriaLauncher />
+      <AriaPanel />
     </div>
+    </AriaProvider>
   );
 }
 

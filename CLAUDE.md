@@ -37,7 +37,8 @@ Edge functions (`supabase/functions/*`) are Deno — NOT covered by the above; v
 `has_role`, `is_admin`, `has_access`. Findings are admin-only.
 
 ## Where things live
-- Pages: `src/pages/` (Overview, Briefings, Findings, Strategy, Workspace, Assistant, Login).
+- Pages: `src/pages/` (Overview, Projects, ProjectDetail, Calendar, Briefings, Findings, Strategy, Workspace, Assistant, Login).
+- Feature flags: `src/config/features.ts` toggles modules per client (gates nav + routes). Aria tools toggle via the `DISABLED_TOOLS` edge-function secret.
 - Shell/nav: `src/components/layout/AppLayout.tsx`. Hooks: `src/hooks/`.
 - Edge fns: `report-ingest`, `assistant-chat` (+ `tools.ts`), `knowledge-sync`, `google-workspace-proxy`; shared in `_shared/`.
 - Migrations: `supabase/migrations/`. Demo data: `supabase/seed.sql`.

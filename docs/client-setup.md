@@ -20,6 +20,17 @@ cd client-name-aios
 npm install
 ```
 
+### Guided setup (recommended)
+
+```bash
+npm run setup:client
+```
+
+Walks you through the per-client basics, writes `.env`, and prints the exact
+ordered backend commands tailored to your project. It does **not** run any
+destructive Supabase command itself — you review and run those — so it's safe to
+re-run. The manual steps below are the same flow, spelled out.
+
 ---
 
 ## 1. Create the Supabase project & apply the schema
@@ -96,6 +107,21 @@ supabase secrets set GOOGLE_EXPORT_USER_ID=<admin-user-uuid> # for scheduled met
 ```
 
 Scope is `drive.file` only — the app sees just the files it creates.
+
+---
+
+## 4b. Toggle modules per client (optional)
+
+`src/config/features.ts` is the plug-and-play lever: flip a flag off and that
+module disappears from the nav **and** its routes stop resolving (deep links
+fall back to Overview) — no code changes. Modules: `projects`, `calendar`,
+`briefings`, `findings`, `strategy`, `workspace`, `assistant`.
+
+To disable a specific Aria tool for a deployment, set the function secret:
+
+```bash
+supabase secrets set DISABLED_TOOLS=get_cost_stats,propose_correction
+```
 
 ---
 

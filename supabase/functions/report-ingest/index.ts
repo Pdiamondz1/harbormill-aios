@@ -1,7 +1,7 @@
 // report-ingest
-// The single audited choke point through which scheduled agents write to the
-// operating deck. Report-only autonomy is structural: this function can write
-// metric, briefing, and finding rows — nothing else.
+// The single audited choke point through which scheduled agents (and Aria) write
+// to the operating deck. Report-only autonomy is structural: this function can
+// write metric, briefing, finding, and correction-proposal rows — nothing else.
 //
 // - Service-role only (exact bearer match).
 // - Metrics: append-only snapshots (the Overview reads the latest per key).
@@ -9,6 +9,9 @@
 //   omitted leaves the existing publish state untouched.
 // - Findings: upsert on fingerprint; occurrences bump, and a recurrence of a
 //   RESOLVED finding reopens it (regression signal).
+// - Corrections: Aria proposes a fix to a dashboard_setting or document; the
+//   before-value is captured server-side and a 'proposed' row is queued for an
+//   admin to approve via aios_corrections_apply().
 //
 // Request bodies:
 //   { type: "metrics",  payload: { metrics: [{ key, label, value, unit?, target?, status?, captured_at? }] } }
@@ -201,9 +204,65 @@ serve(async (req) => {
     }
   }
 
+  // ── Correction proposal (from Aria via assistant-chat) ──
+  // Aria PROPOSES; an admin approves at the corrections surface. We capture the
+  // current value server-side (so the before/after diff can't be fabricated by
+  // the model) and validate the target exists, then insert a 'proposed' row.
+  if (type === "correction") {
+    const p = rawPayload as {
+      target_type?: string; target_ref?: string; title?: string;
+      rationale_md?: string; proposed_value?: unknown;
+      proposed_by?: string; acting_user_id?: string;
+    };
+    if (p.target_type !== "dashboard_setting" && p.target_type !== "document") {
+      return json({ error: "target_type must be 'dashboard_setting' or 'document'" }, 400);
+    }
+    if (!p.target_ref || typeof p.target_ref !== "string") return json({ error: "target_ref is required" }, 400);
+    if (!p.title || typeof p.title !== "string") return json({ error: "title is required" }, 400);
+    if (!p.rationale_md || typeof p.rationale_md !== "string") return json({ error: "rationale_md is required" }, 400);
+    if (p.proposed_value === undefined || p.proposed_value === null) return json({ error: "proposed_value is required" }, 400);
+
+    let currentValue: unknown;
+    if (p.target_type === "dashboard_setting") {
+      const { data, error } = await supabase
+        .from("aios_dashboard_settings").select("value").eq("key", p.target_ref).maybeSingle();
+      if (error) return json({ error: error.message }, 500);
+      if (!data) return json({ error: `unknown dashboard setting '${p.target_ref}'` }, 400);
+      currentValue = data.value;
+    } else {
+      const { data, error } = await supabase
+        .from("documents").select("content_md").eq("path", p.target_ref).maybeSingle();
+      if (error) return json({ error: error.message }, 500);
+      if (!data) return json({ error: `unknown document path '${p.target_ref}'` }, 400);
+      currentValue = data.content_md;
+    }
+
+    try {
+      const { data: inserted, error: insErr } = await supabase
+        .from("aios_corrections")
+        .insert({
+          target_type: p.target_type,
+          target_ref: p.target_ref,
+          title: p.title.trim(),
+          rationale_md: p.rationale_md,
+          current_value: currentValue,
+          proposed_value: p.proposed_value,
+          proposed_by: p.proposed_by ?? "assistant",
+          proposed_by_user: p.acting_user_id ?? null,
+        })
+        .select("id").single();
+      if (insErr) throw insErr;
+      return json({ success: true, id: inserted.id, status: "proposed" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "ingest failed";
+      console.error("[report-ingest] correction:", message);
+      return json({ error: message }, 500);
+    }
+  }
+
   // ── Briefing (single, upsert on week_start) ──
   if (type !== "briefing") {
-    return json({ error: `Unsupported type "${type}" — use 'metrics', 'briefing', or 'findings'` }, 400);
+    return json({ error: `Unsupported type "${type}" — use 'metrics', 'briefing', 'findings', or 'correction'` }, 400);
   }
   const payload = rawPayload as BriefingPayload;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(payload.week_start ?? "")) {

@@ -86,8 +86,9 @@ calendly.com/dwilliams-harbormill/30min, Google Meet).
 
 ## 9. Repo Layout
 
-- Product app: `src/` (pages: Overview, Briefings, Findings, Strategy,
-  Workspace, Assistant, Login). Shell: `src/components/layout/AppLayout.tsx`.
+- Product app: `src/` (pages: Overview, Projects, Calendar, Briefings, Findings,
+  Strategy, Workspace, Assistant, Login). Shell: `src/components/layout/AppLayout.tsx`.
+  Per-client module toggles: `src/config/features.ts`.
 - Edge fns: `report-ingest`, `assistant-chat` (+ `tools.ts`), `knowledge-sync`,
   `google-workspace-proxy`; shared in `_shared/`.
 - Migrations: `supabase/migrations/`. Demo data: `supabase/seed.sql`.
