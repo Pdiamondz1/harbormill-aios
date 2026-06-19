@@ -305,6 +305,19 @@ export const TOOLS: Tool[] = [
   },
   {
     definition: {
+      name: "get_value_summary",
+      description:
+        "The ROI summary: value delivered this month, last month, cumulative, the configured monthly retainer, and the multiple of the fee (roi_multiple). Use for any question about ROI, value delivered, 'what have we gotten', or 'is this worth it'. State the dollar figure and the multiple.",
+      input_schema: { type: "object", properties: {} },
+    },
+    execute: async (_args, ctx) => {
+      const { data, error } = await ctx.supabase.rpc("deck_value_summary");
+      if (error) throw error;
+      return data;
+    },
+  },
+  {
+    definition: {
       name: "get_weight_trend",
       description:
         "Platform 'weight' over time: daily snapshots of database size, storage bytes, total users, and row counts. Use for questions about scale, growth, capacity, or 'how big are we getting'.",

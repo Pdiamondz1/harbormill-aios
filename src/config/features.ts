@@ -11,6 +11,7 @@
 export interface FeatureFlags {
   projects: boolean;
   calendar: boolean;
+  value: boolean;
   briefings: boolean;
   findings: boolean;
   strategy: boolean;
@@ -21,6 +22,7 @@ export interface FeatureFlags {
 export const features: FeatureFlags = {
   projects: true,
   calendar: true,
+  value: true,
   briefings: true,
   findings: true,
   strategy: true,

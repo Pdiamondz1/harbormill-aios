@@ -123,6 +123,17 @@ To disable a specific Aria tool for a deployment, set the function secret:
 supabase secrets set DISABLED_TOOLS=get_cost_stats,propose_correction
 ```
 
+**Retainer / ROI:** the "Value delivered" surface shows value vs the client's fee.
+Set the monthly retainer (cents) — admins can also edit it in-app:
+
+```sql
+update public.aios_dashboard_settings set value = '500000'::jsonb
+  where key = 'monthly_retainer_cents';   -- $5,000/mo
+```
+
+Value is **reported in** (admins log it, or connectors/automations push it via
+`report-ingest` `type:"value"`) — the deck never fabricates it.
+
 ---
 
 ## 5. Deploy the frontend

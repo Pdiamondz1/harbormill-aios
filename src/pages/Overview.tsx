@@ -6,6 +6,8 @@ import { EmptyState } from "@/components/EmptyState";
 import { StatCard } from "@/components/StatCard";
 import { Spinner } from "@/components/ui/spinner";
 import { ActivityTimeline } from "@/components/activity/ActivityTimeline";
+import { ValueDeliveredCard } from "@/components/value/ValueDeliveredCard";
+import { features } from "@/config/features";
 
 export default function Overview() {
   const { data: metrics, isLoading, isError } = useMetrics();
@@ -18,6 +20,12 @@ export default function Overview() {
         title="Overview"
         description="Live metrics for the business, pushed in by your scheduled agents."
       />
+
+      {features.value && (
+        <div className="mb-6">
+          <ValueDeliveredCard />
+        </div>
+      )}
 
       {isLoading ? (
         <div className="flex min-h-[30vh] items-center justify-center">

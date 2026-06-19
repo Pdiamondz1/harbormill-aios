@@ -56,6 +56,7 @@ function systemPrompt(isAdmin: boolean): string {
   - the weekly brief / "this week" / KPI status → get_latest_briefing
   - how the business works, its strategy, processes or domain → search_knowledge
   - a document's COMPLETE content (e.g. to read or revise a strategy doc) → get_document (search_knowledge only returns excerpts)
+  - ROI / value delivered / "what have we gotten" / "is this worth it" → get_value_summary (state the dollar value and the multiple of the retainer)
   - the user reports a bug/risk or asks you to log one → create_finding
   - "draft/write/email an update to <someone>" → compose_email_link (write the full subject and body yourself, then present the returned link as a clickable markdown link; you never send email)
   - "export/save this as a doc" → compose the COMPLETE document first (headings + full analysis + real numbers), then call export_to_drive with that finished markdown, and share the returned link

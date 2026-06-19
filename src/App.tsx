@@ -18,6 +18,7 @@ import Assistant from "@/pages/Assistant";
 import Projects from "@/pages/Projects";
 import ProjectDetail from "@/pages/ProjectDetail";
 import Calendar from "@/pages/Calendar";
+import Value from "@/pages/Value";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ export default function App() {
                 {features.projects && <Route path="projects" element={<Projects />} />}
                 {features.projects && <Route path="projects/:id" element={<ProjectDetail />} />}
                 {features.calendar && <Route path="calendar" element={<Calendar />} />}
+                {features.value && <Route path="value" element={<Value />} />}
                 {features.briefings && <Route path="briefings" element={<Briefings />} />}
                 {features.findings && (
                   <Route
