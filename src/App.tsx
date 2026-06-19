@@ -4,6 +4,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Toaster } from "@/components/ui/sonner";
+import { LazyMotion, loadMotionFeatures } from "@/lib/motion";
+import { features } from "@/config/features";
 
 import Login from "@/pages/Login";
 import Overview from "@/pages/Overview";
@@ -13,6 +15,9 @@ import Strategy from "@/pages/Strategy";
 import Workspace from "@/pages/Workspace";
 import WorkspaceCallback from "@/pages/WorkspaceCallback";
 import Assistant from "@/pages/Assistant";
+import Projects from "@/pages/Projects";
+import ProjectDetail from "@/pages/ProjectDetail";
+import Calendar from "@/pages/Calendar";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,38 +28,47 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/auth" element={<Login />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Overview />} />
-              <Route path="briefings" element={<Briefings />} />
+      <LazyMotion features={loadMotionFeatures} strict>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/auth" element={<Login />} />
               <Route
-                path="findings"
+                path="/"
                 element={
-                  <ProtectedRoute tier="admin">
-                    <Findings />
+                  <ProtectedRoute>
+                    <AppLayout />
                   </ProtectedRoute>
                 }
-              />
-              <Route path="strategy" element={<Strategy />} />
-              <Route path="workspace" element={<Workspace />} />
-              <Route path="workspace/callback" element={<WorkspaceCallback />} />
-              <Route path="assistant" element={<Assistant />} />
-            </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-        <Toaster />
-      </AuthProvider>
+              >
+                <Route index element={<Overview />} />
+                {features.projects && <Route path="projects" element={<Projects />} />}
+                {features.projects && <Route path="projects/:id" element={<ProjectDetail />} />}
+                {features.calendar && <Route path="calendar" element={<Calendar />} />}
+                {features.briefings && <Route path="briefings" element={<Briefings />} />}
+                {features.findings && (
+                  <Route
+                    path="findings"
+                    element={
+                      <ProtectedRoute tier="admin">
+                        <Findings />
+                      </ProtectedRoute>
+                    }
+                  />
+                )}
+                {features.strategy && <Route path="strategy" element={<Strategy />} />}
+                {features.workspace && <Route path="workspace" element={<Workspace />} />}
+                {features.workspace && (
+                  <Route path="workspace/callback" element={<WorkspaceCallback />} />
+                )}
+                {features.assistant && <Route path="assistant" element={<Assistant />} />}
+              </Route>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+          <Toaster />
+        </AuthProvider>
+      </LazyMotion>
     </QueryClientProvider>
   );
 }

@@ -10,6 +10,8 @@
 //   source_id  stable key, e.g. "doc:strategy/positioning"
 //   content    text to embed + store
 //   metadata   optional { title, path, tags? } — stored alongside; source_id added.
+//              When `path` AND `title` are present, the readable `documents`
+//              library row is upserted too (kept in sync with the RAG store).
 //
 // Tip: to sync the whole strategy library, pass each `documents` row as
 //   { source_id: "doc:" + path, content: content_md, metadata: { title, path, tags } }.
@@ -101,6 +103,22 @@ serve(async (req) => {
         ? { source_id: item.source_id, action: "error", error: error.message }
         : { source_id: item.source_id, action: existing ? "updated" : "inserted" }
     );
+
+    // When the item carries a document path + title, also upsert the strategy/
+    // reference library row so the readable doc stays in sync with the RAG store
+    // (and corrections targeting a `document` by path have a row to land on).
+    const path = item.metadata?.path;
+    const title = item.metadata?.title;
+    if (typeof path === "string" && path.trim() && typeof title === "string" && title.trim()) {
+      const tags = Array.isArray(item.metadata?.tags) ? item.metadata!.tags : [];
+      const { error: docErr } = await supabase
+        .from("documents")
+        .upsert(
+          { path: path.trim(), title: title.trim(), content_md: item.content, tags },
+          { onConflict: "path" }
+        );
+      if (docErr) console.error(`[knowledge-sync] documents upsert (${path}):`, docErr.message);
+    }
   }
 
   const approxTokens = Math.ceil(items.reduce((n, i) => n + i.content.length, 0) / 4);

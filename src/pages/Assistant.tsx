@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Sparkles } from "lucide-react";
 import { brand } from "@/config/brand";
-import { useAssistant } from "@/hooks/useAssistant";
+import { useAria } from "@/hooks/useAria";
 import { ChatMessage } from "@/components/assistant/ChatMessage";
 import { ChatInput } from "@/components/assistant/ChatInput";
 import { TypingIndicator } from "@/components/assistant/TypingIndicator";
@@ -14,7 +14,7 @@ const QUICK_PROMPTS = [
 ];
 
 export default function Assistant() {
-  const { messages, pending, sendMessage, isThinking, error } = useAssistant();
+  const { messages, pending, sendMessage, isThinking, error } = useAria();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

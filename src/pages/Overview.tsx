@@ -1,12 +1,15 @@
 import { Gauge } from "lucide-react";
 import { useMetrics } from "@/hooks/useMetrics";
+import { useActivity } from "@/hooks/useActivity";
 import { PageHeader } from "@/components/PageHeader";
 import { EmptyState } from "@/components/EmptyState";
 import { StatCard } from "@/components/StatCard";
 import { Spinner } from "@/components/ui/spinner";
+import { ActivityTimeline } from "@/components/activity/ActivityTimeline";
 
 export default function Overview() {
   const { data: metrics, isLoading, isError } = useMetrics();
+  const { data: activity = [] } = useActivity(8);
 
   return (
     <div>
@@ -34,6 +37,15 @@ export default function Overview() {
             <StatCard key={m.key} metric={m} />
           ))}
         </div>
+      )}
+
+      {activity.length > 0 && (
+        <section className="mt-8">
+          <h2 className="mb-3 text-sm font-bold text-foreground">Recent activity</h2>
+          <div className="rounded-xl border border-border bg-card p-4">
+            <ActivityTimeline items={activity} />
+          </div>
+        </section>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import type { MetricStatus } from "@/hooks/useMetrics";
+import type { ProjectStatus } from "@/types/project";
 
 /** Chip classes for a KPI/metric status. */
 export function metricStatusClass(status?: string | null): string {
@@ -25,6 +26,20 @@ export function metricAccentBorder(status?: MetricStatus | null): string {
       return "border-l-destructive";
     default:
       return "border-l-primary";
+  }
+}
+
+/** Chip classes for a project status. */
+export function projectStatusClass(status: ProjectStatus): string {
+  switch (status) {
+    case "active":
+      return "border-success/50 bg-success/15 text-success";
+    case "blocked":
+      return "border-destructive/50 bg-destructive/15 text-destructive-foreground";
+    case "done":
+      return "border-primary/50 bg-primary/15 text-primary";
+    default: // planned
+      return "border-border bg-muted text-muted-foreground";
   }
 }
 

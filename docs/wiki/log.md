@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-06-19] autoresearch | white-label plug-and-play client compatibility
+Status: kept
+Domain: technical
+Sources: src/config/features.ts, src/config/brand.ts, src/integrations/supabase/client.ts, supabase/functions/assistant-chat/index.ts, scripts/setup-client.mjs, docs/client-setup.md; developex.com, medium.com/koodoo, medium.com/design-for-experience
+Pages created: [[Plug-and-Play Client Compatibility]] (concept)
+Pages updated: index.md (1 new concept entry)
+Note: Filed during the DragonCandy→Harbormill AIOS port (Phase 4). Documents the new feature-flag lever (features.ts + DISABLED_TOOLS) and guided setup (setup:client) alongside the existing branding/isolation keystones; grounded in repo paths + ≥2 external white-label sources. Compounds on [[White-Label Architecture]] and [[Per-Client Deployment]] rather than duplicating.
+
 ## [2026-06-18] ship | sync-aria — wiki → Aria's RAG (Self-Improving App Phase 2)
 
 Shipped Phase 2 of the [[Self-Improving App]] roadmap: the wiki now feeds the
