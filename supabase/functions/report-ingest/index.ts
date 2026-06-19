@@ -12,6 +12,8 @@
 // - Corrections: Aria proposes a fix to a dashboard_setting or document; the
 //   before-value is captured server-side and a 'proposed' row is queued for an
 //   admin to approve via aios_corrections_apply().
+// - Value: quantified value events (hours saved / revenue captured / cost avoided)
+//   pushed by connectors or automations; feeds the ROI ("value delivered") surface.
 //
 // Request bodies:
 //   { type: "metrics",  payload: { metrics: [{ key, label, value, unit?, target?, status?, captured_at? }] } }
@@ -29,6 +31,7 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const SEVERITIES = new Set(["critical", "high", "medium", "low"]);
 const METRIC_STATUSES = new Set(["on_track", "at_risk", "off_track"]);
+const VALUE_CATEGORIES = new Set(["hours_saved", "revenue_captured", "cost_avoided", "other"]);
 
 interface MetricPayload {
   key: string;
@@ -260,9 +263,52 @@ serve(async (req) => {
     }
   }
 
+  // ── Value events (single or batch) ──
+  // Quantified, attributed value the engagement delivered. Pushed by connectors /
+  // automations (or entered by an admin in the UI). Feeds the ROI surface.
+  if (type === "value" || type === "values") {
+    const events: unknown[] =
+      type === "value" && !Array.isArray(rawPayload.events) ? [rawPayload] : rawPayload.events;
+    if (!Array.isArray(events) || events.length === 0) {
+      return json({ error: "payload.events must be a non-empty array" }, 400);
+    }
+    if (events.length > 100) return json({ error: "max 100 value events per request" }, 400);
+
+    const rows: Record<string, unknown>[] = [];
+    for (const e of events) {
+      const x = e as {
+        category?: string; label?: string; amount_cents?: number;
+        occurred_at?: string; source?: string; project_id?: string; metadata?: Record<string, unknown>;
+      };
+      if (!x || typeof x !== "object") return json({ error: "value event must be an object" }, 400);
+      if (!VALUE_CATEGORIES.has(x.category ?? "")) {
+        return json({ error: `category must be one of ${[...VALUE_CATEGORIES].join("|")}` }, 400);
+      }
+      if (typeof x.label !== "string" || !x.label.trim()) return json({ error: "label is required" }, 400);
+      if (typeof x.amount_cents !== "number" || !Number.isFinite(x.amount_cents) || x.amount_cents < 0) {
+        return json({ error: "amount_cents must be a number >= 0" }, 400);
+      }
+      rows.push({
+        category: x.category,
+        label: x.label.trim(),
+        amount_cents: Math.round(x.amount_cents),
+        source: x.source ?? "agent",
+        occurred_at: x.occurred_at ?? new Date().toISOString(),
+        project_id: x.project_id ?? null,
+        metadata: x.metadata ?? {},
+      });
+    }
+    const { error } = await supabase.from("value_events").insert(rows);
+    if (error) {
+      console.error("[report-ingest] value:", error.message);
+      return json({ error: error.message }, 500);
+    }
+    return json({ success: true, inserted: rows.length });
+  }
+
   // ── Briefing (single, upsert on week_start) ──
   if (type !== "briefing") {
-    return json({ error: `Unsupported type "${type}" — use 'metrics', 'briefing', 'findings', or 'correction'` }, 400);
+    return json({ error: `Unsupported type "${type}" — use 'metrics', 'briefing', 'findings', 'correction', or 'value'` }, 400);
   }
   const payload = rawPayload as BriefingPayload;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(payload.week_start ?? "")) {

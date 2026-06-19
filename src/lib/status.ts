@@ -29,6 +29,14 @@ export function metricAccentBorder(status?: MetricStatus | null): string {
   }
 }
 
+/** Chip classes for an ROI multiple (≥10x = strong, ≥3x = solid, else muted). */
+export function roiClass(multiple: number | null): string {
+  if (multiple === null) return "border-border bg-muted text-muted-foreground";
+  if (multiple >= 10) return "border-success/50 bg-success/15 text-success";
+  if (multiple >= 3) return "border-primary/50 bg-primary/15 text-primary";
+  return "border-warning/50 bg-warning/15 text-warning";
+}
+
 /** Chip classes for a project status. */
 export function projectStatusClass(status: ProjectStatus): string {
   switch (status) {
