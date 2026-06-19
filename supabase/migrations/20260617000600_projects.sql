@@ -105,6 +105,11 @@ begin
 end;
 $$;
 
+-- Trigger functions are invoked by the triggers, never directly — keep them off
+-- the REST API surface (triggers still fire regardless of these grants).
+revoke execute on function public.log_project_activity() from public, anon, authenticated;
+revoke execute on function public.log_note_activity() from public, anon, authenticated;
+
 create trigger trg_projects_activity
   after insert or update on public.projects
   for each row execute function public.log_project_activity();
