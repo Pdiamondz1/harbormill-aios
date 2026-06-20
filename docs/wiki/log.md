@@ -1,5 +1,25 @@
 # Wiki Log
 
+## [2026-06-19] ship | ROI-Discovery Audit — in-deck prospecting / Opportunity Report
+
+Shipped the **ROI-Discovery Audit** feature (PR #13, merged to `main`
+2026-06-20; migration applied to the demo project). An admin-only prospecting
+tool: capture a prospect's value opportunities → compute ROI vs the proposed
+retainer → export a branded **Opportunity Report** to Google Docs (via the
+[[Google Workspace Bridge]]'s `export_markdown_to_doc`). It's the sales-side
+mirror of the in-deck *Value Delivered* surface and operationalizes Rung 2 of
+[[The Harbormill Ladder]] while selling Rung 4 (the $5k/mo retainer).
+
+Two admin-only tables (`audits`, `audit_opportunities`,
+migration `20260617000800_audits.sql`) — deliberately **not** written to the
+`activity` table to avoid leaking prospect names to stakeholders. ROI/priority
+logic is unit-tested in `src/lib/audit.ts`. No Aria tool added (sales data is out
+of the assistant's grounded scope).
+
+Pages created: [[ROI-Discovery Audit]] (concept).
+Pages updated: [[AIOS Pages]] (Audits/AuditDetail rows), [[The Harbormill Ladder]]
+(Rung 2 now operationalized), index.md (1 new concept entry).
+
 ## [2026-06-19] autoresearch | white-label plug-and-play client compatibility
 Status: kept
 Domain: technical

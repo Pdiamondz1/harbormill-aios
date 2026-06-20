@@ -2,7 +2,7 @@
 title: The Harbormill Ladder
 type: concept
 created: 2026-06-17
-updated: 2026-06-17
+updated: 2026-06-19
 sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks]
 tags: [strategy, pricing, business-model, gtm]
 ---
@@ -14,6 +14,8 @@ entry, climb only as ROI proves out:
 
 1. **Get started** — $100/hr one-on-one consulting (e.g. Claude setup).
 2. **Paid audit** — $500–$2,500, fixed scope; map workflows, scope the first build.
+   Now operationalized in-product by the [[ROI-Discovery Audit]] tool (Opportunity
+   Report → ROI vs the retainer), which is also the engine for selling Rung 4.
 3. **Focused project** — $2,500–$10,000; ship one workflow, prove ROI.
 4. **Retainer** — $3,000–$10,000/mo; ongoing, after trust and results.
 
@@ -44,6 +46,7 @@ to make the entry rung a cleaner product. Recorded as a strategy flag.
 
 ## See Also
 
+- [[ROI-Discovery Audit]]
 - [[Project Context]]
 - [[SMB AI-Automation Landscape]]
 - [[Harbormill AIOS]]
