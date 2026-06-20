@@ -2,16 +2,18 @@ import { Pencil, Trash2 } from "lucide-react";
 import type { AuditOpportunity } from "@/types/audit";
 import { VALUE_CATEGORY_LABELS, formatDollars } from "@/types/value";
 import { useDeleteOpportunity } from "@/hooks/useAudits";
-import { prioritize } from "@/lib/audit";
+import { prioritize, gateOutcome, isUngated } from "@/lib/audit";
+import { LoopGateBadge } from "@/components/audit/LoopGateBadge";
 import { Button } from "@/components/ui/button";
 
 interface Props {
   auditId: string;
+  isLoopAudit?: boolean;
   opportunities: AuditOpportunity[];
   onEdit: (o: AuditOpportunity) => void;
 }
 
-export function OpportunityList({ auditId, opportunities, onEdit }: Props) {
+export function OpportunityList({ auditId, isLoopAudit, opportunities, onEdit }: Props) {
   const deleteOpp = useDeleteOpportunity(auditId);
 
   if (opportunities.length === 0) {
@@ -30,6 +32,17 @@ export function OpportunityList({ auditId, opportunities, onEdit }: Props) {
               {VALUE_CATEGORY_LABELS[o.category as keyof typeof VALUE_CATEGORY_LABELS]} ·{" "}
               confidence {o.confidence} · effort {o.effort}
             </p>
+            {isLoopAudit && (
+              <div className="mt-1">
+                {isUngated(o) ? (
+                  <span className="inline-flex items-center rounded-full border border-border bg-muted px-2 py-0.5 text-xs font-semibold text-muted-foreground">
+                    Needs assessment
+                  </span>
+                ) : (
+                  <LoopGateBadge outcome={gateOutcome(o)} />
+                )}
+              </div>
+            )}
           </div>
 
           <span className="tnum shrink-0 text-sm font-semibold text-foreground">
