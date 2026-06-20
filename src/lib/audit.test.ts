@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { summarizeAudit, composeReportMarkdown, isUngated, gateOutcome } from "@/lib/audit";
+import { summarizeAudit, composeReportMarkdown, isUngated, gateOutcome, recommendFirstBuild } from "@/lib/audit";
 import type { Audit, AuditOpportunity } from "@/types/audit";
 
 const opp = (over: Partial<AuditOpportunity>): AuditOpportunity => ({
@@ -69,5 +69,24 @@ describe("isUngated / gateOutcome", () => {
   it("not-a-loop (never a silent candidate) when partially gated", () => {
     expect(gateOutcome(opp({ loop_done_rule: true, loop_has_tools: true }))).toBe("not-a-loop");
     expect(gateOutcome(opp({}))).toBe("not-a-loop");
+  });
+});
+
+describe("recommendFirstBuild", () => {
+  const pass = {
+    loop_repeats: "strong" as const, loop_done_rule: true,
+    loop_afford_waste: "strong" as const, loop_has_tools: true,
+  };
+
+  it("returns null when there are no candidates", () => {
+    expect(recommendFirstBuild([opp({}), opp({ ...pass, loop_done_rule: false })])).toBeNull();
+  });
+
+  it("picks the highest value-per-effort candidate, ignoring non-candidates", () => {
+    const big = opp({ ...pass, id: "big", title: "Big", annual_value_cents: 9_000_000, effort: "high" });
+    const lean = opp({ ...pass, id: "lean", title: "Lean", annual_value_cents: 9_000_000, effort: "low" });
+    const blocked = opp({ ...pass, id: "blk", loop_has_tools: false, annual_value_cents: 99_000_000 });
+    const first = recommendFirstBuild([big, blocked, lean]);
+    expect(first?.id).toBe("lean"); // same value, lower effort wins via prioritize()
   });
 });

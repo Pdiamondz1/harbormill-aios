@@ -46,6 +46,12 @@ export function gateOutcome(o: AuditOpportunity): LoopOutcome {
   return passesAll ? "candidate" : "not-a-loop";
 }
 
+/** The single recommended first build: top candidate by value-per-effort, else null. */
+export function recommendFirstBuild(opps: AuditOpportunity[]): AuditOpportunity | null {
+  const candidates = opps.filter((o) => gateOutcome(o) === "candidate");
+  return candidates.length ? prioritize(candidates)[0] : null;
+}
+
 export function composeReportMarkdown(
   audit: Audit,
   opps: AuditOpportunity[],
