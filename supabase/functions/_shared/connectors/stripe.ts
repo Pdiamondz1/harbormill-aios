@@ -1,5 +1,5 @@
 import type { Connector, ConnectorContext, PulledMetric } from "./types.ts";
-import { mapStripe, type StripeSummary } from "./stripe-map.ts";
+import { mapStripe, type StripeSummary, type StripeMapConfig } from "./stripe-map.ts";
 
 const SECRET_ENV = "CONNECTOR_STRIPE_SECRET_KEY";
 const API = "https://api.stripe.com/v1";
@@ -50,6 +50,6 @@ export const stripeConnector: Connector = {
     const key = ctx.env[SECRET_ENV];
     if (!key) throw new Error(`missing ${SECRET_ENV}`);
     const summary = await fetchSummary(key);
-    return mapStripe(summary, ctx.config as any);
+    return mapStripe(summary, ctx.config as StripeMapConfig);
   },
 };
