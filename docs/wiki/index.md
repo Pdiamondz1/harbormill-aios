@@ -30,6 +30,7 @@
 - [[Design Tokens & Theming]](concepts/design-tokens-and-theming.md) — The HSL palette/utilities (azure/amber, Inter, .glow/.glass); dark-first
 - [[Education-First Philosophy]](concepts/education-first-philosophy.md) — Teach AI first, then automate; the differentiator, externally evidenced
 - [[Extending AIOS]](concepts/extending-aios.md) — Add metrics/tools/knowledge/pages in the seams; never fork the engine
+- [[Four-Condition Loop Test]](concepts/four-condition-loop-test.md) — Gate-then-rank methodology for deciding which repeating work to automate as a loop; reused by the loop-audit skill, a paid Loop Audit, and a future Aria feature
 - [[Knowledge & RAG]](concepts/knowledge-and-rag.md) — knowledge table (pgvector 1536 + tsvector hybrid), match_knowledge, knowledge-sync
 - [[Operating Deck Data Model]](concepts/operating-deck-data-model.md) — The three generic tables: metric_snapshots, briefings, findings
 - [[Per-Client Deployment]](concepts/per-client-deployment.md) — Clone-per-client off the template; upstream-merge discipline; config/data seams

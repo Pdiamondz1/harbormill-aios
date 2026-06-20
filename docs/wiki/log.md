@@ -1,5 +1,20 @@
 # Wiki Log
 
+## [2026-06-20] ingest | Four-Condition Loop Test — automation-selection methodology
+
+Filed the **Four-Condition Loop Test** concept page — the shared framework behind a
+new phased effort to productize "loop selection" (prompted by a user-shared slide,
+*Audit Workspace and Rank Loop Candidates*). It is the task-level sibling of the
+[[Self-Improving App]] acceptance gate: a *gate* (4 conditions — repeats; a rule
+decides "done"; afford wasted runs; AI has data + tools — with #2/#4 as hard
+blockers) then a *rank* reusing the [[ROI-Discovery Audit]] scoring
+(`category` × `confidence` ÷ `effort`). Defined once; reused by three surfaces — the
+`loop-audit` dev skill (Phase 1, shipped alongside this page), a paid Loop Audit
+deliverable, and a future in-app Aria feature.
+
+Pages created: [[Four-Condition Loop Test]] (concept).
+Pages updated: index.md (1 new concept entry).
+
 ## [2026-06-20] ship | Connector Library — managed SaaS connector runtime + Stripe reference
 
 Shipped the **Connector Library** feature (branch `feat/connector-library`, merged
