@@ -11,6 +11,10 @@ import {
   Bell,
   Sparkles,
   Puzzle,
+  Repeat,
+  CheckCircle2,
+  ShieldCheck,
+  Plug,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,6 +31,10 @@ const ICONS: Record<string, LucideIcon> = {
   Bell,
   Sparkles,
   Puzzle,
+  Repeat,
+  CheckCircle2,
+  ShieldCheck,
+  Plug,
 };
 
 /** Renders a lucide icon by name (used for config-driven service/problem cards). */

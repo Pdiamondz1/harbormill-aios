@@ -23,6 +23,7 @@ export const site = {
   nav: [
     { label: "Services", href: "#services" },
     { label: "AIOS", href: "#aios" },
+    { label: "Loop Audit", href: "#loop-audit" },
     { label: "Ladder", href: "#ladder" },
     { label: "About", href: "#about" },
     { label: "FAQ", href: "#faq" },
@@ -189,6 +190,46 @@ export const site = {
     footnote: "Every engagement starts with a free 30-minute intro. One-on-one consulting is $100/hour.",
   },
 
+  loopAudit: {
+    eyebrow: "The signature audit",
+    title: "Find the one automation worth building first",
+    subtitle:
+      "Before we build anything, we map your repeating work and score each task on four conditions — then hand you a ranked plan with the single highest-ROI automation to build first.",
+    conditions: [
+      {
+        icon: "Repeat",
+        title: "It repeats",
+        body: "It happens on a predictable cadence — the time it eats, week after week, is the prize.",
+      },
+      {
+        icon: "CheckCircle2",
+        title: "A rule decides \"done\"",
+        body: "Success is checkable by a clear rule, not a matter of human taste.",
+      },
+      {
+        icon: "ShieldCheck",
+        title: "A wrong run is cheap",
+        body: "A mistake is low-stakes and reversible — safe to let software try.",
+      },
+      {
+        icon: "Plug",
+        title: "AI has the data + tools",
+        body: "The inputs are reachable and the actions already exist as tools we can wire in.",
+      },
+    ],
+    receive: {
+      title: "What you walk away with",
+      points: [
+        "Every repeating task scored by ROI — value per unit of effort.",
+        "One clear \"build this first\" recommendation, with the reasoning.",
+        "A plan you keep — whether you build it with us or not.",
+      ],
+    },
+    priceNote: "Rung 2 · $500–$2,500 · fixed scope",
+    closer: "You leave understanding the method — not dependent on us.",
+    cta: "Book a Loop Audit",
+  },
+
   about: {
     eyebrow: "About",
     name: "Damon Williams",
@@ -252,3 +293,4 @@ export type ServiceItem = (typeof site.services.items)[number];
 export type LadderRungItem = (typeof site.ladder.rungs)[number];
 export type ProblemItem = (typeof site.problem.items)[number];
 export type AiosFeature = (typeof site.aios.features)[number];
+export type LoopAuditCondition = (typeof site.loopAudit.conditions)[number];
