@@ -9,6 +9,7 @@ export interface StripeMapConfig {
   kpis?: string[];                          // if set, only these keys are emitted
   targets?: Record<string, string>;         // optional target per key
 }
+// Mirrors PulledMetric from types.ts — duplicated intentionally to keep this file import-free.
 interface Metric { key: string; label: string; value: string | number; unit?: string; target?: string; }
 
 function dollars(cents: number): string {
