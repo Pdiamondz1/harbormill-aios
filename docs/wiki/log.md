@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-06-20] ingest — Loop Audit deliverable (Phase 2)
+
+Shipped surface 2 of the [[Four-Condition Loop Test]]: a paid **Loop Audit** as a
+sibling mode of the [[ROI-Discovery Audit]] (`is_loop_audit` + four gate columns,
+gate/rank lib, loop report export). Added `docs/loop-audit-playbook.md`; updated the
+Four-Condition Loop Test and ROI-Discovery Audit pages.
+
 ## [2026-06-20] ingest | Four-Condition Loop Test — automation-selection methodology
 
 Filed the **Four-Condition Loop Test** concept page — the shared framework behind a

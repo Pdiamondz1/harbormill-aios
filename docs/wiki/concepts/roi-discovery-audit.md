@@ -69,6 +69,10 @@ to stakeholders. This is sales data, not client data.
   ingest/value path: every opportunity carries a `basis_md`.
 - No Aria tool was added for audits (sales data is out of the assistant's grounded
   scope); the feature is operator-driven through the UI.
+- **Loop Audit mode** (`is_loop_audit`) extends this surface with the
+  [[Four-Condition Loop Test]] gate — same tables, scoring, and Doc export, with a
+  per-opportunity gate and a "build-first" recommendation. See
+  `docs/loop-audit-playbook.md`.
 
 ## See Also
 
