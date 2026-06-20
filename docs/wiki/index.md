@@ -34,6 +34,7 @@
 - [[Per-Client Deployment]](concepts/per-client-deployment.md) — Clone-per-client off the template; upstream-merge discipline; config/data seams
 - [[Plug-and-Play Client Compatibility]](concepts/plug-and-play-client-compatibility.md) — Config + data + flags, never a fork: feature flags (features.ts), guided setup, env-only isolation
 - [[Report-Ingest Seam]](concepts/report-ingest-seam.md) — One service-role ingest endpoint; the deck never queries client tables
+- [[ROI-Discovery Audit]](concepts/roi-discovery-audit.md) — Admin-only prospecting: capture a prospect's value opportunities → compute ROI vs the retainer → export a branded Opportunity Report; sells Rung 2/4 of the ladder
 - [[Self-Improving App]](concepts/self-improving-app.md) — The autoresearch loop grows the wiki (+ later Aria's RAG); 5-phase smart-app roadmap
 - [[Strategy Knowledge Library]](concepts/strategy-knowledge-library.md) — documents table + Strategy page; the human-authored side feeding Aria's RAG
 - [[Testing Setup]](concepts/testing-setup.md) — Vitest + testing-library + jsdom; one brand-contract test today; harness ready
