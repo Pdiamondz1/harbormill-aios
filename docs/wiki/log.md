@@ -1,5 +1,15 @@
 # Wiki Log
 
+## [2026-06-20] ship | Loop Audit offer section (Phase 2b)
+
+Gave surface 2 of the [[Four-Condition Loop Test]] a marketing presence: a
+**Loop Audit** offer section on the Harbormill site (`website/`), placed after
+the Ladder. Leads with the four-condition method (Repeats / a rule decides
+"done" / a wrong run is cheap / AI has the data + tools), states what the
+prospect receives (a ranked plan with one "build this first" pick), and ties
+it to Rung 2 ($500–$2,500) with a Calendly CTA. Config-driven via
+`site.loopAudit`; no new deps or routing.
+
 ## [2026-06-20] ingest — Loop Audit deliverable (Phase 2)
 
 Shipped surface 2 of the [[Four-Condition Loop Test]]: a paid **Loop Audit** as a

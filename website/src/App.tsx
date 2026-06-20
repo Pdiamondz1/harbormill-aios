@@ -8,6 +8,7 @@ import { Problem } from "@/sections/Problem";
 import { AiosFlagship } from "@/sections/AiosFlagship";
 import { Services } from "@/sections/Services";
 import { Ladder } from "@/sections/Ladder";
+import { LoopAudit } from "@/sections/LoopAudit";
 import { About } from "@/sections/About";
 import { Faq } from "@/sections/Faq";
 import { LeadMagnet } from "@/sections/LeadMagnet";
@@ -25,6 +26,7 @@ export default function App() {
         <AiosFlagship />
         <Services />
         <Ladder />
+        <LoopAudit />
         <About />
         <Faq />
         <LeadMagnet />
