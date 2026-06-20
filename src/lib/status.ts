@@ -1,6 +1,6 @@
 import type { MetricStatus } from "@/hooks/useMetrics";
 import type { ProjectStatus } from "@/types/project";
-import type { AuditStatus } from "@/types/audit";
+import type { AuditStatus, LoopOutcome } from "@/types/audit";
 import type { ConnectorRunStatus } from "@/types/connector";
 
 /** Chip classes for a KPI/metric status. */
@@ -60,6 +60,15 @@ export function auditStatusClass(status: AuditStatus): string {
     case "lost": return "border-destructive/50 bg-destructive/15 text-destructive-foreground";
     case "presented": return "border-primary/50 bg-primary/15 text-primary";
     default: return "border-border bg-muted text-muted-foreground";
+  }
+}
+
+/** Chip classes for a loop-gate outcome (candidate=success, blocked=warning, else muted). */
+export function loopGateClass(outcome: LoopOutcome): string {
+  switch (outcome) {
+    case "candidate": return "border-success/50 bg-success/15 text-success";
+    case "blocked": return "border-warning/50 bg-warning/15 text-warning";
+    default: return "border-border bg-muted text-muted-foreground"; // not-a-loop
   }
 }
 
