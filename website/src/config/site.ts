@@ -225,7 +225,7 @@ export const site = {
         "A plan you keep — whether you build it with us or not.",
       ],
     },
-    priceNote: "Rung 2 · $500–$2,500 · fixed scope",
+    priceNote: "$500–$2,500 · fixed scope",
     closer: "You leave understanding the method — not dependent on us.",
     cta: "Book a Loop Audit",
   },
