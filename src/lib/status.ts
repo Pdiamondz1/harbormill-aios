@@ -1,6 +1,7 @@
 import type { MetricStatus } from "@/hooks/useMetrics";
 import type { ProjectStatus } from "@/types/project";
 import type { AuditStatus } from "@/types/audit";
+import type { ConnectorRunStatus } from "@/types/connector";
 
 /** Chip classes for a KPI/metric status. */
 export function metricStatusClass(status?: string | null): string {
@@ -59,6 +60,15 @@ export function auditStatusClass(status: AuditStatus): string {
     case "lost": return "border-destructive/50 bg-destructive/15 text-destructive-foreground";
     case "presented": return "border-primary/50 bg-primary/15 text-primary";
     default: return "border-border bg-muted text-muted-foreground";
+  }
+}
+
+/** Chip classes for a connector's last-run status. */
+export function connectorStatusClass(status: ConnectorRunStatus): string {
+  switch (status) {
+    case "ok": return "border-success/50 bg-success/15 text-success";
+    case "error": return "border-destructive/50 bg-destructive/15 text-destructive-foreground";
+    default: return "border-border bg-muted text-muted-foreground"; // never
   }
 }
 
