@@ -88,7 +88,68 @@ supabase secrets set ASSISTANT_NAME="Aria" PRODUCT_NAME="Acme Deck"
 
 ---
 
-## 4. Google Workspace bridge (optional)
+## 4. Connectors (optional)
+
+Connectors pull live data from external SaaS (Stripe, GA4, …) into
+`metric_snapshots` on an hourly schedule via the `connector-sync` edge function.
+
+### Deploy the edge function
+
+```bash
+supabase functions deploy connector-sync
+```
+
+`SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are injected automatically.
+
+### Set per-connector secrets
+
+For each enabled connector, set its API key as a Supabase edge-function secret.
+The env var name is `CONNECTOR_<TYPE>_SECRET_KEY` — one per connector type:
+
+```bash
+supabase secrets set CONNECTOR_STRIPE_SECRET_KEY=sk_live_...
+```
+
+**The key is never stored in the database.** The `connectors` table holds only
+non-secret config (KPI toggles, targets, schedule). The admin Connectors page
+will show `error` with the missing-env message until the secret is set.
+
+### Vault secrets for auto-scheduling
+
+The hourly pg_cron job reads two values from Supabase Vault. Until they are set
+the scheduled POST is inert — the function and the admin "Sync now" button
+continue to work without them.
+
+Set them once per project in the SQL editor:
+
+```sql
+-- The connector-sync function URL (find it in Dashboard → Edge Functions)
+select vault.create_secret(
+  'https://<project-ref>.supabase.co/functions/v1/connector-sync',
+  'connector_sync_url',
+  'connector-sync edge function URL'
+);
+
+-- The service-role key (Dashboard → Project Settings → API → service_role)
+select vault.create_secret(
+  '<your-service-role-key>',
+  'service_role_key',
+  'Supabase service-role key'
+);
+```
+
+Once both are set the cron job fires on the hour and syncs every enabled
+connector whose `next_run_at` is due.
+
+### Enable connectors in the UI
+
+`src/config/features.ts` has a `connectors` flag (default `true`). Flip it to
+`false` to remove the nav entry and route for a client that does not use this
+feature.
+
+---
+
+## 4b. Google Workspace bridge (optional)
 
 1. In Google Cloud → **APIs & Services**: enable the **Google Drive API** and **Google Sheets API**.
 2. **Credentials → Create OAuth client ID → Web application**. Add an authorized redirect URI:
@@ -110,7 +171,7 @@ Scope is `drive.file` only — the app sees just the files it creates.
 
 ---
 
-## 4b. Toggle modules per client (optional)
+## 4c. Toggle modules per client (optional)
 
 `src/config/features.ts` is the plug-and-play lever: flip a flag off and that
 module disappears from the nav **and** its routes stop resolving (deep links

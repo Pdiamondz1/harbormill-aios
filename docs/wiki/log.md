@@ -1,5 +1,29 @@
 # Wiki Log
 
+## [2026-06-20] ship | Connector Library — managed SaaS connector runtime + Stripe reference
+
+Shipped the **Connector Library** feature (branch `feat/connector-library`, merged
+to `main` 2026-06-20). A **managed in-template runtime** that pulls live data
+from external SaaS into `metric_snapshots` on an hourly pg_cron schedule, making
+the Overview KPIs self-sustaining without hand-entry or client-built automation.
+
+What shipped: the `connectors` table + admin-RLS (`20260617000900_connectors.sql`);
+pg_cron + pg_net + Vault scheduling (`20260617001000_connector_schedule.sql`); the
+pluggable connector registry (`_shared/connectors/types.ts`, `registry.ts`);
+the **Stripe reference connector** (`stripe.ts` + pure `mapStripe` in `stripe-map.ts`,
+unit-tested in Vitest); the `connector-sync` edge function with dual auth (service-role
+cron + admin-JWT "Sync now"); an admin Connectors page (`src/pages/Connectors.tsx`,
+`src/components/connectors/`) with enable toggle, config form, run status chip,
+and on-demand sync; a disabled demo seed row; and this wiki page + docs.
+
+**Metrics-only / ROI integrity:** Stripe maps to `metric_snapshots`, not
+`value_events`. Raw client revenue is not value Harbormill delivered; keeping
+them separate preserves the honest *Value Delivered* / ROI ledger.
+
+Pages created: [[Connector Library]] (concept).
+Pages updated: [[Extending AIOS]] (new "Add a connector" section in docs/extending.md),
+index.md (1 new concept entry).
+
 ## [2026-06-19] ship | ROI-Discovery Audit — in-deck prospecting / Opportunity Report
 
 Shipped the **ROI-Discovery Audit** feature (PR #13, merged to `main`

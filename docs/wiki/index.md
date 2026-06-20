@@ -24,6 +24,7 @@
 - [[Assistant Chat Loop]](concepts/assistant-chat-loop.md) — Aria's agentic loop: history, 8 tool rounds, model, injection defense, cost logging
 - [[Build & Verification Gate]](concepts/build-and-verification-gate.md) — npm scripts + CI (Node 22, npm install vs ci/EBADPLATFORM); Deno excluded
 - [[Calendly Booking Flow]](concepts/calendly-booking-flow.md) — Free 30-min intro via Calendly (Google Meet); popup + inline embed; lead funnel
+- [[Connector Library]](concepts/connector-library.md) — Managed pg_cron + connector-sync runtime that pulls SaaS data (Stripe first) into metric_snapshots on an hourly schedule
 - [[Cost Ledger]](concepts/cost-ledger.md) — Per-user × model × function AI-spend accounting; best-effort logCost
 - [[Demo Seed Data]](concepts/demo-seed-data.md) — seed.sql: 8 KPIs, 2 briefings, 2 findings, 2 docs; powers a fresh clone + the demo tour
 - [[Design Tokens & Theming]](concepts/design-tokens-and-theming.md) — The HSL palette/utilities (azure/amber, Inter, .glow/.glass); dark-first
