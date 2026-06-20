@@ -22,6 +22,7 @@ export default function Audits() {
   const [prospectName, setProspectName] = useState("");
   const [company, setCompany] = useState("");
   const [retainerDollars, setRetainerDollars] = useState("5000");
+  const [isLoopAudit, setIsLoopAudit] = useState(false);
 
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ export default function Audits() {
           prospect_name: prospectName.trim(),
           company: company.trim() || null,
           proposed_retainer_cents,
+          is_loop_audit: isLoopAudit,
         },
       },
       {
@@ -41,6 +43,7 @@ export default function Audits() {
           setProspectName("");
           setCompany("");
           setRetainerDollars("5000");
+          setIsLoopAudit(false);
         },
       }
     );
@@ -51,6 +54,7 @@ export default function Audits() {
     setProspectName("");
     setCompany("");
     setRetainerDollars("5000");
+    setIsLoopAudit(false);
   };
 
   return (
@@ -117,6 +121,17 @@ export default function Audits() {
               placeholder="5000"
             />
           </div>
+
+          <label className="flex items-center gap-2 text-sm text-foreground">
+            <input
+              type="checkbox"
+              className="h-4 w-4 rounded border-border bg-background text-primary focus:ring-2 focus:ring-ring"
+              checked={isLoopAudit}
+              onChange={(e) => setIsLoopAudit(e.target.checked)}
+            />
+            Run as a <span className="font-semibold">Loop Audit</span> (score each
+            opportunity with the Four-Condition Loop Test)
+          </label>
 
           <div className="flex items-center justify-end gap-2">
             <Button type="button" variant="outline" size="sm" onClick={handleCancelCreate}>
