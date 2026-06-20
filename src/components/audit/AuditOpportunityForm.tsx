@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { VALUE_CATEGORIES, VALUE_CATEGORY_LABELS, type ValueCategory } from "@/types/value";
-import { type Confidence, type Effort, type AuditOpportunity } from "@/types/audit";
+import { type Confidence, type Effort, type GateScore, type AuditOpportunity } from "@/types/audit";
 import { useSaveOpportunity } from "@/hooks/useAudits";
 import { Button } from "@/components/ui/button";
+import { gateOutcome } from "@/lib/audit";
+import { LoopGateBadge } from "@/components/audit/LoopGateBadge";
 
 const inputClass =
   "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring";
@@ -10,6 +12,7 @@ const labelClass = "mb-1 block text-xs font-semibold text-muted-foreground";
 
 interface Props {
   auditId: string;
+  isLoopAudit?: boolean;
   initial?: AuditOpportunity;
   onDone?: () => void;
 }
@@ -17,7 +20,7 @@ interface Props {
 // Form for adding or editing an audit opportunity. For hours_saved, computes
 // annual_value_cents from hrs/wk × rate × 52 and records the basis so the
 // figure stays defensible (mirrors ValueEventForm's hours×rate helper pattern).
-export function AuditOpportunityForm({ auditId, initial, onDone }: Props) {
+export function AuditOpportunityForm({ auditId, isLoopAudit, initial, onDone }: Props) {
   const saveOpp = useSaveOpportunity(auditId);
 
   const [title, setTitle] = useState(initial?.title ?? "");
@@ -50,6 +53,12 @@ export function AuditOpportunityForm({ auditId, initial, onDone }: Props) {
       : ""
   );
 
+  // loop-audit gate state
+  const [loopRepeats, setLoopRepeats] = useState<GateScore | "">(initial?.loop_repeats ?? "");
+  const [loopAfford, setLoopAfford] = useState<GateScore | "">(initial?.loop_afford_waste ?? "");
+  const [loopDoneRule, setLoopDoneRule] = useState<boolean | null>(initial?.loop_done_rule ?? null);
+  const [loopHasTools, setLoopHasTools] = useState<boolean | null>(initial?.loop_has_tools ?? null);
+
   const isHours = category === "hours_saved";
 
   const annualValueCents = isHours
@@ -78,6 +87,10 @@ export function AuditOpportunityForm({ auditId, initial, onDone }: Props) {
           annual_value_cents: annualValueCents,
           confidence,
           effort,
+          loop_repeats: isLoopAudit ? (loopRepeats || null) : null,
+          loop_afford_waste: isLoopAudit ? (loopAfford || null) : null,
+          loop_done_rule: isLoopAudit ? loopDoneRule : null,
+          loop_has_tools: isLoopAudit ? loopHasTools : null,
           basis_md: basisMd,
         },
       },
@@ -92,6 +105,10 @@ export function AuditOpportunityForm({ auditId, initial, onDone }: Props) {
             setHours("");
             setRate("");
             setDollars("");
+            setLoopRepeats("");
+            setLoopAfford("");
+            setLoopDoneRule(null);
+            setLoopHasTools(null);
           }
           onDone?.();
         },
@@ -228,6 +245,97 @@ export function AuditOpportunityForm({ auditId, initial, onDone }: Props) {
             onChange={(e) => setDollars(e.target.value)}
             placeholder="0"
           />
+        </div>
+      )}
+
+      {isLoopAudit && (
+        <div className="space-y-3 rounded-lg border border-border bg-background/40 p-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-muted-foreground">
+              Four-Condition Loop Test
+            </span>
+            <LoopGateBadge
+              outcome={gateOutcome({
+                ...(initial ?? ({} as AuditOpportunity)),
+                loop_repeats: loopRepeats || null,
+                loop_afford_waste: loopAfford || null,
+                loop_done_rule: loopDoneRule,
+                loop_has_tools: loopHasTools,
+              })}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className={labelClass} htmlFor="opp-repeats">
+                1 · Repeats
+              </label>
+              <select
+                id="opp-repeats"
+                className={inputClass}
+                value={loopRepeats}
+                onChange={(e) => setLoopRepeats(e.target.value as GateScore | "")}
+              >
+                <option value="">—</option>
+                <option value="strong">Strong</option>
+                <option value="partial">Partial</option>
+                <option value="weak">Weak</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelClass} htmlFor="opp-afford">
+                3 · Afford wasted runs
+              </label>
+              <select
+                id="opp-afford"
+                className={inputClass}
+                value={loopAfford}
+                onChange={(e) => setLoopAfford(e.target.value as GateScore | "")}
+              >
+                <option value="">—</option>
+                <option value="strong">Strong</option>
+                <option value="partial">Partial</option>
+                <option value="weak">Weak</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelClass} htmlFor="opp-donerule">
+                2 · A rule decides "done"
+              </label>
+              <select
+                id="opp-donerule"
+                className={inputClass}
+                value={loopDoneRule === null ? "" : loopDoneRule ? "yes" : "no"}
+                onChange={(e) =>
+                  setLoopDoneRule(e.target.value === "" ? null : e.target.value === "yes")
+                }
+              >
+                <option value="">—</option>
+                <option value="yes">Yes</option>
+                <option value="no">No (blocker)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className={labelClass} htmlFor="opp-hastools">
+                4 · AI has data + tools
+              </label>
+              <select
+                id="opp-hastools"
+                className={inputClass}
+                value={loopHasTools === null ? "" : loopHasTools ? "yes" : "no"}
+                onChange={(e) =>
+                  setLoopHasTools(e.target.value === "" ? null : e.target.value === "yes")
+                }
+              >
+                <option value="">—</option>
+                <option value="yes">Yes</option>
+                <option value="no">No (blocker)</option>
+              </select>
+            </div>
+          </div>
         </div>
       )}
 
