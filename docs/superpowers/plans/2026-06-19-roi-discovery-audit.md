@@ -401,7 +401,15 @@ export function useDeleteOpportunity(auditId: string) {
 
 - [ ] **Step 3: Add `useExportDoc` to `src/hooks/useGoogleWorkspace.ts`**
 
-Read the file first to match its `callProxy` signature. Add an exported mutation hook that calls `callProxy("export_markdown_to_doc", { title, markdown, doc_id })` and returns the resulting `{ file }` (with `webViewLink` + `id`). Do NOT duplicate the fetch/auth; reuse the existing private `callProxy`. If `callProxy` is not exportable as-is, export a thin wrapper hook from the same module.
+`callProxy` is `callProxy<T>(body: Record<string, unknown>)` — a SINGLE object arg, with the action inside the body (the proxy reads `body.action`). Add an exported mutation hook in the same module (so it can reach the private `callProxy`) that calls:
+
+```ts
+callProxy<{ file: { id: string; webViewLink: string; name: string } }>({
+  action: "export_markdown_to_doc", title, markdown, doc_id,
+})
+```
+
+and returns the resulting `file` (`webViewLink` + `id`). Do NOT duplicate the fetch/auth — reuse `callProxy`. (The proxy maps `not_connected`/`needs_reconnect` codes; surface the standard "connect Google on the Workspace page" message on those.)
 
 - [ ] **Step 4: Gate**
 
@@ -484,7 +492,7 @@ git commit -m "feat(audit): /audits + /audits/:id pages, routes, nav, feature fl
 
 ## Task 6: Live validation + PR
 
-- [ ] **Step 1: Apply the migration to the demo** via Supabase MCP `apply_migration` (project `khtlrhtgnwhrhrstivkw`, name `audits`) using the Task 1 SQL.
+- [ ] **Step 1: Apply the migration to the demo** via Supabase MCP `apply_migration` (project `harbormill-aios-demo`, ref `khtlrhtgnwhrhrstivkw` — confirmed via `list_projects`; name `audits`) using the Task 1 SQL.
 
 - [ ] **Step 2: Verify** via `execute_sql`: both tables exist, RLS enabled; insert a sample audit + 2 opportunities; confirm a hand-computed ROI matches `summarizeAudit`'s formula (total annual ÷ retainer×12).
 

@@ -101,7 +101,8 @@ optional `doc_id`).
 
 **Implementation note (export seam):** `callProxy` in `src/hooks/useGoogleWorkspace.ts` is currently
 module-private and no export hook is exported. Add an exported hook there (e.g. `useExportDoc`) that
-wraps `callProxy("export_markdown_to_doc", { title, markdown, doc_id })` — keep the single proxy seam;
+wraps `callProxy({ action: "export_markdown_to_doc", title, markdown, doc_id })` (single-object arg —
+the proxy reads `body.action`) — keep the single proxy seam;
 do **not** duplicate the auth/fetch boilerplate. On success, persist the returned doc id to
 `audits.last_export_doc_id` and pass it as `doc_id` on subsequent exports (idempotent re-export).
 Requires a connected Google account (same as the deck's other exports); show the standard "connect
