@@ -1,5 +1,6 @@
 import type { MetricStatus } from "@/hooks/useMetrics";
 import type { ProjectStatus } from "@/types/project";
+import type { AuditStatus } from "@/types/audit";
 
 /** Chip classes for a KPI/metric status. */
 export function metricStatusClass(status?: string | null): string {
@@ -48,6 +49,16 @@ export function projectStatusClass(status: ProjectStatus): string {
       return "border-primary/50 bg-primary/15 text-primary";
     default: // planned
       return "border-border bg-muted text-muted-foreground";
+  }
+}
+
+/** Chip classes for an audit status. */
+export function auditStatusClass(status: AuditStatus): string {
+  switch (status) {
+    case "won": return "border-success/50 bg-success/15 text-success";
+    case "lost": return "border-destructive/50 bg-destructive/15 text-destructive-foreground";
+    case "presented": return "border-primary/50 bg-primary/15 text-primary";
+    default: return "border-border bg-muted text-muted-foreground";
   }
 }
 
