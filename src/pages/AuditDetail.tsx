@@ -4,7 +4,7 @@ import { ArrowLeft, ClipboardList, ExternalLink, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useAudit, useSaveAudit } from "@/hooks/useAudits";
 import { useExportDoc } from "@/hooks/useGoogleWorkspace";
-import { summarizeAudit, composeReportMarkdown } from "@/lib/audit";
+import { summarizeAudit, composeReportMarkdown, composeLoopReportMarkdown } from "@/lib/audit";
 import { AUDIT_STATUSES, AUDIT_STATUS_LABELS, type AuditStatus, type AuditOpportunity } from "@/types/audit";
 import { EmptyState } from "@/components/EmptyState";
 import { Spinner } from "@/components/ui/spinner";
@@ -45,10 +45,12 @@ export default function AuditDetail() {
 
   const handleExport = () => {
     const summary = summarizeAudit(opportunities, audit.proposed_retainer_cents);
-    const md = composeReportMarkdown(audit, opportunities, summary);
+    const md = audit.is_loop_audit
+      ? composeLoopReportMarkdown(audit, opportunities)
+      : composeReportMarkdown(audit, opportunities, summary);
     exportDoc.mutate(
       {
-        title: `Opportunity Report — ${audit.prospect_name}`,
+        title: `${audit.is_loop_audit ? "Loop Audit" : "Opportunity Report"} — ${audit.prospect_name}`,
         markdown: md,
         doc_id: audit.last_export_doc_id,
       },
@@ -130,6 +132,7 @@ export default function AuditDetail() {
           </h2>
           <AuditOpportunityForm
             auditId={audit.id}
+            isLoopAudit={audit.is_loop_audit}
             initial={editing ?? undefined}
             onDone={handleOppDone}
           />
@@ -139,7 +142,9 @@ export default function AuditDetail() {
       {/* Opportunity list */}
       <div>
         <div className="mb-3 flex items-center justify-between gap-3">
-          <h2 className="text-sm font-bold text-foreground">Opportunities</h2>
+          <h2 className="text-sm font-bold text-foreground">
+            {audit.is_loop_audit ? "Loop candidates" : "Opportunities"}
+          </h2>
           {!addingOpp && editing === null && (
             <Button size="sm" variant="outline" onClick={() => setAddingOpp(true)}>
               <Plus className="h-3.5 w-3.5" />
@@ -149,6 +154,7 @@ export default function AuditDetail() {
         </div>
         <OpportunityList
           auditId={audit.id}
+          isLoopAudit={audit.is_loop_audit}
           opportunities={opportunities}
           onEdit={(o) => {
             setEditing(o);
