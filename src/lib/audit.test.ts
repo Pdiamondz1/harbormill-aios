@@ -4,12 +4,12 @@ import type { Audit, AuditOpportunity } from "@/types/audit";
 
 const opp = (over: Partial<AuditOpportunity>): AuditOpportunity => ({
   id: "o", audit_id: "a", title: "X", description_md: null, category: "hours_saved",
-  annual_value_cents: 0, confidence: "med", effort: "med", basis_md: null,
+  annual_value_cents: 0, confidence: "med", effort: "med", loop_repeats: null, loop_done_rule: null, loop_afford_waste: null, loop_has_tools: null, basis_md: null,
   sort_order: 0, created_at: "", updated_at: "", ...over,
 });
 const audit: Audit = {
   id: "a", prospect_name: "Acme", company: "Acme Co", status: "draft",
-  proposed_retainer_cents: 500000, summary_notes: null, last_export_doc_id: null,
+  proposed_retainer_cents: 500000, summary_notes: null, is_loop_audit: false, last_export_doc_id: null,
   created_by: null, created_at: "", updated_at: "",
 };
 
