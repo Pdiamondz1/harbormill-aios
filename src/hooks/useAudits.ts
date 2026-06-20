@@ -3,9 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Audit, AuditOpportunity } from "@/types/audit";
 
 const AUDIT_COLS =
-  "id, prospect_name, company, status, proposed_retainer_cents, summary_notes, last_export_doc_id, created_by, created_at, updated_at";
+  "id, prospect_name, company, status, proposed_retainer_cents, summary_notes, is_loop_audit, last_export_doc_id, created_by, created_at, updated_at";
 const OPP_COLS =
-  "id, audit_id, title, description_md, category, annual_value_cents, confidence, effort, basis_md, sort_order, created_at, updated_at";
+  "id, audit_id, title, description_md, category, annual_value_cents, confidence, effort, loop_repeats, loop_done_rule, loop_afford_waste, loop_has_tools, basis_md, sort_order, created_at, updated_at";
 
 export function useAudits() {
   return useQuery({

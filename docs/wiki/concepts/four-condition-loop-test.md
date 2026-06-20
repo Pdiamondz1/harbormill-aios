@@ -78,9 +78,11 @@ first.
 1. **Dev skill (`loop-audit`)** — audits the Harbormill workspace itself (repo, git
    history, Claude Code transcripts) to decide what dev automation to build next. The
    dogfood; also the tool used to prioritize surfaces 2 and 3.
-2. **Sales deliverable** — the 4-Condition Test packaged as a paid "Loop Audit": map
-   a prospect's repeating work, score it, export a branded build-first recommendation
-   via the [[Google Workspace Bridge]]. Operationalizes the [[ROI-Discovery Audit]].
+2. **Sales deliverable (shipped)** — the 4-Condition Test packaged as a paid "Loop
+   Audit": run an in-deck audit in **Loop Audit** mode (`is_loop_audit`), score each
+   opportunity against the four conditions, and export a branded build-first
+   recommendation via the [[Google Workspace Bridge]]. Operationalizes the
+   [[ROI-Discovery Audit]]. Engagement playbook: `docs/loop-audit-playbook.md`.
 3. **In-app feature (future)** — [[Aria]] scores a client's recurring work from deck
    signals (`findings.occurrences`, metric cadence, connector activity) and surfaces
    ranked candidates. Deferred until the data contract is known — today it fails

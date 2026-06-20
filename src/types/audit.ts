@@ -3,11 +3,19 @@ import type { ValueCategory } from "@/types/value";
 export type AuditStatus = "draft" | "presented" | "won" | "lost";
 export type Confidence = "low" | "med" | "high";
 export type Effort = "low" | "med" | "high";
+export type GateScore = "strong" | "partial" | "weak";
+export type LoopOutcome = "candidate" | "blocked" | "not-a-loop";
 export type OpportunityCategory = ValueCategory;
 
 export const AUDIT_STATUSES: AuditStatus[] = ["draft", "presented", "won", "lost"];
 export const AUDIT_STATUS_LABELS: Record<AuditStatus, string> = {
   draft: "Draft", presented: "Presented", won: "Won", lost: "Lost",
+};
+
+export const LOOP_OUTCOME_LABELS: Record<LoopOutcome, string> = {
+  candidate: "Candidate",
+  blocked: "Blocked",
+  "not-a-loop": "Not a loop",
 };
 
 export interface Audit {
@@ -17,6 +25,7 @@ export interface Audit {
   status: AuditStatus;
   proposed_retainer_cents: number;
   summary_notes: string | null;
+  is_loop_audit: boolean;
   last_export_doc_id: string | null;
   created_by: string | null;
   created_at: string;
@@ -32,6 +41,10 @@ export interface AuditOpportunity {
   annual_value_cents: number;
   confidence: Confidence;
   effort: Effort;
+  loop_repeats: GateScore | null;
+  loop_done_rule: boolean | null;
+  loop_afford_waste: GateScore | null;
+  loop_has_tools: boolean | null;
   basis_md: string | null;
   sort_order: number;
   created_at: string;

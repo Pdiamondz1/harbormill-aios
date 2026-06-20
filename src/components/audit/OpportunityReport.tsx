@@ -1,7 +1,7 @@
 import { TrendingUp } from "lucide-react";
 import type { Audit, AuditOpportunity } from "@/types/audit";
 import { formatDollars } from "@/types/value";
-import { summarizeAudit } from "@/lib/audit";
+import { summarizeAudit, gateOutcome, recommendFirstBuild } from "@/lib/audit";
 import { roiClass } from "@/lib/status";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,9 @@ interface Props {
 // retainer. Mirrors ValueDeliveredCard's hero styling with token-based classes.
 export function OpportunityReport({ audit, opportunities }: Props) {
   const summary = summarizeAudit(opportunities, audit.proposed_retainer_cents);
+  const candidateCount = opportunities.filter((o) => gateOutcome(o) === "candidate").length;
+  const blockedCount = opportunities.filter((o) => gateOutcome(o) === "blocked").length;
+  const first = recommendFirstBuild(opportunities);
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-card-md">
@@ -53,6 +56,25 @@ export function OpportunityReport({ audit, opportunities }: Props) {
           </div>
         )}
       </div>
+      {audit.is_loop_audit && (
+        <div className="relative mt-4 border-t border-border pt-3 text-sm">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Loop Audit
+          </p>
+          <p className="mt-1 text-foreground">
+            {first ? (
+              <>
+                Build first: <span className="font-semibold">{first.title}</span>
+              </>
+            ) : (
+              <span className="text-muted-foreground">No loop candidates yet</span>
+            )}
+          </p>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            {candidateCount} candidate{candidateCount === 1 ? "" : "s"} · {blockedCount} blocked
+          </p>
+        </div>
+      )}
     </div>
   );
 }

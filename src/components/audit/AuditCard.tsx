@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Building2 } from "lucide-react";
+import { Building2, Repeat } from "lucide-react";
 import type { Audit } from "@/types/audit";
 import { formatDollars } from "@/types/value";
 import { AuditStatusBadge } from "@/components/audit/AuditStatusBadge";
@@ -18,6 +18,12 @@ export function AuditCard({ audit }: { audit: Audit }) {
               <Building2 className="h-3.5 w-3.5 shrink-0" />
               {audit.company}
             </p>
+          )}
+          {audit.is_loop_audit && (
+            <span className="mt-1 inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+              <Repeat className="h-3 w-3" />
+              Loop Audit
+            </span>
           )}
         </div>
         <AuditStatusBadge status={audit.status} />
