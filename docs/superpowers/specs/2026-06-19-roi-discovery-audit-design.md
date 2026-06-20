@@ -30,6 +30,9 @@ delivery efficiency, so the audit (sales) precedes the connector library (delive
 - Converting a *won* audit's opportunities into the client deck's `value_events` baseline.
 - A public, self-serve ROI calculator on the marketing site (different job: top-of-funnel).
 - Multi-user collaboration on an audit; client/stakeholder visibility (audits are private sales data).
+- **No `activity`-table logging for audits.** Unlike `projects`/`notes`, audits must NOT write to the
+  append-only `activity` table — that feed is access-tier-readable and would leak prospect names to
+  stakeholders. Do **not** copy the projects activity-trigger pattern onto these tables.
 
 ## Users & access
 
@@ -44,7 +47,12 @@ Routes gated `tier="admin"` (mirrors Findings). The audit lives in the operator'
 - `status text check in ('draft','presented','won','lost') default 'draft'`,
 - `proposed_retainer_cents integer not null default 500000` (seeded from the existing
   `aios_dashboard_settings.monthly_retainer_cents` at insert time via the app, or the column default),
-- `summary_notes text`, `created_by uuid references auth.users`, `created_at`, `updated_at`.
+- `summary_notes text`,
+- `last_export_doc_id text` (the Drive doc id from the most recent export, so re-export updates the
+  same Doc instead of creating duplicates — the proxy already supports `doc_id`),
+- `created_by uuid references auth.users(id) default auth.uid()`, `created_at`, `updated_at`.
+
+No `activity` triggers on either table (see Non-goals — avoids leaking prospect names).
 
 `audit_opportunities`
 - `id uuid pk`, `audit_id uuid references audits(id) on delete cascade`,
@@ -87,22 +95,40 @@ RLS (both tables): `admin manage` via `has_role(auth.uid(),'admin')` for all; no
 ## Export
 
 The page composes the Opportunity Report markdown **deterministically** from the audit data (exact
-numbers, not via the LLM) and calls the Workspace proxy's existing
-`export_markdown_to_doc` action (`supabase/functions/google-workspace-proxy`, already implemented)
-→ branded Google Doc; surface the returned link. Requires a connected Google account (same as the
-deck's other exports); show the standard "connect Google on the Workspace page" message if not.
+numbers, not via the LLM) and exports via the Workspace proxy's existing `export_markdown_to_doc`
+action (`supabase/functions/google-workspace-proxy`, already implemented; accepts `title`, `markdown`,
+optional `doc_id`).
+
+**Implementation note (export seam):** `callProxy` in `src/hooks/useGoogleWorkspace.ts` is currently
+module-private and no export hook is exported. Add an exported hook there (e.g. `useExportDoc`) that
+wraps `callProxy("export_markdown_to_doc", { title, markdown, doc_id })` — keep the single proxy seam;
+do **not** duplicate the auth/fetch boilerplate. On success, persist the returned doc id to
+`audits.last_export_doc_id` and pass it as `doc_id` on subsequent exports (idempotent re-export).
+Requires a connected Google account (same as the deck's other exports); show the standard "connect
+Google on the Workspace page" message if not.
+
+**States:** handle export in-flight (button `isLoading`) and failure (toast the error); a
+zero-opportunity audit shows total $0 and no ROI multiple (`roiClass(null)` muted), and the export
+button is disabled until at least one opportunity exists.
 
 ## Components, types, hooks
 
-- `types/audit.ts` — `AuditStatus`, `Audit`, `OpportunityCategory` (reuse value categories),
-  `Confidence`, `Effort`, `AuditOpportunity`, `AuditSummary`.
+- `types/audit.ts` — `AuditStatus` = `'draft'|'presented'|'won'|'lost'`; `Confidence` = `Effort` =
+  `'low'|'med'|'high'` (**`'med'`, not `'medium'` — must match the DB check constraints**);
+  `OpportunityCategory` reuses `ValueCategory` from `types/value.ts`; plus `Audit`, `AuditOpportunity`,
+  `AuditSummary`.
 - `hooks/useAudits.ts` — `useAudits` (list), `useAudit(id)` (with opportunities), `useSaveAudit`,
-  `useSaveOpportunity`, `useDeleteOpportunity`; a `summarize(opps, retainer)` helper.
-- `components/audit/` — `AuditCard`, `AuditStatusBadge`, `AuditOpportunityForm`, `OpportunityList`,
-  `OpportunityReport` (the on-screen + markdown-composing report).
-- `lib/status.ts` — extend with an audit-status chip helper if useful (reuse `roiClass`).
-- Wiring: `App.tsx` gated routes (`features.audits`), `AppLayout` nav item, `config/features.ts`
-  `audits: true`.
+  `useSaveOpportunity`, `useDeleteOpportunity`; a `summarize(opps, retainer)` helper. Inserts set
+  `created_by` (or rely on the `default auth.uid()`).
+- `hooks/useGoogleWorkspace.ts` — add an exported `useExportDoc` hook (see Export note).
+- `components/audit/` — `AuditCard`, `AuditStatusBadge`, `AuditOpportunityForm` (modeled on
+  `ValueEventForm`), `OpportunityList`, `OpportunityReport` (the on-screen + markdown-composing report).
+- `lib/status.ts` — add `auditStatusClass(status)` (in scope) and reuse `roiClass`.
+- Primitives (exact paths): `src/components/PageHeader.tsx`, `src/components/EmptyState.tsx`,
+  `src/components/ui/spinner.tsx` (`Spinner`), `src/components/ui/button.tsx` (`Button`, supports
+  `isLoading`).
+- Wiring: `App.tsx` gated routes (`features.audits`, `tier="admin"`), `AppLayout` nav item
+  (`adminOnly: true, feature: "audits"`), `config/features.ts` add `audits: true` to `FeatureFlags`.
 
 ## Reuse (don't reinvent)
 
