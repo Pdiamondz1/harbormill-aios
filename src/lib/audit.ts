@@ -83,6 +83,7 @@ export function composeReportMarkdown(
 
 const gateScoreCell = (v: GateScore | null) => v ?? "—";
 const ynCell = (v: boolean | null) => (v === true ? "yes" : v === false ? "no" : "—");
+const tableCell = (s: string) => s.replace(/\|/g, "\\|");
 
 /**
  * The Loop Audit deliverable. Leads with the recommended first build, then a
@@ -112,7 +113,7 @@ export function composeLoopReportMarkdown(audit: Audit, opps: AuditOpportunity[]
   ];
   candidates.forEach((o, i) => {
     lines.push(
-      `| ${i + 1} | ${o.title} | ${VALUE_CATEGORY_LABELS[o.category]} | ${formatDollars(o.annual_value_cents)}/yr | ${o.confidence} | ${o.effort} |`
+      `| ${i + 1} | ${tableCell(o.title)} | ${tableCell(VALUE_CATEGORY_LABELS[o.category])} | ${formatDollars(o.annual_value_cents)}/yr | ${o.confidence} | ${o.effort} |`
     );
   });
 

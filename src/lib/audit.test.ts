@@ -114,4 +114,10 @@ describe("composeLoopReportMarkdown", () => {
     const md = composeLoopReportMarkdown({ ...audit, is_loop_audit: true }, [opp({})]);
     expect(md).toContain("No loop candidates yet");
   });
+
+  it("escapes pipe characters in table cells so the markdown table is not corrupted", () => {
+    const cand = opp({ ...pass, title: "Invoice | dunning", annual_value_cents: 3_000_000 });
+    const md = composeLoopReportMarkdown({ ...audit, is_loop_audit: true }, [cand]);
+    expect(md).toContain("Invoice \\| dunning");
+  });
 });
