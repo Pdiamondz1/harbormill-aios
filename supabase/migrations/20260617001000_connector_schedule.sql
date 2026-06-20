@@ -8,7 +8,8 @@
 --   - pg_cron 1.6.4 already installed; pg_net 0.20.3 available, not yet installed
 --
 -- Vault secrets:
---   connector_sync_url  — SET by this migration script (Step 1, via execute_sql)
+--   connector_sync_url  — SET by this migration script (Step 1, via execute_sql);
+--                         if missing, pg_net drops the null-URL request (also inert)
 --   service_role_key    — MUST be set by the human operator:
 --                           select vault.create_secret('<your-service-role-key>',
 --                                  'service_role_key', 'Supabase service-role key');
