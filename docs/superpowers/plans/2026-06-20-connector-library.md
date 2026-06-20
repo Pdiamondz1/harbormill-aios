@@ -8,6 +8,11 @@
 
 **Tech Stack:** Supabase (Postgres + RLS + Deno edge functions + pg_cron/pg_net/Vault), React 18 + TanStack Query + shadcn/ui, Vitest. Spec: `docs/superpowers/specs/2026-06-19-connector-library-design.md`.
 
+> **Execution order:** Tasks 1-6, then **9** (scheduling — must run after the
+> function is deployed in Task 6), then 7-8, then 10-12. Task 9 is placed in the
+> document between Tasks 6 and 7 for narrative flow; follow this order, not strict
+> top-to-bottom numbering.
+
 ---
 
 ## Spec refinements discovered during planning (read first)
@@ -27,7 +32,23 @@
    `connectors` and to call `report-ingest`. This matches the existing
    `assistant-chat` pattern (user token in, service-role client for work).
 
-2. **Pure Stripe mapping lives in its own import-free module** so Vitest can test
+2b. **Due-selection is a DB query, not a unit-tested JS helper.** The spec listed a
+   `next_run_at` / due-selection helper as a second TDD unit. In implementation,
+   due-selection is a PostgREST filter
+   (`.or('next_run_at.is.null,next_run_at.lte.<iso>')`) executed in
+   `connector-sync` — DB logic, not pure JS — so it is **intentionally not** a
+   separate Vitest unit (would require mocking the query builder for no real
+   coverage). It is verified by the **live invoke** in Task 6 (and the cron fire in
+   Task 9). The `mapStripe` unit test remains the one TDD unit. This is a
+   deliberate YAGNI narrowing of the spec's testing note.
+
+2c. **`useSyncConnector` uses an auth'd `fetch`, not `supabase.functions.invoke`.**
+   The spec named `functions.invoke`; the plan uses the established
+   `useGoogleWorkspace.callProxy` `fetch` pattern instead (explicit error-body
+   handling, one consistent invoke style in the repo). Intentional, equivalent
+   deviation — not a conformance gap.
+
+3. **Pure Stripe mapping lives in its own import-free module** so Vitest can test
    it: `supabase/functions/_shared/connectors/stripe-map.ts` (NO `https://`
    imports, NO `Deno.*`). The test lives under `src/` (Vitest excludes
    `supabase/functions/**` from *running* tests, but a `src/` test may *import*
