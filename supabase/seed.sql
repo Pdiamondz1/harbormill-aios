@@ -50,3 +50,8 @@ insert into public.documents (path, title, content_md, tags) values
   ('strategy/positioning', 'Positioning', E'# Positioning\n\nWe sell **operational clarity** to mid-market operators who are flying blind between their tools.\n\n- **Who:** 20–200 person services & SaaS businesses.\n- **Wedge:** the weekly brief — the one artifact a busy operator actually reads.\n- **Moat:** the assistant gets smarter on their data over time.', '{"strategy","gtm"}'),
   ('playbooks/onboarding', 'Client onboarding', E'# Client onboarding\n\n1. Provision the deck (clone, env, migrations, functions).\n2. Seed the first admin and invite stakeholders.\n3. Wire their metric/brief/finding agents to `report-ingest`.\n4. Connect Google Workspace for exports.\n5. Load their strategy docs so the assistant has context.', '{"playbook","ops"}')
 on conflict (path) do nothing;
+
+-- A disabled sample connector so the admin Connectors page renders on a fresh
+-- clone. Set the CONNECTOR_STRIPE_SECRET_KEY secret and enable it to go live.
+insert into public.connectors (type, name, enabled, config) values
+  ('stripe', 'Stripe', false, '{}'::jsonb);
