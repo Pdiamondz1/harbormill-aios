@@ -19,6 +19,8 @@ import Projects from "@/pages/Projects";
 import ProjectDetail from "@/pages/ProjectDetail";
 import Calendar from "@/pages/Calendar";
 import Value from "@/pages/Value";
+import Audits from "@/pages/Audits";
+import AuditDetail from "@/pages/AuditDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +49,12 @@ export default function App() {
                 {features.projects && <Route path="projects/:id" element={<ProjectDetail />} />}
                 {features.calendar && <Route path="calendar" element={<Calendar />} />}
                 {features.value && <Route path="value" element={<Value />} />}
+                {features.audits && (
+                  <Route path="audits" element={<ProtectedRoute tier="admin"><Audits /></ProtectedRoute>} />
+                )}
+                {features.audits && (
+                  <Route path="audits/:id" element={<ProtectedRoute tier="admin"><AuditDetail /></ProtectedRoute>} />
+                )}
                 {features.briefings && <Route path="briefings" element={<Briefings />} />}
                 {features.findings && (
                   <Route

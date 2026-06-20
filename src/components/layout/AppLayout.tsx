@@ -26,6 +26,7 @@ const NAV: NavItem[] = [
   { to: "/projects", label: "Projects", feature: "projects" },
   { to: "/calendar", label: "Calendar", feature: "calendar" },
   { to: "/value", label: "Value", feature: "value" },
+  { to: "/audits", label: "Audits", adminOnly: true, feature: "audits" },
   { to: "/briefings", label: "Briefings", feature: "briefings" },
   { to: "/findings", label: "Findings", adminOnly: true, feature: "findings" },
   { to: "/strategy", label: "Strategy", feature: "strategy" },
