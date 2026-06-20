@@ -130,3 +130,12 @@ export function useExportMetricsToSheet() {
       callProxy<{ success: boolean; link?: string; rows: number }>({ action: "append_metrics_to_sheet" }),
   });
 }
+
+export function useExportDoc() {
+  return useMutation({
+    mutationFn: async ({ title, markdown, doc_id }: { title: string; markdown: string; doc_id?: string | null }) =>
+      callProxy<{ file: { id: string; webViewLink: string; name: string } }>({
+        action: "export_markdown_to_doc", title, markdown, doc_id,
+      }),
+  });
+}
