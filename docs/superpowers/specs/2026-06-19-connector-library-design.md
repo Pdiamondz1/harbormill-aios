@@ -90,7 +90,16 @@ create trigger trg_connectors_updated_at
 - `service_role` reaches the table via its key bypassing RLS (as elsewhere); no
   explicit service-role policy is required (matches existing tables).
 
-### Scheduling (same migration, mirrors the existing pg_cron block)
+### Scheduling (same migration)
+
+> **New pattern (no in-repo precedent).** The existing `pg_cron` block in
+> `20260617000500_operating_deck_internal.sql` calls a plain SQL function
+> (`capture_platform_weight()`) and uses `pg_cron` only. This connector schedule
+> introduces a **new** pattern for this repo: `pg_cron` + `pg_net`
+> (`net.http_post`) invoking a Deno edge function, with credentials from Vault.
+> It is not a copy of an existing block. Because there is no precedent, the exact
+> `pg_net` / `vault` call form **must be validated against the live Supabase
+> project during implementation** before relying on it.
 
 ```sql
 create extension if not exists pg_cron;
@@ -114,6 +123,14 @@ $$);
   deploy step; the deck does not break without it.
 - The exact `vault.secrets` insert/select form must be validated against the live
   Supabase project during implementation (Vault API specifics).
+
+**First-run / `next_run_at` contract.** `next_run_at` has no default, so a newly
+inserted or seeded connector has `next_run_at = NULL`. Scheduled mode selects
+`enabled AND (next_run_at IS NULL OR next_run_at <= now())`, so a null row is due
+immediately on the next tick (or via "Sync now"); after a successful run
+`next_run_at` is advanced (derive from `schedule_cron`, or simple +interval for
+v1). The demo seed row is **disabled**, so it never runs and its `next_run_at`
+stays null indefinitely — expected.
 
 ## Connector registry + Stripe module — `supabase/functions/_shared/connectors/`
 
@@ -162,11 +179,18 @@ Adding GA4/Sheets later = one module + one `CONNECTORS` line + one allowed
   ignoring schedule.
 - For each connector:
   1. `CONNECTORS[type].pull(ctx)` where `ctx.env = Deno.env.toObject()`.
-  2. POST `{ type:"metrics", payload:{ metrics } }` to `report-ingest` with the
-     service-role bearer.
-  3. On success: `last_status='ok'`, `last_run_at=now()`, `last_result={inserted,keys}`,
+  2. **Empty-pull guard:** if `metrics.length === 0` (e.g. all KPIs toggled off, or
+     an account with no data), **skip the POST** and record a benign success —
+     `last_status='ok'`, `last_result={inserted:0, keys:[]}`. (Posting `[]` to
+     `report-ingest` would 400 on its non-empty-array check and falsely log an error.)
+  3. Otherwise POST `{ type:"metrics", payload:{ metrics } }` to `report-ingest`
+     with the service-role bearer.
+  4. On success: `last_status='ok'`, `last_run_at=now()`, `last_result={inserted, keys}`,
      `next_run_at` advanced (derive from `schedule_cron`, or simple +interval for v1).
-  4. On failure: `last_status='error'`, `last_error=<message>`. **One connector's
+     **`inserted`** is read from the `report-ingest` response (`{success, inserted}`);
+     **`keys`** is `metrics.map(m => m.key)` captured in `connector-sync` *before* the
+     POST (report-ingest does not return keys).
+  5. On failure: `last_status='error'`, `last_error=<message>`. **One connector's
      failure never aborts the others** (per-connector try/catch).
 - Returns a per-connector summary `{ results: [{ id, status, inserted?, error? }] }`.
 - Needs `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (auto-injected) to reach
@@ -186,6 +210,8 @@ Adding GA4/Sheets later = one module + one `CONNECTORS` line + one allowed
 - `src/lib/status.ts` — add `connectorStatusClass(last_status)` chip helper
   (`ok` success, `error` destructive, `never` muted).
 - `src/pages/Connectors.tsx` + `src/components/connectors/`:
+  - **Empty state** — when no connectors are configured, show a "No connectors yet"
+    prompt with an add action (consistent with other admin pages' empty states).
   - `ConnectorCard` — name, type, enabled toggle, last-run chip, last-run time,
     result summary, **"Sync now"** (shows run outcome via toast).
   - `ConnectorForm` — type, name, schedule, per-connector KPI toggles/targets from
