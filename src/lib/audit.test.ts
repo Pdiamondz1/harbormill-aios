@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { summarizeAudit, composeReportMarkdown, isUngated, gateOutcome, recommendFirstBuild } from "@/lib/audit";
+import { summarizeAudit, composeReportMarkdown, isUngated, gateOutcome, recommendFirstBuild, composeLoopReportMarkdown } from "@/lib/audit";
 import type { Audit, AuditOpportunity } from "@/types/audit";
 
 const opp = (over: Partial<AuditOpportunity>): AuditOpportunity => ({
@@ -88,5 +88,30 @@ describe("recommendFirstBuild", () => {
     const blocked = opp({ ...pass, id: "blk", loop_has_tools: false, annual_value_cents: 99_000_000 });
     const first = recommendFirstBuild([big, blocked, lean]);
     expect(first?.id).toBe("lean"); // same value, lower effort wins via prioritize()
+  });
+});
+
+describe("composeLoopReportMarkdown", () => {
+  const pass = {
+    loop_repeats: "strong" as const, loop_done_rule: true,
+    loop_afford_waste: "strong" as const, loop_has_tools: true,
+  };
+
+  it("leads with the build-first headline, ranks candidates, and ledgers every task", () => {
+    const cand = opp({ ...pass, title: "Invoice follow-up", annual_value_cents: 6_000_000 });
+    const blocked = opp({ ...pass, title: "Inbox triage", loop_has_tools: false });
+    const md = composeLoopReportMarkdown({ ...audit, is_loop_audit: true }, [cand, blocked]);
+    expect(md).toContain("# Loop Audit — Acme");
+    expect(md).toContain("## Recommended first build");
+    expect(md).toContain("Invoice follow-up");
+    expect(md).toContain("## Ranked candidates");
+    expect(md).toContain("## Ledger");
+    expect(md).toContain("Blocked");          // the blocked task appears in the ledger
+    expect(md).not.toMatch(/\| 1 \| Inbox triage/); // blocked task is NOT ranked
+  });
+
+  it("states no candidates when none pass the gate", () => {
+    const md = composeLoopReportMarkdown({ ...audit, is_loop_audit: true }, [opp({})]);
+    expect(md).toContain("No loop candidates yet");
   });
 });

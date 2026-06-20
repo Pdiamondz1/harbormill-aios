@@ -1,6 +1,6 @@
-import type { Audit, AuditOpportunity, AuditSummary, OpportunityCategory, LoopOutcome } from "@/types/audit";
+import type { Audit, AuditOpportunity, AuditSummary, OpportunityCategory, LoopOutcome, GateScore } from "@/types/audit";
 import { VALUE_CATEGORY_LABELS, formatDollars } from "@/types/value";
-import { AUDIT_STATUS_LABELS } from "@/types/audit";
+import { AUDIT_STATUS_LABELS, LOOP_OUTCOME_LABELS } from "@/types/audit";
 
 export function summarizeAudit(opps: AuditOpportunity[], retainerCents: number): AuditSummary {
   const total = opps.reduce((n, o) => n + (o.annual_value_cents || 0), 0);
@@ -75,6 +75,54 @@ export function composeReportMarkdown(
     lines.push(`*${VALUE_CATEGORY_LABELS[o.category]} · confidence ${o.confidence} · effort ${o.effort}*`);
     if (o.description_md) lines.push("", o.description_md);
     if (o.basis_md) lines.push("", `_Basis: ${o.basis_md}_`);
+    lines.push("");
+  }
+  lines.push(`---`, `_Status: ${AUDIT_STATUS_LABELS[audit.status]}._`);
+  return lines.join("\n");
+}
+
+const gateScoreCell = (v: GateScore | null) => v ?? "—";
+const ynCell = (v: boolean | null) => (v === true ? "yes" : v === false ? "no" : "—");
+
+/**
+ * The Loop Audit deliverable. Leads with the recommended first build, then a
+ * ranked table of loop candidates, then a ledger of every task (including
+ * blocked / not-a-loop). The non-loop report stays in composeReportMarkdown.
+ */
+export function composeLoopReportMarkdown(audit: Audit, opps: AuditOpportunity[]): string {
+  const who = audit.company ? `${audit.prospect_name} — ${audit.company}` : audit.prospect_name;
+  const candidates = prioritize(opps.filter((o) => gateOutcome(o) === "candidate"));
+  const candidateValue = candidates.reduce((n, o) => n + (o.annual_value_cents || 0), 0);
+  const first = candidates[0] ?? null;
+
+  const lines: string[] = [
+    `# Loop Audit — ${who}`,
+    "",
+    `**Projected annual value (candidates):** ${formatDollars(candidateValue)}`,
+    "",
+    "## Recommended first build",
+    first
+      ? `**${first.title}** — ${formatDollars(first.annual_value_cents)}/yr · ${VALUE_CATEGORY_LABELS[first.category]} · confidence ${first.confidence} · effort ${first.effort}. Highest value-per-effort among the loop candidates.`
+      : "_No loop candidates yet — every task is blocked or stays manual (see the ledger)._",
+    "",
+    "## Ranked candidates",
+    "",
+    "| Rank | Task | Category | Annual value | Confidence | Effort |",
+    "|------|------|----------|--------------|------------|--------|",
+  ];
+  candidates.forEach((o, i) => {
+    lines.push(
+      `| ${i + 1} | ${o.title} | ${VALUE_CATEGORY_LABELS[o.category]} | ${formatDollars(o.annual_value_cents)}/yr | ${o.confidence} | ${o.effort} |`
+    );
+  });
+
+  lines.push("", "## Ledger", "");
+  for (const o of opps) {
+    lines.push(`### ${o.title} — ${LOOP_OUTCOME_LABELS[gateOutcome(o)]}`);
+    lines.push(
+      `Gate: repeats=${gateScoreCell(o.loop_repeats)} · rule-decides-done=${ynCell(o.loop_done_rule)} · afford-wasted=${gateScoreCell(o.loop_afford_waste)} · has-data+tools=${ynCell(o.loop_has_tools)}`
+    );
+    if (o.basis_md) lines.push(`_Basis: ${o.basis_md}_`);
     lines.push("");
   }
   lines.push(`---`, `_Status: ${AUDIT_STATUS_LABELS[audit.status]}._`);
