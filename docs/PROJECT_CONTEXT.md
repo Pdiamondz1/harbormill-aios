@@ -105,6 +105,9 @@ calendly.com/dwilliams-harbormill/30min, Google Meet).
   never hardcode hex.
 - Gate before "done": `npm run typecheck`, `npm run lint`, `npm run build`,
   `npm run test`. Edge functions are Deno — validate on deploy.
+- Decide what to automate with the [[Four-Condition Loop Test]] — gate repeating
+  work (repeats; a rule decides "done"; afford wasted runs; AI has data + tools),
+  then rank by value-per-effort. The `loop-audit` skill applies it to dev work.
 
 ## See Also
 
