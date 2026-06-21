@@ -12,7 +12,7 @@
 - [[Edge Functions]](entities/edge-functions.md) — The four Deno functions: report-ingest, assistant-chat, knowledge-sync, google-workspace-proxy
 - [[Google Workspace Bridge]](entities/google-workspace-bridge.md) — Per-user OAuth gateway to Drive/Sheets; tokens stay server-side
 - [[Harbormill AIOS]](entities/harbormill-aios.md) — The white-label AI operating-deck product
-- [[Marketing Site]](entities/marketing-site.md) — harbormill.net; separate Vite app in website/, Vercel; Calendly + lead capture
+- [[Marketing Site]](entities/marketing-site.md) — harbormill.net; separate Vite app in website/, Vercel; Calendly + lead capture; Loop Audit offer section
 - [[Supabase]](entities/supabase.md) — Backend: Postgres + RLS + Auth + Deno edge functions; per-client project
 
 ## Concepts

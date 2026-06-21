@@ -3,7 +3,7 @@ title: Four-Condition Loop Test
 type: concept
 created: 2026-06-20
 updated: 2026-06-20
-sources: [.claude/skills/autoresearch/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, docs/PROJECT_CONTEXT.md]
+sources: [.claude/skills/autoresearch/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, docs/PROJECT_CONTEXT.md]
 tags: [automation, methodology, loops, autoresearch, audits, framework]
 ---
 
@@ -82,7 +82,11 @@ first.
    Audit": run an in-deck audit in **Loop Audit** mode (`is_loop_audit`), score each
    opportunity against the four conditions, and export a branded build-first
    recommendation via the [[Google Workspace Bridge]]. Operationalizes the
-   [[ROI-Discovery Audit]]. Engagement playbook: `docs/loop-audit-playbook.md`.
+   [[ROI-Discovery Audit]]. Engagement playbook: `docs/loop-audit-playbook.md`. The
+   public-facing offer for this engagement is a **Loop Audit section** on the
+   [[Marketing Site]] (`#loop-audit`, `website/src/sections/LoopAudit.tsx`) — the
+   four-condition method as a teachable 4-card grid, the deliverable, and a Calendly
+   CTA.
 3. **In-app feature (future)** — [[Aria]] scores a client's recurring work from deck
    signals (`findings.occurrences`, metric cadence, connector activity) and surfaces
    ranked candidates. Deferred until the data contract is known — today it fails
@@ -95,4 +99,5 @@ first.
 - [[The Harbormill Ladder]]
 - [[AI Tool Registry]]
 - [[Extending AIOS]]
+- [[Marketing Site]]
 - [[Harbormill AIOS]]
