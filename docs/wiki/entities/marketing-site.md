@@ -2,8 +2,8 @@
 title: Marketing Site
 type: entity
 created: 2026-06-17
-updated: 2026-06-17
-sources: [website/, website/src/config/site.ts, website/vercel.json, website/scripts/lead-capture.gs]
+updated: 2026-06-20
+sources: [website/, website/src/config/site.ts, website/src/sections/LoopAudit.tsx, website/vercel.json, website/scripts/lead-capture.gs]
 tags: [marketing, website, vercel, gtm]
 ---
 
@@ -21,9 +21,17 @@ Single long-scroll page (`website/src/config/site.ts` is the content source of
 truth): product-forward hero with a live-looking AIOS deck preview, a
 Nike/Assurant/IAA credibility strip, the [[Education-First Philosophy]] strip, a
 problem section, an **interactive AIOS demo tour** (Overview → Briefing → Ask
-Aria, backend-free, seed data), six service cards, [[The Harbormill Ladder]],
-About (founder), FAQ, a free-guide email opt-in, an inline **Calendly** booking
-(free 30-min intro, Google Meet), and the footer.
+Aria, backend-free, seed data), six service cards, [[The Harbormill Ladder]], a
+**Loop Audit offer section** (`#loop-audit`, after the Ladder — the public pitch
+for the paid [[Four-Condition Loop Test]] deliverable: the four-condition method
+as a 4-card grid, a "what you receive" deliverable card, and a "Book a Loop Audit"
+Calendly CTA), About (founder), FAQ, a free-guide email opt-in, an inline
+**Calendly** booking (free 30-min intro, Google Meet), and the footer.
+
+The nav order is Services · AIOS · Loop Audit · Ladder · About · FAQ. Note the
+public pricing copy never uses the internal word "Rung" (see [[The Harbormill
+Ladder]]) — tiers are shown by name ("Paid audit") or a numeric badge, and the
+Loop Audit price pill reads simply `$500–$2,500 · fixed scope`.
 
 ## Plumbing
 
@@ -40,5 +48,6 @@ About (founder), FAQ, a free-guide email opt-in, an inline **Calendly** booking
 - [[Damon Williams]]
 - [[Harbormill AIOS]]
 - [[The Harbormill Ladder]]
+- [[Four-Condition Loop Test]]
 - [[Education-First Philosophy]]
 - [[Project Context]]

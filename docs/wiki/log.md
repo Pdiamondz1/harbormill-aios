@@ -1,5 +1,20 @@
 # Wiki Log
 
+## [2026-06-20] update | Loop Audit offer page + "Rung" is client-invisible
+
+Session-end ingest of the Phase 2b work (PR #18) and a follow-up branding fix
+(PR #19). Recorded the **Loop Audit offer section** on the [[Marketing Site]]
+(`website/src/sections/LoopAudit.tsx`, `#loop-audit`) as the public face of the
+paid [[Four-Condition Loop Test]] deliverable. Also recorded a branding rule:
+**"Rung" is internal-only vocabulary — never shown to or said to clients.** The
+price pill was changed from `Rung 2 · $500–$2,500 · fixed scope` to
+`$500–$2,500 · fixed scope`; client-facing tiers use a name/number, not "Rung N."
+This guards [[Aria]]'s RAG output (see the new Key Decisions on [[The Harbormill
+Ladder]]).
+
+Source: `docs/wiki/raw/sessions/2026-06-20-loop-audit-offer-page.md`.
+Pages updated: [[Marketing Site]], [[Four-Condition Loop Test]], [[The Harbormill Ladder]], index.md.
+
 ## [2026-06-20] ship | Loop Audit offer section (Phase 2b)
 
 Gave surface 2 of the [[Four-Condition Loop Test]] a marketing presence: a

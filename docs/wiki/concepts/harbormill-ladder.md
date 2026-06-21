@@ -2,7 +2,7 @@
 title: The Harbormill Ladder
 type: concept
 created: 2026-06-17
-updated: 2026-06-19
+updated: 2026-06-20
 sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks]
 tags: [strategy, pricing, business-model, gtm]
 ---
@@ -21,6 +21,17 @@ entry, climb only as ROI proves out:
 
 Every climb starts with a free 30-min intro. Surfaced on the marketing site
 (`website/src/config/site.ts`) and in [[Project Context]].
+
+## Key Decisions
+
+- **"Rung" is internal vocabulary — never shown to or said to clients (2026-06-20).**
+  The ladder/rung model is how Harbormill reasons about the engagement internally;
+  client-facing surfaces refer to a tier by its **name** ("Paid audit") or a numeric
+  badge, not "Rung N." The [[Marketing Site]] follows this (the Ladder section uses
+  numbered badges + names; the Loop Audit price pill reads `$500–$2,500 · fixed
+  scope`, not "Rung 2 · …"). This matters for the knowledge base: when [[Aria]]
+  answers a client from this page's content, it should describe a tier by name/price,
+  never echo the word "Rung." (Internal code identifiers and docs may still use it.)
 
 ## Why it's shaped this way (external validation)
 
@@ -47,6 +58,8 @@ to make the entry rung a cleaner product. Recorded as a strategy flag.
 ## See Also
 
 - [[ROI-Discovery Audit]]
+- [[Four-Condition Loop Test]]
+- [[Marketing Site]]
 - [[Project Context]]
 - [[SMB AI-Automation Landscape]]
 - [[Harbormill AIOS]]
