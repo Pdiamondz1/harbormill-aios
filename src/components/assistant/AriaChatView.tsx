@@ -54,7 +54,7 @@ export function AriaChatView() {
             {isThinking && (
               <>
                 {statusLabel && (
-                  <p className="text-xs text-muted-foreground">{statusLabel}</p>
+                  <p className="pl-1 text-xs text-muted-foreground">{statusLabel}</p>
                 )}
                 {streamingText ? (
                   <div className="flex justify-start">

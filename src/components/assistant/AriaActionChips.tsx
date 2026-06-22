@@ -14,7 +14,7 @@ export function AriaActionChips({ chips }: { chips: ActionChip[] }) {
     <div className="flex flex-wrap gap-2 px-1 pt-1">
       {chips.map((chip) => (
         <button
-          key={chip.label}
+          key={`${chip.route}:${chip.label}`}
           type="button"
           onClick={() => navigate(chip.route)}
           className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
