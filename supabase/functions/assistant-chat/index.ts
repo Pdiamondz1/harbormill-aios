@@ -359,6 +359,7 @@ serve(async (req) => {
           claudeMessages.push({ role: "user", content: toolResults });
 
           result = await callModelStreaming(buildRequest(system, claudeMessages, toolDefs), send);
+          // Cache-read tokens are intentionally excluded — this only underestimates, so the loop errs toward MORE rounds (safe backstop direction).
           totalTokens += (result.usage?.input_tokens ?? 0) + (result.usage?.output_tokens ?? 0);
           await logCost(supabase, {
             userId,

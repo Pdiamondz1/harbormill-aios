@@ -113,7 +113,8 @@ function isEmptyContent(content: any): boolean {
 //   pass 1: drop tool_result blocks whose tool_use_id has no matching tool_use
 //           in the immediately preceding assistant message (orphaned results are
 //           removed from the block array; if no blocks remain the user turn is
-//           kept with empty content so the history still starts with a user turn);
+//           dropped entirely — emitting an empty-content user turn would 422 the
+//           Anthropic API);
 //   pass 2: drop tool_use blocks not answered by a tool_result in the next
 //           message (if no blocks remain the assistant turn is dropped entirely);
 // then drop any empty assistant message and re-merge to restore alternating turns.

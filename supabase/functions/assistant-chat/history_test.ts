@@ -52,6 +52,34 @@ Deno.test("orphan tool_use (no answering tool_result) is dropped", () => {
   assertEquals(hasToolUse, false);
 });
 
+Deno.test("parallel tool calls: two tool_result blocks fold into a single user turn", () => {
+  const out = reconstructHistory([
+    { role: "user", content: "do both" },
+    { role: "assistant", content: "", tool_calls: [
+      { type: "tool_use", id: "tu_a", name: "read_metrics", input: {} },
+      { type: "tool_use", id: "tu_b", name: "search_knowledge", input: { q: "x" } },
+    ]},
+    { role: "tool", content: "tu_a", tool_result: { mrr: 1000 } },
+    { role: "tool", content: "tu_b", tool_result: { hits: [] } },
+    { role: "assistant", content: "done" },
+  ]);
+  // assistant tool_use turn with both tool_use blocks is preserved
+  assertEquals(out[1].role, "assistant");
+  const toolUseBlocks = (out[1].content as any[]).filter((b: any) => b.type === "tool_use");
+  assertEquals(toolUseBlocks.length, 2);
+  assertEquals(toolUseBlocks[0].id, "tu_a");
+  assertEquals(toolUseBlocks[1].id, "tu_b");
+  // both tool_result blocks folded into a SINGLE following user turn
+  assertEquals(out[2].role, "user");
+  const resultBlocks = (out[2].content as any[]).filter((b: any) => b.type === "tool_result");
+  assertEquals(resultBlocks.length, 2);
+  const ids = resultBlocks.map((b: any) => b.tool_use_id);
+  assertEquals(ids.includes("tu_a"), true);
+  assertEquals(ids.includes("tu_b"), true);
+  // final assistant text is present
+  assertEquals(out[3], { role: "assistant", content: "done" });
+});
+
 Deno.test("only an orphan tool_result + a leading assistant repairs to empty (never emits an empty-content turn)", () => {
   const out = reconstructHistory([
     { role: "tool", content: "tu_1", tool_result: { x: 1 } }, // orphan: no preceding tool_use
