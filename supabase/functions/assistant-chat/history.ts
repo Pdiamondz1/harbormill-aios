@@ -87,13 +87,17 @@ function mergeConsecutive(messages: AnthropicMessage[]): AnthropicMessage[] {
   return out;
 }
 
-// Drop leading non-user messages so the history always starts with a user turn.
-// A leading assistant turn is not a valid start (the API requires the first
-// message to be from the user). Tool-result-only user turns are left in place
-// here and handled by enforceToolPairing, which strips the orphaned blocks.
+// Drop leading messages until the history starts with a plain user message.
+// A leading assistant turn or a user turn headed by tool_result blocks is not a
+// valid start (the API rejects tool_result blocks with no matching tool_use in
+// the previous message).
 function stripLeadingOrphans(messages: AnthropicMessage[]): AnthropicMessage[] {
   const out = messages.slice();
-  while (out.length > 0 && out[0].role !== "user") {
+  while (
+    out.length > 0 &&
+    (out[0].role !== "user" ||
+      (Array.isArray(out[0].content) && (out[0].content as any[])[0]?.type === "tool_result"))
+  ) {
     out.shift();
   }
   return out;
@@ -133,10 +137,7 @@ function enforceToolPairing(messages: AnthropicMessage[]): AnthropicMessage[] {
       const kept = (msg.content as any[]).filter(
         (b: any) => b?.type !== "tool_result" || prevToolUseIds.has(b.tool_use_id),
       );
-      // Keep the user turn even when all tool_result blocks were orphaned so
-      // the history still opens with a user turn after stripLeadingOrphans has
-      // already run. The empty content is handled downstream by the API or
-      // filtered by the caller if needed.
+      if (kept.length === 0) continue; // every block was orphaned — drop the message
       afterResults.push({ ...msg, content: kept });
     } else {
       afterResults.push(msg);
@@ -170,11 +171,9 @@ function enforceToolPairing(messages: AnthropicMessage[]): AnthropicMessage[] {
     }
   }
 
-  // Drop empty assistant messages, then re-merge so dropping a turn in the
-  // middle never leaves two same-role turns adjacent.
-  const nonEmpty = afterUses.filter(
-    (m) => m.role === "user" || !isEmptyContent(m.content),
-  );
+  // Drop any message left genuinely empty, then re-merge so dropping a turn in
+  // the middle never leaves two same-role turns adjacent.
+  const nonEmpty = afterUses.filter((m) => !isEmptyContent(m.content));
   return mergeConsecutive(nonEmpty);
 }
 
