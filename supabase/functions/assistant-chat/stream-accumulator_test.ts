@@ -53,3 +53,12 @@ Deno.test("parseSseLines splits complete events and keeps a partial tail buffere
   const r2 = parseSseLines(r1.buffer, "pe\":\"b\"}\n\n");
   assertEquals(r2.events[0].type, "b");
 });
+
+Deno.test("text_delta for orphaned index returns no textDelta and does not appear in finalize", () => {
+  const acc = new StreamAccumulator();
+  // No content_block_start for index 99 — orphaned delta
+  const result = acc.push({ type: "content_block_delta", index: 99, delta: { type: "text_delta", text: "ghost" } });
+  assertEquals(result.textDelta, undefined);
+  const out = acc.finalize();
+  assertEquals(out.content.length, 0);
+});

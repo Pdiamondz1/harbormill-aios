@@ -76,8 +76,8 @@ export class StreamAccumulator {
         const d = ev.delta ?? {};
         if (d.type === "text_delta") {
           const b = this.blocks[ev.index];
-          if (b?.type === "text") b.text += d.text ?? "";
-          return { textDelta: d.text ?? "" };
+          if (b?.type === "text") { b.text += d.text ?? ""; return { textDelta: d.text ?? "" }; }
+          return {};
         }
         if (d.type === "input_json_delta") {
           this.partialJson[ev.index] = (this.partialJson[ev.index] ?? "") + (d.partial_json ?? "");
