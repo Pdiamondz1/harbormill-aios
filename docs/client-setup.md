@@ -82,7 +82,9 @@ Supabase automatically — you do **not** set those. Set the rest as secrets:
 supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
 supabase secrets set OPENAI_API_KEY=sk-...
 # Optional AI overrides
-supabase secrets set ANTHROPIC_MODEL=claude-sonnet-4-6
+supabase secrets set ANTHROPIC_MODEL=claude-sonnet-4-6          # model id (default: claude-sonnet-4-6; Harbormill's own deploy uses an Opus id)
+supabase secrets set ANTHROPIC_MAX_TOKENS=4096                  # max output tokens (default: 4096)
+supabase secrets set ANTHROPIC_THINKING_BUDGET=0                # extended-thinking budget_tokens (default: 0 = off; e.g. 8000 enables it; auto-raises max_tokens above the budget, temperature stays default)
 supabase secrets set ASSISTANT_NAME="Aria" PRODUCT_NAME="Acme Deck"
 ```
 
