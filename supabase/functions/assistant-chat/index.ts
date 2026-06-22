@@ -283,9 +283,10 @@ serve(async (req) => {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
+      let closed = false;
       const send = (e: unknown) => controller.enqueue(encoder.encode(JSON.stringify(e) + "\n"));
       send({ type: "heartbeat" }); // flush the first byte immediately
-      const heartbeat = setInterval(() => send({ type: "heartbeat" }), 15_000);
+      const heartbeat = setInterval(() => { if (!closed) send({ type: "heartbeat" }); }, 15_000);
       // deno-lint-ignore no-explicit-any
       let capturedActions: any[] = [];
       try {
@@ -373,18 +374,20 @@ serve(async (req) => {
         // turn is still pushed verbatim (thinking intact) to satisfy the API.
         let content = extractText(result.content);
         if (result.stop_reason === "tool_use" && !content.trim()) {
+          // Build a tool_result for EVERY tool_use in the budget-terminating turn —
+          // Anthropic requires one tool_result per tool_use or it returns a 400.
           // deno-lint-ignore no-explicit-any
-          const pendingId = (result.content as any[]).find((b: any) => b.type === "tool_use")?.id;
+          const pendingToolResults = (result.content as any[])
+            .filter((b: any) => b.type === "tool_use")
+            .map((b: any) => ({
+              type: "tool_result",
+              tool_use_id: b.id,
+              content: "Tool budget reached — answer now from what you have.",
+            }));
           claudeMessages.push({ role: "assistant", content: result.content });
           claudeMessages.push({
             role: "user",
-            content: [
-              {
-                type: "tool_result",
-                tool_use_id: pendingId,
-                content: "Tool budget reached — answer now from what you have.",
-              },
-            ],
+            content: pendingToolResults,
           });
           const finalBody = buildRequest(system, claudeMessages, []); // no tools
           result = await callModelStreaming(finalBody, send);
@@ -413,6 +416,7 @@ serve(async (req) => {
         console.error("[assistant-chat]", msg);
         send({ type: "error", message: msg });
       } finally {
+        closed = true;
         clearInterval(heartbeat);
         controller.close();
       }
