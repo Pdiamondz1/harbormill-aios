@@ -2,7 +2,10 @@
 // Single-agent chat with RAG + a pluggable tool registry (see tools.ts).
 //
 // - Caller must have a valid session AND an admin/stakeholder role row.
-// - Inserts the user message, runs an Anthropic tool loop, persists the reply.
+// - Inserts the user message, runs a STREAMING Anthropic tool loop, persists the reply.
+// - Response is NDJSON (application/x-ndjson): one JSON object per line —
+//   {type:"heartbeat"} | {type:"status",...} | {type:"text",delta} |
+//   {type:"done",content,actions} | {type:"error",message}.
 // - Tools execute server-side with the service role (see tools.ts / ToolContext).
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -11,6 +14,8 @@ import { corsHeaders } from "../_shared/cors.ts";
 import { logCost } from "../_shared/cost-ledger.ts";
 import { anthropicFetch } from "../_shared/anthropic-fetch.ts";
 import { TOOLS, type ToolContext } from "./tools.ts";
+import { reconstructHistory, type StoredRow } from "./history.ts";
+import { StreamAccumulator, parseSseLines } from "./stream-accumulator.ts";
 
 const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
 const ANTHROPIC_MODEL = Deno.env.get("ANTHROPIC_MODEL") ?? "claude-sonnet-4-6";
@@ -25,7 +30,12 @@ const ASSISTANT_PERSONA =
   "the operator's AI co-pilot — concise, candid, and grounded in this business's live metrics and knowledge base";
 
 const MAX_INPUT_LENGTH = 20_000;
-const MAX_TOOL_ROUNDS = 8;
+const MAX_TOOL_ROUNDS = 12;
+const TOKEN_SAFETY_NET = 300_000;
+
+// Extended thinking + output budget (Task 4). Thinking budget of 0 disables it.
+const THINKING_BUDGET = Number(Deno.env.get("ANTHROPIC_THINKING_BUDGET") ?? "0") || 0;
+const MAX_OUTPUT_TOKENS = Number(Deno.env.get("ANTHROPIC_MAX_TOKENS") ?? "4096") || 4096;
 
 // Per-deployment tool toggle (plug-and-play): comma-separated tool names to hide.
 const DISABLED_TOOLS = new Set(
@@ -34,6 +44,24 @@ const DISABLED_TOOLS = new Set(
     .map((s) => s.trim())
     .filter(Boolean)
 );
+
+// Friendly per-tool status labels surfaced to the UI while a tool runs.
+const STATUS_LABELS: Record<string, string> = {
+  search_knowledge: "Searching the knowledge base…",
+  read_metrics: "Reading the latest metrics…",
+  get_latest_briefing: "Pulling the latest briefing…",
+  get_value_summary: "Calculating value delivered…",
+  get_document: "Reading the document…",
+  get_weight_trend: "Checking the growth trend…",
+  get_cost_stats: "Reviewing AI spend…",
+  create_finding: "Logging the finding…",
+  propose_correction: "Queuing the correction…",
+  compose_email_link: "Drafting the email…",
+  export_to_drive: "Exporting to Drive…",
+  list_drive_files: "Listing Drive files…",
+  suggest_actions: "Suggesting next steps…",
+  // unmatched tools fall back to "Working on <name>…" below.
+};
 
 const INJECTION_PATTERNS = [
   /ignore\s+(all\s+)?previous/gi,
@@ -111,6 +139,29 @@ function extractText(content: any): string {
   return "";
 }
 
+// Build a streaming Anthropic request body (Task 4). Always streams, never sets
+// temperature (incompatible with extended thinking), and enables extended
+// thinking when THINKING_BUDGET > 0 — bumping max_tokens to leave room for the
+// thinking budget plus the visible answer. The cache breakpoint rides on the
+// last message via withHistoryCacheBreakpoint.
+// deno-lint-ignore no-explicit-any
+function buildRequest(system: any, messages: any[], tools: any[]): Record<string, unknown> {
+  // deno-lint-ignore no-explicit-any
+  const body: Record<string, any> = {
+    model: ANTHROPIC_MODEL,
+    max_tokens: MAX_OUTPUT_TOKENS,
+    stream: true,
+    system,
+    messages: withHistoryCacheBreakpoint(messages),
+    tools,
+  };
+  if (THINKING_BUDGET > 0) {
+    body.thinking = { type: "enabled", budget_tokens: THINKING_BUDGET };
+    body.max_tokens = Math.max(MAX_OUTPUT_TOKENS, THINKING_BUDGET + 1024);
+  }
+  return body;
+}
+
 async function anthropic(body: unknown): Promise<Response> {
   return anthropicFetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -121,6 +172,31 @@ async function anthropic(body: unknown): Promise<Response> {
     },
     body: JSON.stringify(body),
   });
+}
+
+// Stream one model call: feed the SSE accumulator and forward text deltas via
+// `emit`. Returns the assembled message (same shape as the non-streaming JSON).
+// deno-lint-ignore no-explicit-any
+async function callModelStreaming(body: any, emit: (e: unknown) => void) {
+  const resp = await anthropic(body); // anthropic() JSON.stringifies; body.stream === true
+  if (!resp.ok || !resp.body) {
+    throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
+  }
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  const acc = new StreamAccumulator();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    const { events, buffer: rest } = parseSseLines(buffer, decoder.decode(value, { stream: true }));
+    buffer = rest;
+    for (const ev of events) {
+      const { textDelta } = acc.push(ev);
+      if (textDelta) emit({ type: "text", delta: textDelta });
+    }
+  }
+  return acc.finalize();
 }
 
 serve(async (req) => {
@@ -177,23 +253,22 @@ serve(async (req) => {
 
   const sanitized = sanitize(message);
 
-  // Persist the user message, then load recent history (which now includes it).
+  // Persist the user message BEFORE loading history (so history includes it).
   await supabase.from("messages").insert({ conversation_id, role: "user", content: sanitized });
 
+  // Tool-aware history: replay text + tool_use + tool_result rows so prior tool
+  // turns survive (Task 5). reconstructHistory enforces tool_use/tool_result
+  // pairing so a cut window never reaches the API malformed.
   const { data: history } = await supabase
     .from("messages")
-    .select("role, content")
+    .select("role, content, tool_calls, tool_result")
     .eq("conversation_id", conversation_id)
-    .in("role", ["user", "assistant"])
-    .not("content", "is", null)
+    .in("role", ["user", "assistant", "tool"])
     .order("created_at", { ascending: true })
-    .limit(40);
+    .limit(60);
 
   // deno-lint-ignore no-explicit-any
-  const claudeMessages: any[] = (history ?? []).map((m: { role: string; content: string }) => ({
-    role: m.role,
-    content: m.content,
-  }));
+  const claudeMessages: any[] = reconstructHistory((history ?? []) as StoredRow[]);
 
   // Admin-only tools (requiresAdmin) are hidden from stakeholders; tools named in
   // DISABLED_TOOLS are hidden for the whole deployment. Filter applies to both
@@ -205,82 +280,146 @@ serve(async (req) => {
   const toolDefs = availableTools.map((t) => t.definition);
   const toolCtx: ToolContext = { supabase, userId, openaiKey: OPENAI_API_KEY, isAdmin };
 
-  try {
-    let resp = await anthropic({
-      model: ANTHROPIC_MODEL,
-      max_tokens: 4096,
-      system,
-      messages: withHistoryCacheBreakpoint(claudeMessages),
-      tools: toolDefs,
-    });
-    if (!resp.ok) throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
-    let result = await resp.json();
-    await logCost(supabase, {
-      userId,
-      edgeFunction: "assistant-chat",
-      model: ANTHROPIC_MODEL,
-      inputTokens: result.usage?.input_tokens ?? 0,
-      outputTokens: result.usage?.output_tokens ?? 0,
-    });
-
-    let rounds = 0;
-    while (result.stop_reason === "tool_use" && rounds < MAX_TOOL_ROUNDS) {
-      rounds++;
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      const send = (e: unknown) => controller.enqueue(encoder.encode(JSON.stringify(e) + "\n"));
+      send({ type: "heartbeat" }); // flush the first byte immediately
+      const heartbeat = setInterval(() => send({ type: "heartbeat" }), 15_000);
       // deno-lint-ignore no-explicit-any
-      const toolUses = (result.content as any[]).filter((b) => b.type === "tool_use");
-      // deno-lint-ignore no-explicit-any
-      const toolResults: any[] = [];
-      for (const tu of toolUses) {
-        const tool = availableTools.find((t) => t.definition.name === tu.name);
-        let output: unknown;
-        try {
-          output = tool ? await tool.execute(tu.input, toolCtx) : { error: `Unknown tool ${tu.name}` };
-        } catch (err) {
-          output = { error: err instanceof Error ? err.message : "tool failed" };
-        }
-        // Audit the tool turn (tool_result row).
-        await supabase.from("messages").insert({
-          conversation_id,
-          role: "tool",
-          content: tu.id,
-          tool_result: output,
+      let capturedActions: any[] = [];
+      try {
+        let result = await callModelStreaming(buildRequest(system, claudeMessages, toolDefs), send);
+        await logCost(supabase, {
+          userId,
+          edgeFunction: "assistant-chat",
+          model: ANTHROPIC_MODEL,
+          inputTokens: result.usage?.input_tokens ?? 0,
+          outputTokens: result.usage?.output_tokens ?? 0,
         });
-        toolResults.push({ type: "tool_result", tool_use_id: tu.id, content: JSON.stringify(output) });
+
+        let rounds = 0;
+        let totalTokens = (result.usage?.input_tokens ?? 0) + (result.usage?.output_tokens ?? 0);
+        while (
+          result.stop_reason === "tool_use" &&
+          rounds < MAX_TOOL_ROUNDS &&
+          totalTokens < TOKEN_SAFETY_NET
+        ) {
+          rounds++;
+          // deno-lint-ignore no-explicit-any
+          const toolUses = (result.content as any[]).filter((b) => b.type === "tool_use");
+          // deno-lint-ignore no-explicit-any
+          const toolResults: any[] = [];
+
+          // Persist the assistant tool-use turn for FUTURE replay. Strip thinking /
+          // redacted_thinking blocks — only text + tool_use are replay-safe; stale
+          // thinking signatures risk validation errors on later requests. The live
+          // loop (below) still pushes the unmodified content with thinking intact.
+          const persistedToolCalls = (result.content as Array<Record<string, unknown>>).filter(
+            (b) => b.type !== "thinking" && b.type !== "redacted_thinking",
+          );
+          await supabase.from("messages").insert({
+            conversation_id,
+            role: "assistant",
+            content: extractText(result.content),
+            tool_calls: persistedToolCalls,
+          });
+
+          for (const tu of toolUses) {
+            send({
+              type: "status",
+              tool: tu.name,
+              label: STATUS_LABELS[tu.name] ?? `Working on ${tu.name}…`,
+            });
+            if (tu.name === "suggest_actions") {
+              capturedActions = (tu.input?.actions ?? []).slice(0, 3);
+            }
+            const tool = availableTools.find((t) => t.definition.name === tu.name);
+            let output: unknown;
+            try {
+              output = tool ? await tool.execute(tu.input, toolCtx) : { error: `Unknown tool ${tu.name}` };
+            } catch (err) {
+              output = { error: err instanceof Error ? err.message : "tool failed" };
+            }
+            // Audit the tool turn (tool_result row).
+            await supabase.from("messages").insert({
+              conversation_id,
+              role: "tool",
+              content: tu.id,
+              tool_result: output,
+            });
+            toolResults.push({ type: "tool_result", tool_use_id: tu.id, content: JSON.stringify(output) });
+          }
+
+          // Live loop: push the assistant turn VERBATIM (thinking blocks first and
+          // unmodified) so the thinking block immediately precedes the tool_use it
+          // reasoned about when the matching tool_results are sent in this request.
+          claudeMessages.push({ role: "assistant", content: result.content });
+          claudeMessages.push({ role: "user", content: toolResults });
+
+          result = await callModelStreaming(buildRequest(system, claudeMessages, toolDefs), send);
+          totalTokens += (result.usage?.input_tokens ?? 0) + (result.usage?.output_tokens ?? 0);
+          await logCost(supabase, {
+            userId,
+            edgeFunction: "assistant-chat",
+            model: ANTHROPIC_MODEL,
+            inputTokens: result.usage?.input_tokens ?? 0,
+            outputTokens: result.usage?.output_tokens ?? 0,
+          });
+        }
+
+        // Loop hardening: budget hit with a pending tool_use and no text → one
+        // no-tools "answer now" call so the user always gets a reply. The assistant
+        // turn is still pushed verbatim (thinking intact) to satisfy the API.
+        let content = extractText(result.content);
+        if (result.stop_reason === "tool_use" && !content.trim()) {
+          // deno-lint-ignore no-explicit-any
+          const pendingId = (result.content as any[]).find((b: any) => b.type === "tool_use")?.id;
+          claudeMessages.push({ role: "assistant", content: result.content });
+          claudeMessages.push({
+            role: "user",
+            content: [
+              {
+                type: "tool_result",
+                tool_use_id: pendingId,
+                content: "Tool budget reached — answer now from what you have.",
+              },
+            ],
+          });
+          const finalBody = buildRequest(system, claudeMessages, []); // no tools
+          result = await callModelStreaming(finalBody, send);
+          await logCost(supabase, {
+            userId,
+            edgeFunction: "assistant-chat",
+            model: ANTHROPIC_MODEL,
+            inputTokens: result.usage?.input_tokens ?? 0,
+            outputTokens: result.usage?.output_tokens ?? 0,
+          });
+          content = extractText(result.content);
+        }
+        if (!content.trim()) {
+          content =
+            "I gathered the data but couldn't compose an answer. Ask again, more specifically if you can.";
+        }
+
+        await supabase.from("messages").insert({ conversation_id, role: "assistant", content });
+        await supabase
+          .from("conversations")
+          .update({ last_message_at: new Date().toISOString() })
+          .eq("id", conversation_id);
+        send({ type: "done", content, actions: capturedActions });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Internal error";
+        console.error("[assistant-chat]", msg);
+        send({ type: "error", message: msg });
+      } finally {
+        clearInterval(heartbeat);
+        controller.close();
       }
+    },
+  });
 
-      claudeMessages.push({ role: "assistant", content: result.content });
-      claudeMessages.push({ role: "user", content: toolResults });
-
-      resp = await anthropic({
-        model: ANTHROPIC_MODEL,
-        max_tokens: 4096,
-        system,
-        messages: withHistoryCacheBreakpoint(claudeMessages),
-        tools: toolDefs,
-      });
-      if (!resp.ok) throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
-      result = await resp.json();
-      await logCost(supabase, {
-        userId,
-        edgeFunction: "assistant-chat",
-        model: ANTHROPIC_MODEL,
-        inputTokens: result.usage?.input_tokens ?? 0,
-        outputTokens: result.usage?.output_tokens ?? 0,
-      });
-    }
-
-    let content = extractText(result.content);
-    if (!content.trim()) {
-      content = "I gathered the data but ran out of room composing the answer. Ask me again, more specifically if you can.";
-    }
-
-    await supabase.from("messages").insert({ conversation_id, role: "assistant", content });
-    await supabase.from("conversations").update({ last_message_at: new Date().toISOString() }).eq("id", conversation_id);
-
-    return json({ success: true, content });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : "Internal error";
-    console.error("[assistant-chat]", msg);
-    return json({ error: msg }, 500);
-  }
+  return new Response(stream, {
+    headers: { ...corsHeaders(req), "Content-Type": "application/x-ndjson" },
+  });
 });
