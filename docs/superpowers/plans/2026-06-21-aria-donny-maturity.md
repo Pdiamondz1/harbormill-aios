@@ -220,12 +220,15 @@ Deno.test("orphan tool_use (no answering tool_result) is dropped", () => {
   assertEquals(hasToolUse, false);
 });
 
-Deno.test("history starting with a tool_result is stripped to a valid leading user turn", () => {
+Deno.test("only an orphan tool_result + a leading assistant repairs to empty (never emits an empty-content turn)", () => {
   const out = reconstructHistory([
-    { role: "tool", content: "tu_1", tool_result: { x: 1 } },
-    { role: "assistant", content: "answer" },
+    { role: "tool", content: "tu_1", tool_result: { x: 1 } }, // orphan: no preceding tool_use
+    { role: "assistant", content: "answer" },                  // invalid as a leading turn
   ]);
-  assertEquals(out[0].role, "user"); // never leads with an orphan tool_result / assistant
+  // The orphan tool_result's user turn would be empty after repair → it must be DROPPED,
+  // never emitted as { role:"user", content:[] } (an Anthropic 422). The leading assistant
+  // turn is also stripped. Nothing valid remains.
+  assertEquals(out.length, 0);
 });
 ```
 
