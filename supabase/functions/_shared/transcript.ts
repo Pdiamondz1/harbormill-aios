@@ -31,6 +31,9 @@ export function parseTranscriptResult(raw: string): TranscriptResult {
   const clean = items
     .filter((i) => i && typeof i.title === "string" && SEVERITIES.has(i.severity))
     .slice(0, 50)
-    .map((i) => ({ severity: i.severity, title: i.title, summary_md: String(i.summary_md ?? "") }));
+    .map((i) => {
+      const s = String(i.summary_md ?? "").trim();
+      return { severity: i.severity, title: i.title, summary_md: s.length ? s : i.title };
+    });
   return { summary_md: parsed.summary_md, action_items: clean };
 }

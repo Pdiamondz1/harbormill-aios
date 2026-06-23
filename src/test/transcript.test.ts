@@ -31,6 +31,15 @@ describe("parseTranscriptResult", () => {
   it("throws on malformed input", () => {
     expect(() => parseTranscriptResult("not json at all")).toThrow();
   });
+  it("falls back to title when summary_md is empty/missing", () => {
+    const r = parseTranscriptResult(JSON.stringify({ summary_md: "x", action_items: [
+      { severity: "high", title: "Email the CFO", summary_md: "" },
+      { severity: "low", title: "Book the room" },
+    ] }));
+    expect(r.action_items).toHaveLength(2);
+    expect(r.action_items[0].summary_md).toBe("Email the CFO");
+    expect(r.action_items[1].summary_md).toBe("Book the room");
+  });
 });
 
 describe("buildTranscriptPrompt", () => {
