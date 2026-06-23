@@ -31,6 +31,7 @@ const NAV: NavItem[] = [
   { to: "/loops", label: "Loops", adminOnly: true, feature: "loops" },
   { to: "/briefings", label: "Briefings", feature: "briefings" },
   { to: "/findings", label: "Findings", adminOnly: true, feature: "findings" },
+  { to: "/meetings", label: "Meetings", adminOnly: true, feature: "meetings" },
   { to: "/strategy", label: "Strategy", feature: "strategy" },
   { to: "/workspace", label: "Workspace", feature: "workspace" },
   { to: "/assistant", label: brand.assistantName, feature: "assistant" },

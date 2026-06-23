@@ -17,6 +17,7 @@ export interface FeatureFlags {
   loops: boolean;
   briefings: boolean;
   findings: boolean;
+  meetings: boolean;
   strategy: boolean;
   workspace: boolean;
   assistant: boolean;
@@ -31,6 +32,7 @@ export const features: FeatureFlags = {
   loops: true,
   briefings: true,
   findings: true,
+  meetings: true,
   strategy: true,
   workspace: true,
   assistant: true,

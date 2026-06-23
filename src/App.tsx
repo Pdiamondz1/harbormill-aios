@@ -11,6 +11,7 @@ import Login from "@/pages/Login";
 import Overview from "@/pages/Overview";
 import Briefings from "@/pages/Briefings";
 import Findings from "@/pages/Findings";
+import Meetings from "@/pages/Meetings";
 import Strategy from "@/pages/Strategy";
 import Workspace from "@/pages/Workspace";
 import WorkspaceCallback from "@/pages/WorkspaceCallback";
@@ -70,6 +71,16 @@ export default function App() {
                     element={
                       <ProtectedRoute tier="admin">
                         <Findings />
+                      </ProtectedRoute>
+                    }
+                  />
+                )}
+                {features.meetings && (
+                  <Route
+                    path="meetings"
+                    element={
+                      <ProtectedRoute tier="admin">
+                        <Meetings />
                       </ProtectedRoute>
                     }
                   />
