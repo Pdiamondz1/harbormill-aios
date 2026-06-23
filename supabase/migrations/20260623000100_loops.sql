@@ -38,7 +38,7 @@ create table public.loop_actions (
                          check (value_category in ('hours_saved','revenue_captured','cost_avoided','other')),
   audit_opportunity_id uuid references public.audit_opportunities (id) on delete set null,
   metadata             jsonb not null default '{}'::jsonb,
-  approved_by          uuid references auth.users (id),
+  approved_by          uuid references auth.users (id) on delete set null,
   approved_at          timestamptz,
   sent_at              timestamptz,
   last_error           text,
@@ -53,10 +53,12 @@ alter table public.loops enable row level security;
 alter table public.loop_actions enable row level security;
 
 create policy "loops admin all" on public.loops
-  for all using (public.is_admin()) with check (public.is_admin());
+  for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
 
 create policy "loop_actions admin all" on public.loop_actions
-  for all using (public.is_admin()) with check (public.is_admin());
+  for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
 
 -- ── Triggers ──────────────────────────────────────────────────────────────────
 
