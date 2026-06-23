@@ -26,6 +26,12 @@ export interface ValueEvent {
   created_at: string;
 }
 
+export interface Reconciliation {
+  promised_annual_cents: number;
+  delivered_cents: number;
+  pct_of_promise: number | null;
+}
+
 export interface ValueSummary {
   this_month_cents: number;
   prev_month_cents: number;
@@ -34,6 +40,7 @@ export interface ValueSummary {
   roi_multiple: number | null;
   by_category: Partial<Record<ValueCategory, number>>;
   generated_at: string;
+  reconciliation?: Reconciliation;
 }
 
 /** Whole-dollar formatting from cents (no cents shown — these are estimates). */
