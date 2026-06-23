@@ -16,7 +16,12 @@ const GOOGLE_REVOKE_URL = "https://oauth2.googleapis.com/revoke";
 const DRIVE_FILES_URL = "https://www.googleapis.com/drive/v3/files";
 const DRIVE_UPLOAD_URL = "https://www.googleapis.com/upload/drive/v3/files";
 
-export const GOOGLE_SCOPES = ["openid", "email", "https://www.googleapis.com/auth/drive.file"];
+export const GOOGLE_SCOPES = [
+  "openid",
+  "email",
+  "https://www.googleapis.com/auth/drive.file",
+  "https://www.googleapis.com/auth/gmail.send",
+];
 export const FOLDER_NAME = Deno.env.get("WORKSPACE_FOLDER_NAME") ?? "Harbormill AIOS";
 
 export class GoogleWorkspaceError extends Error {
@@ -396,4 +401,59 @@ export async function appendMetricsRows(
     );
   }
   return { link: sheet.link, created: sheet.created, rows: rows.length };
+}
+
+// ── Gmail Send ──
+
+/**
+ * Send an email from the authenticated user's Gmail account.
+ *
+ * Requires the gmail.send scope (added to GOOGLE_SCOPES above).
+ * Existing connected users must re-consent via the OAuth flow to grant this
+ * scope — the consent URL includes it automatically because GOOGLE_SCOPES is
+ * the single source of truth.
+ *
+ * UTF-8 note: we encode via TextEncoder → Uint8Array → binary string so that
+ * non-ASCII characters in subject/body survive btoa (which only accepts Latin-1).
+ * The same b64url helper already used in this file strips padding and swaps
+ * the two non-URL-safe base64 chars, giving us a valid RFC-4648 base64url raw
+ * value that the Gmail API expects.
+ */
+export async function sendGmail(
+  accessToken: string,
+  args: { to: string; subject: string; body: string }
+): Promise<{ id: string; threadId: string }> {
+  const { to, subject, body } = args;
+
+  // Build RFC-2822 MIME message.
+  const mime = [
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    'Content-Type: text/plain; charset="UTF-8"',
+    "",
+    body,
+  ].join("\r\n");
+
+  // UTF-8-safe base64url encoding: TextEncoder gives us a proper Uint8Array
+  // so that any non-ASCII codepoint is encoded as multi-byte UTF-8 before
+  // btoa sees it (btoa rejects codepoints > 255 in a string).
+  const raw = b64url(new TextEncoder().encode(mime));
+
+  const resp = await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/send", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ raw }),
+  });
+
+  if (!resp.ok) {
+    const errText = (await resp.text()).slice(0, 300);
+    console.error("[google-workspace] Gmail send failed:", resp.status, errText);
+    throw new GoogleWorkspaceError("google_api_error", `Gmail send failed (${resp.status})`, 502);
+  }
+
+  const data = await resp.json() as { id: string; threadId: string };
+  return { id: data.id, threadId: data.threadId };
 }
