@@ -22,6 +22,7 @@ import Value from "@/pages/Value";
 import Audits from "@/pages/Audits";
 import AuditDetail from "@/pages/AuditDetail";
 import Connectors from "@/pages/Connectors";
+import Loops from "@/pages/Loops";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,6 +59,9 @@ export default function App() {
                 )}
                 {features.connectors && (
                   <Route path="connectors" element={<ProtectedRoute tier="admin"><Connectors /></ProtectedRoute>} />
+                )}
+                {features.loops && (
+                  <Route path="loops" element={<ProtectedRoute tier="admin"><Loops /></ProtectedRoute>} />
                 )}
                 {features.briefings && <Route path="briefings" element={<Briefings />} />}
                 {features.findings && (
