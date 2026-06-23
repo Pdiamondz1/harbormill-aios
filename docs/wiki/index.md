@@ -7,7 +7,7 @@
 ## Entities
 
 - [[AI Providers]](entities/ai-providers.md) — Anthropic (claude-sonnet-4-6, chat) + OpenAI (text-embedding-3-small, RAG); per-client keys
-- [[Aria]](entities/aria.md) — The operator's AI co-pilot; pluggable tool registry in assistant-chat/tools.ts
+- [[Aria]](entities/aria.md) — The operator's AI co-pilot; streaming "Donny-grade" engine (PR #21) + pluggable tool registry; Gmail/Calendar tools designed (M2a)
 - [[Damon Williams]](entities/damon-williams.md) — Founder & AI Solutions Engineer; 15 yrs enterprise IT; education-first
 - [[Edge Functions]](entities/edge-functions.md) — The four Deno functions: report-ingest, assistant-chat, knowledge-sync, google-workspace-proxy
 - [[Google Workspace Bridge]](entities/google-workspace-bridge.md) — Per-user OAuth gateway to Drive/Sheets; tokens stay server-side
@@ -21,7 +21,7 @@
 - [[AI Tool Registry]](concepts/ai-tool-registry.md) — Aria's pluggable TOOLS array in assistant-chat/tools.ts; six tools, add by appending
 - [[AIOS App Shell]](concepts/aios-app-shell.md) — Front-end: React Router, AppLayout, AuthContext, ProtectedRoute, env-only client, data hooks
 - [[AIOS Pages]](concepts/aios-pages.md) — The user-facing surfaces: Overview, Briefings, Findings, Strategy, Assistant, Workspace, Login
-- [[Assistant Chat Loop]](concepts/assistant-chat-loop.md) — Aria's agentic loop: history, 8 tool rounds, model, injection defense, cost logging
+- [[Assistant Chat Loop]](concepts/assistant-chat-loop.md) — Aria's agentic loop: NDJSON streaming, tool-aware memory + pairing-repair, 12 tool rounds + "answer now" fallback, extended thinking, action chips (PR #21)
 - [[Build & Verification Gate]](concepts/build-and-verification-gate.md) — npm scripts + CI (Node 22, npm install vs ci/EBADPLATFORM); Deno excluded
 - [[Calendly Booking Flow]](concepts/calendly-booking-flow.md) — Free 30-min intro via Calendly (Google Meet); popup + inline embed; lead funnel
 - [[Connector Library]](concepts/connector-library.md) — Managed pg_cron + connector-sync runtime that pulls SaaS data (Stripe first) into metric_snapshots on an hourly schedule
