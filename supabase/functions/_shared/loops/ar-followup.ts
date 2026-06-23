@@ -18,6 +18,19 @@ export const arFollowup: Loop = {
       .from("ar_invoices").select("*").eq("status", "open");
     if (error) throw error;
 
+    // Load invoice_ids that already have a non-terminal proposed action so we
+    // don't queue a duplicate reminder every hour for unapproved invoices.
+    const { data: pending, error: pendErr } = await ctx.supabase
+      .from("loop_actions")
+      .select("target")
+      .eq("status", "proposed");
+    if (pendErr) throw pendErr;
+    const alreadyQueued = new Set(
+      (pending ?? [])
+        .map((p: { target: { invoice_id?: string } }) => p.target?.invoice_id)
+        .filter(Boolean),
+    );
+
     const actions: ProposedAction[] = [];
     let openTotal = 0, overdueTotal = 0;
 
@@ -27,6 +40,8 @@ export const arFollowup: Loop = {
       if (overdue <= 0) continue;
       overdueTotal += inv.amount_cents;
       if (!dueForReminder(overdue, inv.last_reminded_at, cadence, now)) continue;
+      // Skip if a proposed action for this invoice is already awaiting approval.
+      if (alreadyQueued.has(inv.id)) continue;
 
       const valueCents = estimateRecoverableCents(inv.amount_cents, overdue);
       const amount = (inv.amount_cents / 100).toLocaleString("en-US",
