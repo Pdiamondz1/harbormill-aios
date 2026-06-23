@@ -238,3 +238,62 @@ in the assistant chat.
 > **auto-send mode** (skip the approve step for low-risk actions), and
 > **webhook ingestion** so billing systems push invoice updates in real time
 > rather than on a polling schedule.
+
+## Meeting Transcript Reports
+
+The Meetings page (admin-only) lets an operator paste or upload a raw meeting
+transcript. The `transcript-summarize` edge function calls Claude, then writes
+two things: a structured summary row to `meeting_reports` and one or more
+action-item findings to the `findings` table — exactly as if Aria had filed
+them, so they appear on the Findings page alongside other AI-sourced findings.
+
+**Data flow:**
+
+```
+Admin pastes / uploads transcript (Meetings page)
+  → POST /transcript-summarize  (admin JWT required)
+      → _shared/transcript.ts   parse + build Claude prompt
+      → _shared/anthropic-fetch.ts + logCost
+      → claude-sonnet-4-6       returns summary + action items JSON
+      → INSERT meeting_reports  (summary, participants, duration, transcript_chars)
+      → report-ingest  type:"findings"
+          → findings rows  (source: "transcript-agent",
+                            evidence.meeting_report_id: <id>)
+  → Meetings page               new report appears in list
+  → Findings page               action items linked back to the meeting
+```
+
+**Input constraints.** Transcript input is manual paste or file upload only —
+no Google Meet / Calendar auto-pull (those would require additional OAuth
+scopes and Drive read permissions, deferred). Transcripts are capped at
+**100 000 chars** before being sent to Claude. The raw transcript text is
+**not stored**; only `transcript_chars` (the character count) is persisted for
+auditing. This keeps the `meeting_reports` table lean and avoids storing
+potentially sensitive verbatim content.
+
+**Seams reused.**
+
+| Seam | Role |
+|---|---|
+| `_shared/anthropic-fetch.ts` | Authenticated Claude API call (same wrapper used by assistant-chat) |
+| `logCost` | Writes token usage to `ai_cost_log` for the Value page |
+| `report-ingest` `type:"findings"` | Files action items through the standard findings path, preserving RLS and the Findings page UI for free |
+
+**Findings linkage.** Each action-item finding has:
+```json
+{ "source": "transcript-agent",
+  "evidence": { "meeting_report_id": "<uuid>" } }
+```
+This lets the Meetings page cross-link findings to their source report without
+a custom join table.
+
+> **Deferred follow-ons.** Not yet built, but natural next steps:
+> **Drive / Calendar auto-pull** (new OAuth scopes, calendar event → transcript
+> attachment lookup); **KPI extraction** → push meeting-mentioned metrics into
+> `metric_snapshots` via report-ingest; **RAG embedding** of summaries into
+> `knowledge` via `knowledge-sync` so Aria can answer "what did we decide in
+> last week's ops meeting?"; **project-status updates** (needs a new projects
+> ingest path); **re-run / edit a report** (re-summarise with a corrected
+> transcript or updated prompt); **stakeholder visibility** (currently
+> admin-only; a `shared` flag on `meeting_reports` could expose selected
+> summaries to stakeholders without exposing the raw action-item findings).
