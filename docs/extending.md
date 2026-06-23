@@ -135,3 +135,106 @@ through the existing [[report-ingest]] seam, never through a second write path.
 > Harbormill delivered; conflating them would inflate the ROI surface. The
 > framework is value-capable, but the Stripe connector is intentionally
 > metrics-only to keep the Value Delivered / ROI ledger honest.
+
+## Add a loop
+
+A **loop** is a scheduled automation that reads live state, proposes a set of
+approve-first actions, and emits metrics — all in one `plan()` call. The
+reference loop is `ar_followup`: it scans overdue invoices, drafts email
+reminders for admin approval, and surfaces AR outstanding / overdue as metrics.
+The AR Follow-Up loop is the reference; the pattern generalises to any recurring
+outbound action (lead intake, renewal reminders, etc.).
+
+**Data flow:**
+
+```
+pg_cron (hourly)
+  → loop-run edge function
+      → loop.plan(ctx)          reads state, returns { actions, metrics }
+      → loop_actions rows       status = "proposed", await admin approval
+      → report-ingest (metrics) AR outstanding / overdue visible on Overview
+  → admin approves in Loops page
+      → loop-run approve handler → gmail_send (google-workspace-proxy)
+      → loop_action.status = "sent"
+      → value_event created (linked to audit_opportunity_id)
+  → Value page                  promised-vs-delivered reconciliation via
+                                deck_value_summary() RPC
+```
+
+**1. Write the loop module** in `supabase/functions/_shared/loops/`
+implementing the `Loop` interface from `types.ts`:
+
+```ts
+// supabase/functions/_shared/loops/renewal.ts
+import type { Loop, LoopContext, LoopPlan } from "./types.ts";
+import { mapRenewal, type RenewalMapConfig } from "./renewal-map.ts";   // pure fn
+
+export const renewalLoop: Loop = {
+  type: "renewal",
+  async plan(ctx: LoopContext): Promise<LoopPlan> {
+    const cfg = ctx.config as RenewalMapConfig;
+    // ... fetch upcoming renewals from ctx.supabase ...
+    return mapRenewal(rows, cfg);
+  },
+};
+```
+
+Keep all response→action/metric transform logic in a separate file
+(`renewal-map.ts`) with no network imports so it can be unit-tested with
+Vitest without I/O — the same pattern `ar-followup-map.ts` follows for
+`daysOverdue`, `estimateRecoverableCents`, and `dueForReminder`.
+
+**2. Register it** in `supabase/functions/_shared/loops/registry.ts`:
+
+```ts
+import { renewalLoop } from "./renewal.ts";
+
+export const LOOPS: Record<string, Loop> = {
+  ar_followup: arFollowup,
+  renewal: renewalLoop,   // add one line
+};
+```
+
+**3. Extend the `type` CHECK constraint** via a new migration:
+
+```sql
+-- supabase/migrations/20260701000000_loop_add_renewal.sql
+alter table public.loops
+  drop constraint loops_type_check,
+  add constraint loops_type_check check (type in ('ar_followup', 'renewal'));
+```
+
+**4. Insert a `loops` row** (enabled + config) to activate the loop — either
+in a seed or via the admin UI once deployed:
+
+```sql
+insert into public.loops (type, enabled, config) values
+  ('renewal', true, '{"days_before": 30, "sender_name": "Account Team"}'::jsonb);
+```
+
+**The AR invoice feed.** The AR Follow-Up loop reads `public.ar_invoices`, which
+is populated via the `report-ingest` edge function using `type: "invoices"`.
+Clients push their overdue invoices on whatever schedule their billing system
+allows:
+
+```json
+{ "type": "invoices", "payload": { "invoices": [
+  { "external_id": "INV-1042", "customer_name": "Acme Co",
+    "customer_email": "billing@acme.example", "amount_cents": 450000,
+    "due_date": "2026-05-15", "status": "open" }
+] } }
+```
+
+Upserts are keyed on `external_id` and are idempotent; mark an invoice
+`"status": "paid"` to remove it from future reminder plans.
+
+**Aria tool.** Aria ships a `list_pending_loop_actions` tool out of the box —
+admins can ask "what reminders are waiting?" and get the pending queue directly
+in the assistant chat.
+
+> **Deferred follow-ons.** The framework is intentionally minimal at launch.
+> Planned extensions (not yet built): a **lead-intake loop** (new enquiry →
+> CRM draft), a **renewal loop** (subscription expiry → upsell draft),
+> **auto-send mode** (skip the approve step for low-risk actions), and
+> **webhook ingestion** so billing systems push invoice updates in real time
+> rather than on a polling schedule.
