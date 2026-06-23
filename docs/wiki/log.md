@@ -1,5 +1,24 @@
 # Wiki Log
 
+## [2026-06-23] update | Aria "Donny-grade" engine (M1, PR #21) + M2 comms roadmap
+
+Session-end extract of the **M1** assistant-engine upgrade — implemented in **PR #21**
+(`feat/aria-donny-maturity`), **pending live e2e + merge** (not yet deployed). Brought [[Aria]]'s
+[[Assistant Chat Loop]] to "Donny-grade": NDJSON streaming + live tool-status, tool-aware history
+with pairing-repair (`history.ts`), loop hardening (12 rounds + "answer now" fallback), agentic
+action chips (`suggest_actions`), and Opus + extended thinking (env-configurable; thinking kept
+verbatim in-loop, stripped on persist). No DB migration. Static gate green (deno 11/11, vitest
+44/44). Recorded the decision that DragonCandy's "orchestrator" is one loop with domain-grouped
+tools (not multi-LLM) → a sub-agent orchestrator was **deferred**.
+
+Also captured the **M2 comms-layer roadmap** (Gmail+Calendar tools → triage scheduler → Google
+Chat channel) and the agreed-but-unbuilt **M2a** design (expand [[Google Workspace Bridge]] scopes
+with Gmail/Calendar; 7 Aria tools; **email = drafts + confirm-to-send**). M2a is paused awaiting
+the go-ahead.
+
+Source: `docs/wiki/raw/sessions/2026-06-23-aria-donny-engine.md`.
+Pages updated: [[Assistant Chat Loop]], [[Aria]], index.md (2 stale summaries refreshed).
+
 ## [2026-06-20] update | Loop Audit offer page + "Rung" is client-invisible
 
 Session-end ingest of the Phase 2b work (PR #18) and a follow-up branding fix

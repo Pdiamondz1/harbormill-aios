@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { parseNdjson } from "@/lib/aria/stream";
 
 export interface ChatMessage {
   id: string;
@@ -20,6 +21,9 @@ export function useAssistant() {
   const queryClient = useQueryClient();
   const [pending, setPending] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [streamingText, setStreamingText] = useState("");
+  const [statusLabel, setStatusLabel] = useState<string | null>(null);
+  const [actions, setActions] = useState<{ label: string; route: string }[]>([]);
 
   const { data: conversation } = useQuery({
     queryKey: ["assistant", "conversation", user?.id],
@@ -79,12 +83,47 @@ export function useAssistant() {
         },
         body: JSON.stringify({ conversation_id: conversation.id, message: content }),
       });
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) throw new Error(data?.error || "The assistant could not respond");
-      return data;
+      if (!resp.ok || !resp.body) {
+        const data = await resp.json().catch(() => ({}));
+        throw new Error(data?.error || "The assistant could not respond");
+      }
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let acc = "";
+      setStreamingText("");
+      setStatusLabel(null);
+      setActions([]);
+      try {
+        for (;;) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          const parsed = parseNdjson(buffer, decoder.decode(value, { stream: true }));
+          buffer = parsed.buffer;
+          for (const ev of parsed.events) {
+            if (ev.type === "text") {
+              acc += ev.delta;
+              setStreamingText(acc);
+            } else if (ev.type === "status") {
+              setStatusLabel(ev.label);
+            } else if (ev.type === "done") {
+              setActions(ev.actions ?? []);
+              return { content: ev.content };
+            } else if (ev.type === "error") {
+              throw new Error(ev.message);
+            }
+            // heartbeat: ignore
+          }
+        }
+        throw new Error("The assistant response was cut off");
+      } finally {
+        reader.cancel().catch(() => {});
+      }
     },
     onSettled: () => {
       setPending(null);
+      setStreamingText("");
+      setStatusLabel(null);
       queryClient.invalidateQueries({ queryKey: ["assistant", "messages", conversation?.id] });
     },
     onError: (err) => setError(err instanceof Error ? err.message : "Something went wrong"),
@@ -104,5 +143,8 @@ export function useAssistant() {
     sendMessage,
     isThinking: sendMutation.isPending,
     error,
+    streamingText,
+    statusLabel,
+    actions,
   };
 }

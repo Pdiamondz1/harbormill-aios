@@ -340,6 +340,39 @@ export const TOOLS: Tool[] = [
     },
   },
   {
+    requiresAdmin: false,
+    definition: {
+      name: "suggest_actions",
+      description:
+        "Attach up to 3 clickable follow-up chips to your answer. Each action is an in-app navigation. " +
+        "Call this when a next step maps to a page (e.g. opening Projects, Briefings, Findings). " +
+        "Routes must be real in-app paths like '/projects', '/briefings', '/findings', '/value', '/strategy'.",
+      input_schema: {
+        type: "object",
+        properties: {
+          actions: {
+            type: "array",
+            maxItems: 3,
+            items: {
+              type: "object",
+              properties: {
+                label: { type: "string", description: "Short chip label, e.g. 'Open Projects'" },
+                route: { type: "string", description: "In-app path, e.g. '/projects'" },
+              },
+              required: ["label", "route"],
+            },
+          },
+        },
+        required: ["actions"],
+      },
+    },
+    // deno-lint-ignore no-explicit-any
+    execute: async (input: any) => {
+      const actions = Array.isArray(input?.actions) ? input.actions.slice(0, 3) : [];
+      return { ok: true, actions };
+    },
+  },
+  {
     definition: {
       name: "propose_correction",
       description:
