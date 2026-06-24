@@ -43,7 +43,9 @@ loop-audit's `candidate/blocked/not-a-loop`):
 - **`validator`** — already has an objective done-rule. **Credit it and point at it;
   never re-propose.** (The four already in the repo: the `autoresearch` acceptance gate,
   `wiki-ops lint`, the build-and-verification gate (`npm run typecheck/lint/build/test`),
-  and `loop-audit`'s own four-condition gate.)
+  and `loop-audit`'s own four-condition gate.) Crediting an existing validator ≠ leaving
+  its loop unbuilt: a credited validator may still be the gate of a newly-forged loop —
+  that loop is the `forgeable` opportunity, scored on the skill whose output it closes.
 - **`forgeable`** — a **specific, named tweak** converts it into a validator → rank it.
 - **`taste-bound`** — "done" needs human judgment; not forgeable. Record the closest
   objective proxy, if any.

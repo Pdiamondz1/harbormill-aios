@@ -38,7 +38,7 @@ Note: Already a closed loop with an objective done-rule. **Credited as existing 
 Verdict: **validator**
 Generates: Loop candidates with four-condition gate scores, ranked by value-per-effort
 Latent check: yes — the Four-Condition Loop Test is itself an objective gate (conditions #2 and #4 are hard blockers; #1 and #3 are scored strong/partial/weak with enumerable criteria)
-Done-rule: A task is `candidate` if all four conditions pass, `blocked` if #2 or #4 fails, `not-a-loop` if #1 or #3 fails. Strength: **heuristic-but-objective** (condition thresholds are named and consistent, though "strong/partial/weak" has some judgment)
+Done-rule: A task is `candidate` if all four conditions pass, `blocked` if #2 or #4 fails, `not-a-loop` if #1 or #3 fails. Strength: **heuristic** (condition thresholds are named and consistent, though "strong/partial/weak" has some judgment)
 Loop: enumerate tasks → gate each → rank candidates → recommend first build
 Note: Already implements an objective gate on condition #2 specifically (rule-decides-done = yes/no). **Credited as existing validator** — do not re-propose. Pointer: `.claude/skills/loop-audit/SKILL.md` §"The framework, in one screen."
 
