@@ -107,6 +107,10 @@ set ~1.4× Tyler's, rounded to clean premium anchors.
 
 - **Paid "AI Exploration" milestone — $3,500**, credited toward month 1, refundable if undeliverable.
   De-risks the buyer, funds scoping, filters tire-kickers. Functions as a build down-payment.
+  **Duration: a fast 3–6 *day* sprint** (verify APIs/data, map the workflow, build a rough MVP).
+  Speed is competitive, not just operational — a slow exploration lets the client cool off and a
+  competitor swoop in, and it contradicts the speed-to-value pitch the whole model is built on.
+  (The webinar did not pin a duration; 3–6 days is Harbormill's deliberate standard.)
 - **Tiered monthly retainers:**
   | Tier | Price (NYC/Hoboken) | Tyler ref (AL) | Scope |
   |---|---|---|---|
@@ -114,11 +118,12 @@ set ~1.4× Tyler's, rounded to clean premium anchors.
   | Growth | **$6,500/mo** | $4,500 | Expanded automations / multiple workflows |
   | Full AIOS | **$15,000/mo** | $10,500 | Complete operating system build-out |
   *~99% of clients start in Core or Growth; Full is the land-and-expand ceiling.*
-- **Founding-client offer** — to charge premium *before* local case studies exist, the first ~2–3
-  paying agencies get **30–40% off the retainer for 3–6 months** in exchange for testimonial +
-  case-study + referral rights. The **exploration fee is still charged in full** (keeps commitment
-  real). This deliberately trades early margin for the Phase-1 deliverable — proof — then ramps to
-  full NYC pricing once the case studies exist.
+- **Founding-client offer** *(distinct from the exploration sprint above)* — to charge premium
+  *before* local case studies exist, the first ~2–3 paying agencies get **30–40% off the monthly
+  retainer for their first 3–6 months** in exchange for testimonial + case-study + referral rights.
+  The **exploration fee is still charged in full** (keeps commitment real). This discount applies to
+  the *ongoing retainer rate*, not to how long exploration takes — it deliberately trades early
+  margin for the Phase-1 deliverable (proof), then ramps to full NYC pricing once case studies exist.
 - **Land-and-expand** is the operating mindset: solve one pain cheaply, then let the AIOS sell its own
   next phase as the client's "what else can it do?" instinct kicks in. *"I just let them upsell
   themselves."* — webinar, ~56:00
