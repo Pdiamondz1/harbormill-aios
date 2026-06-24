@@ -50,8 +50,9 @@ has every piece needed to close that gap:
 
 | Unit | Responsibility | Depends on |
 |------|----------------|------------|
-| `deriveBreachFindings(metrics)` — **pure core** | Map `metric_latest` rows → finding payloads. **No I/O**, fully deterministic → unit-testable in isolation. This is the validator + finding-shaping logic. | nothing (pure) |
-| `supabase/functions/kpi-watch/index.ts` — **shell** | Service-role auth (exact-bearer match, mirroring `report-ingest`); read `metric_latest`; call `deriveBreachFindings`; POST the findings to `report-ingest`; return a run summary. | `deriveBreachFindings`, `metric_latest`, `report-ingest` |
+| `supabase/functions/kpi-watch/derive.ts` — **pure core** (`deriveBreachFindings`) | Map `metric_latest` rows → finding payloads. **No I/O, no imports**, fully deterministic → unit-testable in isolation. The validator + finding-shaping logic. | nothing (pure) |
+| `supabase/functions/kpi-watch/derive_test.ts` — **unit tests** | `deno test` over `deriveBreachFindings` (Deno 2.8.3 confirmed available locally). | `derive.ts` |
+| `supabase/functions/kpi-watch/index.ts` — **shell** | Service-role auth (exact-bearer match, mirroring `report-ingest`); read `metric_latest`; call `deriveBreachFindings` from `./derive.ts`; POST the findings to `report-ingest` (batched ≤50/request); return a run summary. | `derive.ts`, `metric_latest`, `report-ingest` |
 | `supabase/migrations/<ts>_kpi_watch_schedule.sql` — **schedule** | A daily `pg_cron` job that `net.http_post`s the `kpi-watch` function with the Vault service-role bearer; sets the `kpi_watch_url` Vault secret. Mirrors `connector-sync`; inert until the operator sets the `service_role_key` Vault secret. | pg_cron, pg_net, Vault (all already used by connector-sync) |
 
 No change to `findings`, `metric_snapshots`/`metric_latest`, or any UI. Edge functions are
@@ -63,7 +64,7 @@ The `kpi-watch` shell, per invocation (cron, daily):
 1. **Auth:** require `Authorization: Bearer <SERVICE_ROLE_KEY>` (exact match, like report-ingest). Reject otherwise.
 2. **Read** `metric_latest` (service-role): `key, label, value, unit, target, status, captured_at`.
 3. **Derive** (`deriveBreachFindings`): for each row with `status ∈ {at_risk, off_track}`, build a finding payload (§5). On-track rows → ignored.
-4. **Act:** if there are breach findings, POST `{ type: "findings", payload: { findings } }` to `report-ingest` with the service-role bearer (reusing its fingerprint upsert + reopen — DRY, single choke point). If none → no POST.
+4. **Act:** if there are breach findings, POST `{ type: "findings", payload: { findings } }` to `report-ingest` with the service-role bearer (reusing its fingerprint upsert + reopen — DRY, single choke point), **batched in chunks of ≤50 per request** (`report-ingest` caps at 50; a client realistically has far fewer KPIs, but batch defensively so a large deck never 400s). If none → no POST.
 5. **Return** a summary `{ checked, breaching, upserted }` and log it. "Done" for the cycle = every breaching KPI has an upserted finding (or there are none).
 
 Four-Condition fit: **Repeats** (cron / KPI cadence) · **Rule decides done** (`status != on_track`, deterministic) · **Afford wasted runs** (advisory findings, idempotent, no AI, no business-table access) · **Has data + tools** (`metric_latest` + the `report-ingest` finding seam).
@@ -76,6 +77,7 @@ Four-Condition fit: **Repeats** (cron / KPI cadence) · **Rule decides done** (`
 - `title`: e.g. `"KPI off target: <label>"` (off_track) / `"KPI at risk: <label>"` (at_risk).
 - `summary_md`: **templated, no LLM** — e.g. `"**<label>** is <status>. Latest **<value><unit>** vs target **<target>** (as of <captured_at>). Auto-maintained by the KPI-watch loop while the metric is off target."`
 - `evidence`: `{ key, value, target, status, captured_at }`.
+- **Null-guard (required):** `unit` and `target` are nullable in the view. Omit a null `unit` (never emit a trailing `"undefined"`), and render a null `target` gracefully (e.g. "no target set"); the `evidence` object omits null fields rather than storing `null`. A unit test covers a breaching row with null `unit` + null `target` (§8.1).
 - `source`: `"kpi-watch"`.
 
 **Resolution posture — open/reopen, never auto-resolve.** While a KPI is breaching, each
@@ -108,10 +110,12 @@ function + cron, not a fork of the engine.
 
 Edge functions are Deno — **not** covered by `npm run typecheck/lint/build/test`; the repo
 convention is "validate on deploy." So:
-1. **Unit tests on the pure core** `deriveBreachFindings` (the real TDD target): on_track
-   rows produce no finding; at_risk → medium; off_track → high; fingerprint is
-   `kpi-breach:<key>`; summary/evidence are populated from the row; empty/all-on_track input
-   → empty output.
+1. **Unit tests on the pure core** `deriveBreachFindings` (the real TDD target), run via
+   **`deno test supabase/functions/kpi-watch/`** (Deno 2.8.3 confirmed available). Cases:
+   on_track rows produce no finding; `at_risk → medium`; `off_track → high`; fingerprint is
+   `kpi-breach:<key>`; summary/evidence populated from the row; **a breaching row with null
+   `unit` and null `target` yields a clean summary (no `"undefined"`) and evidence without
+   null fields**; empty / all-on_track input → empty output.
 2. **Static Deno validation** of `kpi-watch/index.ts` (`deno check` / `deno lint` if the
    toolchain is available; otherwise inspection against the `report-ingest` patterns).
 3. **Live integration test — deferred (not in this build).** Deploying `kpi-watch` to a real
