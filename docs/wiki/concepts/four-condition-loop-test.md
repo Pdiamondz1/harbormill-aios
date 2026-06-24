@@ -77,7 +77,11 @@ first.
 
 1. **Dev skill (`loop-audit`)** — audits the Harbormill workspace itself (repo, git
    history, Claude Code transcripts) to decide what dev automation to build next. The
-   dogfood; also the tool used to prioritize surfaces 2 and 3.
+   dogfood; also the tool used to prioritize surfaces 2 and 3. Its condition-#2
+   companion is **`validator-forge`** (`.claude/skills/validator-forge/SKILL.md`),
+   which analyzes existing capabilities to identify which can become the objective
+   validator that unblocks a blocked loop candidate — the forge that turns a
+   `blocked` finding into a `candidate`.
 2. **Sales deliverable (shipped)** — the 4-Condition Test packaged as a paid "Loop
    Audit": run an in-deck audit in **Loop Audit** mode (`is_loop_audit`), score each
    opportunity against the four conditions, and export a branded build-first
@@ -101,3 +105,4 @@ first.
 - [[Extending AIOS]]
 - [[Marketing Site]]
 - [[Harbormill AIOS]]
+- Condition-#2 companion skill: `.claude/skills/validator-forge/SKILL.md`

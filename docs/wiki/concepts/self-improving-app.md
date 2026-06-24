@@ -48,6 +48,16 @@ what stops the loop from polluting the wiki.
 5. **Phase 5 — KPI/briefing autopilot:** a living KPI page tracked against the
    deck's `metric_snapshots` / `briefings`; flag when a target slips.
 
+## Maintenance counterpart
+
+The autoresearch loop *grows* the wiki; a separate **wiki-gardener maintenance
+loop** (forthcoming, proposed) *prunes and validates* it — running `wiki-ops lint`
+as the objective done-rule so it qualifies under condition #2 of the
+[[Four-Condition Loop Test]]. This loop is expected to be emitted as a
+build-first proposal by the **`validator-forge`** skill
+(`.claude/skills/validator-forge/SKILL.md`), which identifies which existing
+capability can become the validator that unblocks a blocked loop candidate.
+
 ## Guardrails
 
 Writes only to `docs/wiki/` (Phase 1). Never edits app code, schema, RLS, or auth;
@@ -61,3 +71,5 @@ claims for in-place verification rather than asserting them in codebase docs.
 - [[Wiki-to-Aria Sync]]
 - [[Report-Ingest Seam]]
 - [[Project Context]]
+- [[Four-Condition Loop Test]]
+- Maintenance companion skill: `.claude/skills/validator-forge/SKILL.md`
