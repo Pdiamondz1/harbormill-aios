@@ -115,6 +115,8 @@ strip.
 ## See Also
 
 - [[Self-Improving App]]
+- [[Independent Verification]]
+- [[Loop Memory]]
 - [[ROI-Discovery Audit]]
 - [[The Harbormill Ladder]]
 - [[AI Tool Registry]]

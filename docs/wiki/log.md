@@ -1,5 +1,19 @@
 # Wiki Log
 
+## [2026-06-24] ingest | Session-end — Independent verification & loop memory
+
+Session-end extract of two `autoresearch` loop enhancements built and shipped this session (both
+from evaluated prompt-cards): the **independent fresh-context verifier** (`loop-verify` skill,
+PR #29, merged cd95071) that turns the acceptance gate into a separate 1-10 scored subagent, and
+**loop memory** (`docs/wiki/memory.md`, PR #31, merged f67970c) — a curated, read-back lessons
+file that makes the loop learn over runs. Both go beyond Karpathy's original, which self-grades
+and carries lessons only in git history.
+
+Source: `docs/wiki/raw/sessions/2026-06-24-loop-verify-and-loop-memory.md`.
+Pages created: [[Independent Verification]] (concept), [[Loop Memory]] (concept).
+Pages updated: [[Self-Improving App]] (See Also), [[Four-Condition Loop Test]] (See Also —
+condition-#2 independent done-rule), index.md (+2 concept entries). Wiki now 43 pages.
+
 ## [2026-06-24] ingest | Session-end — Validators → Loops → KPI-watch
 
 Session-end extract of the "skills → validators → loops" arc (a user-shared slide:
