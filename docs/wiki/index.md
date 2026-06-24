@@ -31,8 +31,10 @@
 - [[Education-First Philosophy]](concepts/education-first-philosophy.md) — Teach AI first, then automate; the differentiator, externally evidenced
 - [[Extending AIOS]](concepts/extending-aios.md) — Add metrics/tools/knowledge/pages in the seams; never fork the engine
 - [[Four-Condition Loop Test]](concepts/four-condition-loop-test.md) — Gate-then-rank methodology for deciding which repeating work to automate as a loop; reused by the loop-audit skill, a paid Loop Audit, and a future Aria feature
+- [[Independent Verification]](concepts/independent-verification.md) — A loop's done-rule run as a separate fresh-context subagent that scores output 1-10 against a rubric (sourcing/accuracy floors, threshold 8); the loop-verify skill
 - [[Knowledge & RAG]](concepts/knowledge-and-rag.md) — knowledge table (pgvector 1536 + tsvector hybrid), match_knowledge, knowledge-sync
 - [[KPI-Watch Loop]](concepts/kpi-watch.md) — Deterministic daily loop: watches metric_latest, files a finding per breached KPI via report-ingest; the in-product Four-Condition Loop Test; live on both projects
+- [[Loop Memory]](concepts/loop-memory.md) — Two files per run: log.md (append-only audit) + memory.md (curated lessons read back next run); makes a loop learn instead of repeating itself
 - [[Operating Deck Data Model]](concepts/operating-deck-data-model.md) — The three generic tables: metric_snapshots, briefings, findings
 - [[Per-Client Deployment]](concepts/per-client-deployment.md) — Clone-per-client off the template; upstream-merge discipline; config/data seams
 - [[Plug-and-Play Client Compatibility]](concepts/plug-and-play-client-compatibility.md) — Config + data + flags, never a fork: feature flags (features.ts), guided setup, env-only isolation

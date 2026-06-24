@@ -101,6 +101,8 @@ claims for in-place verification rather than asserting them in codebase docs.
 - [[Report-Ingest Seam]]
 - [[Project Context]]
 - [[Four-Condition Loop Test]]
+- [[Independent Verification]]
+- [[Loop Memory]]
 - [[KPI-Watch Loop]]
 - Maintenance companion skill: `.claude/skills/wiki-gardener/SKILL.md`
 - Validator-forge (proposed the maintenance loop): `.claude/skills/validator-forge/SKILL.md`
