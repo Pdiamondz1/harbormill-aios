@@ -32,10 +32,13 @@ only** (`useBriefings.ts`). See [[Access Model]].
 `source`, `status` (open|acknowledged|resolved|wontfix), `fingerprint` (unique),
 `occurrences`, `last_seen_at`. Upsert on `fingerprint`: a resolved finding that
 recurs **reopens** (regression signal) and bumps `occurrences` (`useFindings.ts`).
+Findings are filed by humans, by Aria's `create_finding` tool, and now
+automatically by the [[KPI-Watch Loop]] (fingerprint `kpi-breach:{key}`).
 
 ## See Also
 
 - [[Report-Ingest Seam]]
 - [[Supabase]]
 - [[Access Model]]
+- [[KPI-Watch Loop]]
 - [[Harbormill AIOS]]

@@ -2,8 +2,8 @@
 title: Marketing Site
 type: entity
 created: 2026-06-17
-updated: 2026-06-20
-sources: [website/, website/src/config/site.ts, website/src/sections/LoopAudit.tsx, website/vercel.json, website/scripts/lead-capture.gs]
+updated: 2026-06-24
+sources: [website/, website/src/config/site.ts, website/src/sections/LoopAudit.tsx, website/src/sections/TrustStrip.tsx, website/vercel.json, website/scripts/lead-capture.gs]
 tags: [marketing, website, vercel, gtm]
 ---
 
@@ -33,6 +33,21 @@ public pricing copy never uses the internal word "Rung" (see [[The Harbormill
 Ladder]]) — tiers are shown by name ("Paid audit") or a numeric badge, and the
 Loop Audit price pill reads simply `$500–$2,500 · fixed scope`.
 
+## Trust strip — "Automation you can leave running"
+
+A single trust differentiator card (`website/src/sections/TrustStrip.tsx`,
+content in `site.trust`, mounted between `<LoopAudit />` and `<About />` — no nav
+entry of its own). It states the loop-trust thesis at **principle altitude**:
+plain language, **no internal jargon** ("Loop Test", "condition #2",
+"validator"). Eyebrow *"Why it's safe to automate"*, title *"Automation you can
+leave running"*, body: black-box automation is unnerving because you can't tell
+when it's quietly gone wrong, so Harbormill only builds automation where a clear
+rule decides when the job is done and a wrong run is cheap to undo — *"the same
+discipline we run on our own systems … We don't sell a black box we wouldn't run
+ourselves."* That self-proof is honest because the loops exist: [[KPI-Watch
+Loop]] and `wiki-gardener` (see [[Self-Improving App]]). It is the public,
+principle-altitude face of the [[Four-Condition Loop Test]].
+
 ## Plumbing
 
 - **Deploy:** Vercel, Root Directory `website`, `vercel.json` (SPA rewrite +
@@ -49,5 +64,6 @@ Loop Audit price pill reads simply `$500–$2,500 · fixed scope`.
 - [[Harbormill AIOS]]
 - [[The Harbormill Ladder]]
 - [[Four-Condition Loop Test]]
+- [[KPI-Watch Loop]]
 - [[Education-First Philosophy]]
 - [[Project Context]]

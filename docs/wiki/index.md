@@ -9,10 +9,10 @@
 - [[AI Providers]](entities/ai-providers.md) — Anthropic (claude-sonnet-4-6, chat) + OpenAI (text-embedding-3-small, RAG); per-client keys
 - [[Aria]](entities/aria.md) — The operator's AI co-pilot; pluggable tool registry in assistant-chat/tools.ts
 - [[Damon Williams]](entities/damon-williams.md) — Founder & AI Solutions Engineer; 15 yrs enterprise IT; education-first
-- [[Edge Functions]](entities/edge-functions.md) — The four Deno functions: report-ingest, assistant-chat, knowledge-sync, google-workspace-proxy
+- [[Edge Functions]](entities/edge-functions.md) — The Deno functions: report-ingest, assistant-chat, knowledge-sync, google-workspace-proxy + the scheduled loops connector-sync & kpi-watch
 - [[Google Workspace Bridge]](entities/google-workspace-bridge.md) — Per-user OAuth gateway to Drive/Sheets; tokens stay server-side
 - [[Harbormill AIOS]](entities/harbormill-aios.md) — The white-label AI operating-deck product
-- [[Marketing Site]](entities/marketing-site.md) — harbormill.net; separate Vite app in website/, Vercel; Calendly + lead capture; Loop Audit offer section
+- [[Marketing Site]](entities/marketing-site.md) — harbormill.net; separate Vite app in website/, Vercel; Calendly + lead capture; Loop Audit offer + "leave it running" trust strip
 - [[Supabase]](entities/supabase.md) — Backend: Postgres + RLS + Auth + Deno edge functions; per-client project
 
 ## Concepts
@@ -32,6 +32,7 @@
 - [[Extending AIOS]](concepts/extending-aios.md) — Add metrics/tools/knowledge/pages in the seams; never fork the engine
 - [[Four-Condition Loop Test]](concepts/four-condition-loop-test.md) — Gate-then-rank methodology for deciding which repeating work to automate as a loop; reused by the loop-audit skill, a paid Loop Audit, and a future Aria feature
 - [[Knowledge & RAG]](concepts/knowledge-and-rag.md) — knowledge table (pgvector 1536 + tsvector hybrid), match_knowledge, knowledge-sync
+- [[KPI-Watch Loop]](concepts/kpi-watch.md) — Deterministic daily loop: watches metric_latest, files a finding per breached KPI via report-ingest; the in-product Four-Condition Loop Test; live on both projects
 - [[Operating Deck Data Model]](concepts/operating-deck-data-model.md) — The three generic tables: metric_snapshots, briefings, findings
 - [[Per-Client Deployment]](concepts/per-client-deployment.md) — Clone-per-client off the template; upstream-merge discipline; config/data seams
 - [[Plug-and-Play Client Compatibility]](concepts/plug-and-play-client-compatibility.md) — Config + data + flags, never a fork: feature flags (features.ts), guided setup, env-only isolation
