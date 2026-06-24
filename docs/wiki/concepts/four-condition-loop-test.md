@@ -32,7 +32,7 @@ A task is a **loop candidate** only if it passes all four:
 | # | Condition | Meaning | Maps to (in this repo) |
 |---|-----------|---------|------------------------|
 | 1 | **Repeats** | Recurs on a predictable cadence (daily / weekly / per-event). Frequency × time-per-run is the prize. | `findings.occurrences`, `metric_snapshots` cadence |
-| 2 | **A rule decides "done"** | An objective acceptance check exists — the `val_bpb` analog. If "done" needs human taste/judgment, it is not loop-ready. | the `autoresearch` acceptance gate |
+| 2 | **A rule decides "done"** | An objective acceptance check exists — the `val_bpb` analog. If "done" needs human taste/judgment, it is not loop-ready. | the `autoresearch` gate, run as an independent `loop-verify` subagent |
 | 3 | **Afford wasted runs** | Failure is cheap and reversible; the loop is advisory or easily reverted, not high-blast-radius. | guardrail design (advisory-only) |
 | 4 | **AI has data + tools** | The inputs are reachable and the actions exist as tools/integrations. Locked-away data or a missing API blocks it. | [[AI Tool Registry]], [[Connector Library]] |
 
@@ -44,6 +44,14 @@ echoing autoresearch's `kept` / `discarded` / `flagged`:
 - **`candidate`** — passes all four; proceed to ranking.
 - **`blocked`** — fails #2 or #4; record the one thing that would unblock it.
 - **`not-a-loop`** — fails #1 or #3 enough that it should stay manual.
+
+When condition #2's done-rule is an LLM judgment rather than a deterministic check (e.g.
+"is this research finding good enough?"), it should run as an **independent, fresh-context
+verifier** — a separate subagent that did not produce the work, scoring the output and gating
+on a threshold — not the producing agent grading its own homework. The reusable form is the
+`loop-verify` skill (`.claude/skills/loop-verify/SKILL.md`); `autoresearch` is its first
+adopter. A deterministic comparison (like the [[KPI-Watch Loop]]'s `status != on_track`) needs
+no such subagent — it is already objective.
 
 ### Stage 2 — the ranking (among gate-passers)
 
@@ -115,3 +123,4 @@ strip.
 - [[Harbormill AIOS]]
 - [[KPI-Watch Loop]]
 - Condition-#2 companion skill: `.claude/skills/validator-forge/SKILL.md`
+- Independent condition-#2 verifier skill: `.claude/skills/loop-verify/SKILL.md`

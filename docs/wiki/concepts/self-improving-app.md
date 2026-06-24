@@ -33,6 +33,16 @@ independent external sources or grounded in repo code/docs with file paths, and
 it is **discarded** or **flagged**. Only `kept` findings become pages — this is
 what stops the loop from polluting the wiki.
 
+The gate now runs as an **independent, fresh-context verifier** rather than the
+producing agent self-grading: a separate subagent — the `loop-verify` skill
+(`.claude/skills/loop-verify/SKILL.md`), dispatched via the Agent tool with a fresh
+context — scores the candidate **1-10** and gates on a threshold (default 8, with
+sourcing/accuracy floors). This is distinct from `deep-research`'s in-flow adversarial
+checks, which run during *production*; `loop-verify` is the *final, independent* done-rule,
+so the loop never grades its own homework. The score is recorded per iteration in `log.md`,
+making each done-decision auditable. It is the reusable, concrete form of a `validator-forge`
+validator and the condition-#2 validator any loop can adopt.
+
 ## Roadmap
 
 1. **Phase 1 (now):** grow the wiki across technical, competitive, and strategy domains.
@@ -77,3 +87,4 @@ claims for in-place verification rather than asserting them in codebase docs.
 - [[KPI-Watch Loop]]
 - Maintenance companion skill: `.claude/skills/wiki-gardener/SKILL.md`
 - Validator-forge (proposed the maintenance loop): `.claude/skills/validator-forge/SKILL.md`
+- Independent verifier for the acceptance gate: `.claude/skills/loop-verify/SKILL.md`

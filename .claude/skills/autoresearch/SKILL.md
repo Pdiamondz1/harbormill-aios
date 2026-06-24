@@ -38,16 +38,41 @@ repo/docs mining (Grep/Glob/Read).
 
 ## The acceptance gate (the `val_bpb` analog)
 
-Karpathy keeps a change only if `val_bpb` improved. Here, a finding is **kept** only if **all** hold:
+Karpathy keeps a change only if `val_bpb` improved. Here, a finding is **kept** only if it
+passes an **independent verifier** (next section) — never on the producing agent's own say-so.
+The verifier scores the candidate **1-10** against these criteria, and the outcome maps to the
+ledger:
 
 1. **Fills a real gap** — not already covered by an existing page (check `index.md` first).
+   → verifier *gap_fit*.
 2. **Verified** — backed by **≥2 independent external sources**, *or* grounded directly in repo
-   code/docs with concrete file paths.
-3. **Non-contradictory** — or the contradiction with an existing page is **explicitly flagged** in
-   the page (never silently overwrite — wiki rule).
+   code/docs with concrete file paths the verifier can open. → verifier *sourcing* (a gating floor).
+3. **Non-contradictory** — or the contradiction with an existing page is **explicitly flagged**
+   (never silently overwrite — wiki rule). → verifier *accuracy* + the verdict's `contradiction`.
 
-Otherwise the outcome is **discarded** (fails 1 or 2) or **flagged** (a contradiction to resolve).
-Only `kept` findings produce a wiki page. This is what stops the loop from polluting the wiki.
+- **`kept`** — verifier returns `verdict: pass` (`score >= 8`, sourcing & accuracy floors met)
+  and `contradiction: none`. Only `kept` findings produce a wiki page.
+- **`flagged`** — verifier names a contradiction to resolve (surfaced for a human, never merged).
+- **`discarded`** — verifier returns `verdict: fail` (below threshold, or a floor tripped).
+
+This independent gate is what stops the loop from grading its own homework and polluting the wiki.
+
+## Independent verification (the verifier subagent)
+
+The gate is applied by a **separate subagent with a fresh context window** — *not* the agent that
+did the research — via the **`loop-verify`** skill (`.claude/skills/loop-verify/SKILL.md`). This
+is distinct from `deep-research`'s adversarial checks, which run *during* production; this is the
+*final, independent* gate on the assembled page.
+
+After research assembles a candidate page, **dispatch the verifier with the Agent tool**
+(`subagent_type: Explore`), passing it **only**: the candidate page, the target gap, and the
+titles + one-line excerpts of related existing pages (so it can check redundancy/contradiction).
+**Do not pass your research transcript or your argument for the page** — withholding it is what
+keeps the verification independent. The subagent re-checks the cited sources/paths itself and
+returns a `VERDICT` block (`score` 1-10, `verdict` pass/fail, `contradiction`, per-criterion
+scores, one-line `rationale`). Default threshold **`MIN_SCORE = 8`** (tunable). Read `loop-verify`
+for the rubric, floors, and schema; then ingest / flag / discard per the mapping above and record
+the score in the ledger.
 
 ## `/autoresearch <topic>` — on-demand (one pass)
 
@@ -55,7 +80,10 @@ Only `kept` findings produce a wiki page. This is what stops the loop from pollu
 2. **Gather** from both source types:
    - External: invoke `deep-research` (web search → fetch → adversarial verify → cited synthesis).
    - Internal: Grep/Glob/Read over `src/`, `supabase/functions/`, `supabase/migrations/`, `docs/`.
-3. **Gate**: apply the acceptance gate above.
+3. **Verify (independent gate)**: dispatch the **`loop-verify`** subagent (Agent tool,
+   `subagent_type: Explore`, fresh context) on the candidate; parse its `VERDICT` →
+   `kept` / `flagged` / `discarded` per the mapping above. Pass only the artifact + gap +
+   related-page titles — never your research transcript.
 4. **Ingest** (if `kept`): follow the wiki-ops 8-step ingest flow — write the page into the correct
    bucket with valid frontmatter (`title`, `type`, `created`, `updated`, `sources`, `tags`), add
    `[[wikilinks]]` and a `## See Also`, update `index.md` (alphabetical), and append to `log.md`.
@@ -73,7 +101,8 @@ loop is autonomous *within* the budget, then stops and summarizes. The budget is
    orphan pages, thin/single-source coverage, stale claims.
 2. Pick the highest-value gap as this iteration's "experiment."
 3. Research it (web + repo, exactly as on-demand).
-4. Apply the **acceptance gate** → `kept` / `discarded` / `flagged`.
+4. Apply the gate via the **independent `loop-verify` subagent** (fresh context, scores 1-10,
+   threshold 8) → `kept` / `discarded` / `flagged`.
 5. If `kept`, ingest via wiki-ops; else record the reason. Append a ledger line to `log.md`.
 6. **Do not pause to ask permission mid-budget** (Karpathy's "NEVER STOP" — but bounded by `N`).
 
@@ -82,16 +111,19 @@ iterations spent.
 
 ## Results ledger (the `results.tsv` analog)
 
-Every iteration — kept, discarded, or flagged — appends to `docs/wiki/log.md`:
+Every iteration — kept, discarded, or flagged — appends to `docs/wiki/log.md`. The `Score`
+line is the **independent verifier's** number, which makes every iteration's done-decision
+auditable:
 
 ```
 ## [YYYY-MM-DD] autoresearch | <gap or topic>
 Status: kept | discarded | flagged
+Score: <n>/10 (threshold 8)
 Domain: technical | competitive | strategy
 Sources: <urls / file paths used>
 Pages created: [[Page]]   (omit if none)
 Pages updated: [[Page]]   (omit if none)
-Note: <one line — why discarded/flagged, or what was learned>
+Note: <verifier's one-line rationale — why kept / discarded / flagged>
 ```
 
 ## `/autoresearch sync-aria` — teach the assistant (Phase 2, future)
