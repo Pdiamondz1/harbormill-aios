@@ -179,7 +179,7 @@ git commit -m "feat(aria): read-only chat tool allowlist with registry-partition
 - Create: `supabase/functions/_shared/google-chat.ts`
 - Test: `src/test/google-chat.test.ts`
 
-Parses both `MESSAGE` (sender at `message.sender.email`) and `ADDED_TO_SPACE` (adder at `user.email`) events, derives the thread ref, and gates the sender. Fails closed on a missing email.
+Parses both `MESSAGE` (sender at `message.sender.email`) and `ADDED_TO_SPACE` (adder at `user.email` — Google Chat puts the actor at the top-level `user` on space-membership events, not `message.sender`; this is deliberate and consistent with the spec's "greeting only if the adder passes the identity gate") events, derives the thread ref, and gates the sender. Fails closed on a missing email.
 
 - [ ] **Step 1: Write the pure module**
 
@@ -538,7 +538,13 @@ serve(async (req) => {
 
 - [ ] **Step 3: Static review (no CI for Deno)**
 
-Re-read both files. Confirm: no duplicated constant/helper across the two files; `assistant-chat` no longer imports `TOOLS`/`logCost`/`anthropicFetch` directly; the moved helpers reference the core's module constants; the request/response contract (200 `{success,content}`, 400 on bad input/too-long, 401/403 on auth) is preserved.
+Re-read both files. Confirm:
+- No duplicated constant/helper across the two files; `assistant-chat` no longer imports `TOOLS`/`logCost`/`anthropicFetch` directly; the moved helpers reference the core's module constants.
+- **Error-contract parity with the pre-refactor function:**
+  - Missing/blank `message` → still **400** (the core throws `AssistantInputError` *before* the user-message insert, so no `messages` row is written; the caller maps it to 400). Trace the code to confirm the blank-check precedes the insert.
+  - `ANTHROPIC_API_KEY` unset → still **500** with message `"ANTHROPIC_API_KEY not configured"` (now thrown from the core, caught → 500). Acceptable that it now fires after auth rather than before.
+  - Unauthorized/no-role/not-your-conversation → still **401/403** (unchanged, handled in the caller above the core call).
+  - Happy path → **200** `{ success, content }`.
 
 - [ ] **Step 4: Commit**
 
@@ -685,9 +691,9 @@ Apply `20260624000100_conversations_external_ref.sql` to `znkoxpwvocxxvrvajmza` 
 Run (MCP `execute_sql` on the project): `select id from auth.users where email = 'dwilliams@harbormill.net';`
 Record the UUID for `ARIA_CHAT_USER_ID`.
 
-- [ ] **Step 4: Set the edge-function secrets**
+- [ ] **Step 4a: Set the two known secrets now**
 
-Set on the project (dashboard or CLI `secrets set`): `ARIA_CHAT_ALLOWED_EMAIL=dwilliams@harbormill.net`, `ARIA_CHAT_USER_ID=<uuid from Step 3>`, `ARIA_CHAT_PROJECT_NUMBER=<Damon's Chat app project number — from Step 7>`. (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `SUPABASE_*` already set.)
+Set on the project (dashboard or CLI `secrets set`): `ARIA_CHAT_ALLOWED_EMAIL=dwilliams@harbormill.net` and `ARIA_CHAT_USER_ID=<uuid from Step 3>`. (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `SUPABASE_*` already set.) `ARIA_CHAT_PROJECT_NUMBER` is set later in **Step 7c** — it doesn't exist until Damon's Google runbook (Step 7) produces it. **Hard dependency:** the webhook's JWT `audience` check rejects *every* request until that secret holds the real project number, so the live smoke (Step 8) cannot pass before Step 7 is done.
 
 - [ ] **Step 5: Deploy the functions**
 
@@ -708,7 +714,11 @@ Damon, in the live deck at `https://aios.harbormill.net` → Assistant: ask a me
 
 1. Google Cloud Console (the project that will own the Chat app) → **enable the Google Chat API**.
 2. Chat API → **Configuration**: App name `Aria`; avatar + description; **enable interactive features**; **Connection settings → App URL** = the webhook URL from Step 5; **Visibility** = restricted to himself / the Harbormill Workspace org (this is load-bearing — it's what makes `sender.email` present and trusted).
-3. Note the Google Cloud **project number** → give it to set `ARIA_CHAT_PROJECT_NUMBER` (Step 4), then re-deploy is not needed (secrets are read at runtime), but the secret must be set before testing.
+3. Note the Google Cloud **project number** (a bare numeric string).
+
+- [ ] **Step 7c: Set `ARIA_CHAT_PROJECT_NUMBER`**
+
+Set the secret to the project number from Step 7 — paste the numeric value with **no quotes and no whitespace** (it's compared string-to-string against the JWT `aud` claim). No re-deploy needed (secrets are read at runtime), but it must be set before Step 8.
 
 - [ ] **Step 8: Live smoke test**
 
@@ -726,5 +736,5 @@ After smoke passes, proceed to `superpowers:finishing-a-development-branch` (tes
 ## Notes for the implementer
 - **Deno files aren't in CI.** Get them right by review + deploy smoke; the Vitest gate only covers the pure `_shared` modules (Tasks 2–3) and the app.
 - **Don't change Aria's behaviour in Task 4** — it's a pure move + three additive options (`edgeFunction`, `toolAllowlist`, length-cap-in-core). The deck regression (Step 6) is the proof.
-- **Secrets are write-only** on Supabase; you can set but not read them back. `ARIA_CHAT_PROJECT_NUMBER` depends on Damon's Google step, so Step 4 may be split (set the two known secrets now, the project number after Step 7).
+- **Secrets are write-only** on Supabase; you can set but not read them back. `ARIA_CHAT_PROJECT_NUMBER` depends on Damon's Google runbook, so Task 6 sets the two known secrets in **Step 4a** and the project number in **Step 7c** — this is a hard ordering, not a footnote (the JWT audience check rejects every request until it's set).
 - **The security boundary is the JWT gate + the single-sender gate** — both must pass before any tool runs. Keep them at the very top of the handler.
