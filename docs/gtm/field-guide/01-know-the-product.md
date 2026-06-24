@@ -217,7 +217,7 @@ from §3, made concrete.
   architecture keystones, and the engagement ladder. Read this first if you only read one thing.
 - **`docs/wiki/`** — the knowledge wiki. Most relevant here:
   `concepts/four-condition-loop-test.md`, `concepts/kpi-watch.md`, `concepts/report-ingest-seam.md`,
-  `concepts/aios-pages.md`, and `concepts/aria` material. Query or extend it with the `wiki-ops` skill.
+  `concepts/aios-pages.md`, and `entities/aria.md`. Query or extend it with the `wiki-ops` skill.
 - **`docs/extending.md`** — how to add a new Aria tool, a new metric, or a new page without forking
   the engine.
 - **GTM siblings:** [`../README.md`](../README.md) (the 30-day playbook) and
