@@ -28,8 +28,12 @@ skill.
 A concrete gap motivates it: **`autoresearch` is a growth loop** (it *adds* verified
 wiki pages) but **nothing maintains** the pages it has already written. `wiki-ops lint`
 is the obvious validator for that missing **maintenance** loop. Running the validator
-lens by hand over the three existing skills produces an unambiguous #1 candidate (the
-"wiki-gardener" loop), which is good evidence the method works.
+lens by hand over the three skills in `.claude/skills/` (`autoresearch`, `wiki-ops`,
+`loop-audit`) produces an unambiguous #1 candidate (the "wiki-gardener" loop), which is
+good evidence the method works. (Note the distinction used throughout this spec: the
+**four existing validators** above are validator-shaped *logic* to credit; the
+*skills* in `.claude/skills/` are the units the skill enumerates and classifies — see
+§4.)
 
 ## 2. Goals / non-goals
 
@@ -73,9 +77,12 @@ For each capability, answer:
 
 ## 4. Flow — `/validator-forge` (one pass)
 
-1. **Enumerate** capabilities — the skills in `.claude/skills/` first; also note
-   validator-shaped logic already in the repo (the four existing validators in §1) so
-   the skill credits rather than duplicates them.
+1. **Enumerate** capabilities. The **unit of classification is each skill in
+   `.claude/skills/`** — every such skill gets exactly one ledger row with a
+   `validator | forgeable | taste-bound` verdict (§5). Separately, **note repo-level
+   validator logic that is not a skill** (notably the build-and-verification gate,
+   which is `npm` scripts, not a skill) so the analysis *credits* it and avoids
+   re-proposing it — but it does **not** get a per-skill ledger row.
 2. **Apply the lens** to each → verdict + proposed done-rule + one-line rationale.
 3. **Rank** the `forgeable` set by **value-per-effort**, reusing the **ROI-Discovery /
    `loop-audit` scoring vocabulary** (`category` = `hours_saved | revenue_captured |
