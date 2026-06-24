@@ -40,7 +40,7 @@ Damon (Google Chat)
    ▼
 Google Chat  ──HTTP POST (event JSON + Bearer JWT signed by Google)──►
    ▼
-supabase/functions/google-chat-webhook   (verify_jwt: false; does its own verification)
+supabase/functions/google-chat-webhook   (deployed --no-verify-jwt; verifies Google's JWT itself)
    ├─ 1. Verify the Google-signed Bearer JWT (authenticity gate)
    ├─ 2. Identity gate: sender email == ARIA_CHAT_ALLOWED_EMAIL → map to ARIA_CHAT_USER_ID
    ├─ 3. Find-or-create the conversation for this Chat thread (external_ref)
@@ -67,15 +67,23 @@ runAssistantTurn(supabase, {
   conversationId: string,   // must already exist and be owned by userId (caller guarantees)
   message: string,
   isAdmin: boolean,
+  edgeFunction: string,     // cost-ledger label: "assistant-chat" | "google-chat-webhook"
   toolAllowlist?: Set<string>,  // when set, only these tool names are exposed to Aria
 }): Promise<{ content: string }>
 ```
 
-Responsibilities (lifted verbatim from `assistant-chat/index.ts` lines ~178–278): sanitise the
-message, persist the user message, load the last 40 turns, build the system prompt, select tools,
-run the Anthropic tool loop (max 8 rounds), log cost, persist the assistant reply, bump
-`last_message_at`, return the final text. The system prompt builder, `sanitize`, cache-breakpoint
-helper, `extractText`, and the `anthropic()` wrapper move here too.
+Responsibilities (lifted verbatim from `assistant-chat/index.ts` lines ~166–278): enforce the
+`MAX_INPUT_LENGTH` (20k) guard, sanitise the message, persist the user message, load the last 40
+turns, build the system prompt, select tools, run the Anthropic tool loop (max 8 rounds), log cost,
+persist the assistant reply, bump `last_message_at`, return the final text. The system prompt
+builder, `sanitize`, cache-breakpoint helper, `extractText`, and the `anthropic()` wrapper move here
+too. The **length cap moves into the core** (per DRY) so both callers — including the public webhook
+— inherit it; over-length input throws/returns a clear error the caller surfaces.
+
+Two options fields keep cost attribution and limits correct across callers:
+- `edgeFunction: string` — passed to `logCost` so webhook spend ledgers as `"google-chat-webhook"`,
+  not `"assistant-chat"` (otherwise `get_cost_stats`' per-function breakdown is muddied).
+- `toolAllowlist?: Set<string>` — read-only subset for the webhook (below).
 
 **Tool selection becomes:** existing filter (`isAdmin || !requiresAdmin`, minus `DISABLED_TOOLS`)
 **AND**, when `toolAllowlist` is provided, `toolAllowlist.has(name)`. `assistant-chat` passes no
@@ -84,39 +92,52 @@ allowlist (unchanged behaviour); the webhook passes the read-only set.
 ### 2. `supabase/functions/assistant-chat/index.ts` (refactor — thin caller)
 
 Keeps its JWT auth, role check, body parse, and conversation-ownership check, then calls
-`runAssistantTurn(supabase, { userId, conversationId, message, isAdmin })` and returns
-`{ success: true, content }`. Net effect: the loop body is deleted and replaced by one call. **The
+`runAssistantTurn(supabase, { userId, conversationId, message, isAdmin, edgeFunction:
+"assistant-chat" })` and returns `{ success: true, content }`. Net effect: the loop body is deleted
+and replaced by one call. **The
 deck Aria must behave identically** — this is the regression gate (re-verified live on Harbormill's
 instance after deploy).
 
 ### 3. `supabase/functions/google-chat-webhook/index.ts` (new)
 
-Deployed `--no-verify-jwt` (it verifies Google's JWT itself). Steps:
+Deployed with the CLI's `--no-verify-jwt` flag (it verifies Google's JWT itself; there is no
+per-function `verify_jwt` key in this repo's `config.toml`). Steps:
 
 1. **Authenticity gate — verify the Google-signed Bearer JWT.** Google Chat sends
    `Authorization: Bearer <JWT>` signed by `chat@system.gserviceaccount.com`. Verify with `jose`
-   (`createRemoteJWKSet` against Google's JWKS endpoint
-   `https://www.googleapis.com/service_accounts/v1/jwk/chat@system.gserviceaccount.com`), asserting
-   `issuer = chat@system.gserviceaccount.com` and `audience = ARIA_CHAT_PROJECT_NUMBER` (the Chat
-   app's project number). Reject (401) on any failure. This stops anyone else POSTing to the URL.
+   (pinned import, e.g. `https://esm.sh/jose@5`), using a **module-level** `createRemoteJWKSet`
+   against Google's JWKS endpoint
+   `https://www.googleapis.com/service_accounts/v1/jwk/chat@system.gserviceaccount.com` — jose
+   caches the keyset across invocations, so it must be constructed once at module scope, not per
+   request. Assert `issuer = chat@system.gserviceaccount.com` and `audience = ARIA_CHAT_PROJECT_NUMBER`
+   (the Chat app's project number, a **string** — compare string-to-string). Reject (401) on any
+   failure. This stops anyone else POSTing to the URL.
 2. **Parse the event.** Handle `type: "MESSAGE"` (answer) and `type: "ADDED_TO_SPACE"` (one-line
-   greeting). Ignore others with an empty 200.
-3. **Identity gate.** Require `message.sender.email === ARIA_CHAT_ALLOWED_EMAIL`. Anyone else →
-   polite `{ text: "Sorry, I'm a private assistant and can't help here." }`. The allowed sender maps
-   to `ARIA_CHAT_USER_ID` (his admin deck user); `isAdmin = true`.
-4. **Resolve the conversation by thread.** Use `message.thread.name` as `external_ref`; look up
+   greeting, sent **only** if the adder passes the identity gate below). Ignore others with empty 200.
+3. **Identity gate.** Require `message.sender.email === ARIA_CHAT_ALLOWED_EMAIL`. Anyone else (or a
+   **missing** `email`) → polite `{ text: "Sorry, I'm a private assistant and can't help here." }`.
+   The allowed sender maps to `ARIA_CHAT_USER_ID` (his admin deck user); `isAdmin = true`.
+4. **Redelivery guard.** Google Chat retries deliveries that don't get a fast 2xx, which would
+   otherwise re-insert the user message and re-run the paid loop. **v1 decision (single user):** the
+   turn must complete inside Chat's sync window; accept the rare duplicate on a slow retry rather
+   than build dedup storage. *(Flagged follow-on: dedupe on the event's `message.name`.)*
+5. **Resolve the conversation by thread.** Use `message.thread.name` as `external_ref`; look up
    `conversations` by `(user_id = ARIA_CHAT_USER_ID, external_ref)`; create the row if absent. (DMs
    without a thread fall back to a single stable `external_ref = space.name`.)
-5. **Run the turn.** `runAssistantTurn(supabase, { userId: ARIA_CHAT_USER_ID, conversationId,
-   message: message.text, isAdmin: true, toolAllowlist: READ_ONLY_TOOLS })`.
-6. **Reply.** Return `{ text: content }` (Google Chat renders it). On error, return a friendly
+6. **Run the turn.** `runAssistantTurn(supabase, { userId: ARIA_CHAT_USER_ID, conversationId,
+   message: message.text, isAdmin: true, edgeFunction: "google-chat-webhook", toolAllowlist:
+   READ_ONLY_TOOLS })`.
+7. **Reply.** Return `{ text: content }` (Google Chat renders it). On error, return a friendly
    `{ text: "I hit an error pulling that — try again in a moment." }` and log server-side.
 
 **`READ_ONLY_TOOLS`** (defined in the webhook): `search_knowledge`, `read_metrics`,
-`get_latest_briefing`, `get_document`, `get_value_summary`, `get_weight_trend`, `get_cost_stats`.
-Deliberately excludes every write/action tool and the Google-proxy tools (which need an interactive
-user JWT that the webhook context doesn't have): `create_finding`, `propose_correction`,
-`export_to_drive`, `list_drive_files`, `compose_email_link`.
+`get_latest_briefing`, `get_document`, `get_value_summary`, `get_weight_trend`, `get_cost_stats`,
+`list_pending_loop_actions` (read-only view of the AR approve-queue — admin-gated, no write). This is
+the **full** read-only membership of the registry; every other tool is deliberately excluded as a
+write/action or Google-proxy tool (the latter need an interactive user JWT the webhook lacks):
+`create_finding`, `propose_correction`, `export_to_drive`, `list_drive_files`, `compose_email_link`.
+Together these two sets **partition the entire `TOOLS` registry** — a test enforces that (below), so
+any future tool must be classified read or write before it can ship.
 
 ### 4. Migration — `conversations.external_ref`
 
@@ -167,7 +188,11 @@ the project.)
 
 - **Unit (Vitest, `src/test/`):** pure helpers extracted where practical — e.g. an
   `isAllowedSender(email)` / `resolveThreadRef(event)` helper module under `_shared/` tested without
-  network. The read-only allowlist is asserted to exclude every write/action tool name.
+  network. **Allowlist-partition test (registry as the gate):** assert (a) every name in
+  `READ_ONLY_TOOLS` exists in `TOOLS` (catches typos/renames silently dropping a read tool), (b)
+  `READ_ONLY_TOOLS ∪ EXCLUDED == ` the full set of `TOOLS` names (catches an unclassified future
+  tool), and (c) no write/action tool name is in `READ_ONLY_TOOLS`. This fails CI the moment a tool
+  is added to `tools.ts` without being classified read or write.
 - **Deck-Aria regression:** after the `assistant-chat` refactor, re-run the existing manual deck
   smoke (ask Aria a metrics + a value question) on Harbormill's live instance — behaviour identical.
 - **Webhook live smoke:** with the Chat app configured, DM Aria a metrics question and confirm a
@@ -192,11 +217,18 @@ the project.)
 - Live: Damon DMs Aria and gets a correct, grounded, read-only answer; a non-allowed sender is
   refused; an unsigned POST is rejected 401.
 
-## Notes
+## Security notes
 
-- Reuses the established pattern: edge function deployed `--no-verify-jwt` that self-authenticates
-  (matches `report-ingest`, `loop-run`, `transcript-summarize`).
+- This webhook is reachable from the public internet; the Google-JWT + single-sender gates are the
+  security boundary and **must both pass before any tool runs**.
+- **The identity gate depends on the app being org-internal.** `message.sender.email` is populated by
+  Google Chat only when the app and sender are in the same Workspace org and the app is configured to
+  receive it. The runbook's "visibility limited to the Harbormill org" is therefore load-bearing, not
+  cosmetic. A missing/absent `email` is treated as a refusal (fail closed) — never as a match.
+- Reuses the established deploy pattern — an edge function deployed `--no-verify-jwt` that
+  self-authenticates — but the **verification mechanism differs** from `report-ingest` /`loop-run`
+  /`transcript-summarize` (those compare an exact service-role bearer or check an admin JWT). This one
+  verifies a Google-signed RS256 JWT against a JWKS; do **not** copy report-ingest's bearer-equality
+  check.
 - The shared-core extraction is the kind of in-place improvement this work naturally motivates: two
   callers now share one well-tested loop instead of duplicating it.
-- This webhook is reachable from the public internet; the Google-JWT + single-sender gates are the
-  security boundary and must both pass before any tool runs.
