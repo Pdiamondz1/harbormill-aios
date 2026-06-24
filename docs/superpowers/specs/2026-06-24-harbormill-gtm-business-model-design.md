@@ -207,7 +207,13 @@ a proven sales script).
    truth; the earlier NYC/exploration numbers are dropped (see §4). Optional founding-client lever
    stays within the band.
 4. Who delivers builds beyond Dame in Phase 1 (partner? first hire? a Sweven member-builder)?
-5. What is the trigger metric to *start* Phase 2 (client count, MRR, or a specific case-study bar)?
+5. ~~What is the trigger metric to *start* Phase 2 (client count, MRR, or a specific case-study bar)?~~
+   **Resolved (default — adopt unless Dame overrides):** Phase 2 starts when **all three** hold:
+   **3 paying agency clients (Operate tier or above) + 2 published case studies + ≥ $12,000 MRR.**
+   The three are complementary, not redundant — paying clients prove the loop *repeats*, case studies
+   prove it *sells*, and the MRR floor proves the base can *fund* the Phase-2 builder push without
+   starving founder build-time. Re-scored against live numbers in plan Task 5.3
+   (`docs/gtm/phase2-readiness.md`).
 
 ---
 
