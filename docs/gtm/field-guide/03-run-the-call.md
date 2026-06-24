@@ -88,7 +88,7 @@ dollar prize and a clean read on whether it's a Loop.
 > client, but a wrong draft is caught at signature — *cheap, reversible (condition 3 ✓)*. Q7–8:
 > data is in their CRM + a Google Form, both with exports/APIs — *reachable (condition 4 ✓)*. Q9–10:
 > the owner green-lights builds, no partner. → **Passes all four.** Prize:
-> `10 × 90 min × $35/hr` ≈ **$5,250/yr** of ops time, before the faster-kickoff upside. You just
+> `10/mo × 12 × 1.5 hr × $35/hr` ≈ **$6,300/yr** of ops time, before the faster-kickoff upside. You just
 > took a pain the script never mentions and turned it into a number and a Loop verdict.
 
 ---
