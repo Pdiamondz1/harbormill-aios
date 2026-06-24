@@ -16,6 +16,12 @@ Listen for the three high-ROI loops:
 - **Leads** — "leads come in by email/call and get re-keyed / dropped / followed up late."
 - **Reporting** — "I build the same report by hand every week / I'm flying blind on numbers."
 
+**For agencies (the Sweven beachhead niche)** the same three loops show up as:
+- **Their own lead-gen** — sourcing → enriching → scoring → personalized outreach (a manual SDR motion).
+- **Client onboarding** — intake → kickoff → asset collection, hand-done per new client.
+- **Client reporting** — the same per-client report rebuilt by hand every week/month.
+Lead with these when the prospect is an agency; they're where the reusable template compounds.
+
 Probe: *"How often does that happen? Roughly how long each time? What's it costing you?"*
 
 ### 2. Make the prize a number — 5 min
@@ -23,6 +29,7 @@ Reflect their pain back as dollars, live:
 - AR: *"So ~$40k in overdue invoices, paying ~30 days slow. Even recovering a third faster is ~$13k
   back in your account, and it never stops once it's automated."*
 - Leads: *"If you're dropping ~5 leads a month at a $2k value and 20% close — that's ~$24k/yr walking out."*
+- Agency reporting: *"If 8 clients each eat ~2 hrs of hand-built reporting a month at your ~$100/hr — that's ~$19k/yr of billable time you're burning on copy-paste."*
 
 The number is what makes them want the audit. Don't skip it.
 

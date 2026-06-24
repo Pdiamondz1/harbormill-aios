@@ -48,6 +48,17 @@ The deck's **monthly value surface re-proves ROI every cycle.** As long as value
 the retainer renews itself. If a month's value dips, that's your signal to ship a higher-impact loop —
 not wait for a cancellation.
 
+## Sweven layer — agency niche + founding-client lever (added 2026-06-24)
+
+The "niche after revenue" principle above now has a named target: the **beachhead agency sub-type**
+from the [Sweven audit](sweven-audit.md). Agencies are higher-budget, so they typically land on
+**Operate + Build** ($5,000) or **Embedded** ($8–10k) — *within the published band; no new tiers.*
+
+**Founding-client lever (optional):** to seed the first 2–3 case studies the outreach currently lacks,
+offer those early clients a reduced first-few-months retainer (or an extra credited audit) in exchange
+for testimonial + case-study + referral rights. Keep it inside the $3–10k band and time-box it — it
+buys proof, then ramps to standard pricing.
+
 ## Health metrics to track per retainer
 - Value delivered vs. fee (target: ≥3× the monthly fee).
 - Loops shipped per month (Tier 2: ≥1).
