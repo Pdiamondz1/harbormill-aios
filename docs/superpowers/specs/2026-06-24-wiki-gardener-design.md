@@ -85,11 +85,18 @@ thin/orphan page that the next lint flags (churn), and it brushes the wiki's
 `/wiki-gardener [N]` — one autonomous run (default budget `N=10`):
 
 1. Run `wiki-ops lint`. Read its structured findings; map each to a class (§4).
-2. If **zero gating-class defects** → **stop: done**. Go to step 6.
-3. If budget `N` is exhausted → **stop: budget**. Go to step 6.
-4. Pick the **single highest-severity auto-fixable defect**. Apply its fix via the
-   appropriate `wiki-ops` action. **Commit it** as its own revertable commit
-   (`docs(wiki): wiki-gardener — fix <class> on <page>`).
+2. If **zero gating-class (auto-fixable) defects** remain → **stop: done**. Go to step 6.
+   (Human-gated defects do **not** block "done" and do **not** consume budget — a lint
+   result containing only human-gated defects terminates here and surfaces them in step 6.)
+3. If budget `N` is exhausted → **stop: budget**. Go to step 6. (`N` counts **auto-fixes
+   applied**; lint runs, re-lints, and surfacing are free.)
+4. Pick **one** auto-fixable defect and apply its fix via the appropriate `wiki-ops`
+   action. The three auto-fixable classes are equal, low-risk structural fixes; because the
+   loop re-lints and is exhaustive, processing order does not affect the end state — as a
+   deterministic tie-break, process them in the order listed in §4 (typo/duplicate
+   wikilinks → missing `index.md` entries → missing cross-references). **Commit it** as its
+   own revertable commit (`docs(wiki): wiki-gardener — fix <class> on <page edited>`; for a
+   typo-link fix, `<page edited>` is the **source** page where the link was rewritten).
 5. **Re-lint** (return to step 1). One defect per iteration — never batch.
 6. **Summarize:** print fixes applied (with commit SHAs) and **every human-gated defect**
    surfaced (with its specifics/handoff). Append the run's ledger entry to
@@ -117,7 +124,7 @@ Note: <one line — e.g. "2 missing-concept links routed to autoresearch">
   or `docs/validator-forge/`. **Read-only against `docs/wiki/raw/`** (sources are immutable).
 - **No metered/client spend.** Runs in the local Claude Code session.
 - **Flag, don't overwrite** — contradictions are surfaced, never autonomously resolved.
-- **One defect per iteration** — fix the single highest-severity auto-fixable defect, then
+- **One defect per iteration** — fix one auto-fixable defect (ordered per §5 step 4), then
   re-lint; never batch (keeps each change auditable and individually revertable).
 - **Human-gated classes are never auto-resolved** — the loop surfaces them and continues
   with the next auto-fixable defect (or stops if none remain).
