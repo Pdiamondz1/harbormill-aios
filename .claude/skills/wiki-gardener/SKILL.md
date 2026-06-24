@@ -30,6 +30,10 @@ Read `docs/KNOWLEDGE_WIKI.md` and the `wiki-ops` skill before any run.
 consume budget — they are surfaced for a human and (where applicable) routed to
 `autoresearch`.
 
+**Wikilink extraction must be newline-tolerant** — a `[[...]]` split across a line break
+(it occurs in `marketing-site.md`) is a valid link: neither falsely flagged as a typo nor
+dropped from the link graph.
+
 ## The class split (the critical guardrail)
 
 ### Auto-fixable (gating — the loop resolves these autonomously, one per iteration)
@@ -38,7 +42,7 @@ consume budget — they are surfaced for a human and (where applicable) routed t
 |---|---|
 | **Typo/duplicate wikilinks** | A `[[link]]` whose target page doesn't exist but clearly matches an existing page (typo, casing, duplicate name) → rewrite the link to the correct existing page. *Structural; no new content.* |
 | **Missing `index.md` entries** | A page on disk not listed in `index.md` → append it in the correct alphabetical section, in the existing `- [[Display Name]](path) — summary` format. |
-| **Missing cross-references** | Two pages already relate in prose (one names the other / they share a concept) but lack `## See Also` `[[wikilinks]]` → add the See-Also entries. *Relationship already stated; no new claims.* |
+| **Missing cross-references** | Two pages already relate in prose (one names the other / they share a concept) but lack `## See Also` `[[wikilinks]]` → add the See-Also entries. *Relationship already stated; no new claims.*<br>**Trigger** = a page's own prose body names another existing page (a stated relationship) but that page is absent from that page's own `## See Also`. **Fix** = add the See-Also entry on that page only. **Out of scope → human-gated:** reciprocal back-linking (B linking A merely because A links B) and hub back-linking — those are curation calls, not stated-relationship gaps. Incidental/illustrative mentions where the See Also already curates the material targets are not defects. |
 
 **Never auto-create stub pages.** A genuine missing-concept link is human-gated (below) — an
 empty stub just becomes the next lint's thin/orphan defect.

@@ -68,7 +68,7 @@ thin/orphan page that the next lint flags (churn), and it brushes the wiki's
 |---|---|---|
 | **Typo/duplicate wikilinks** | A `[[link]]` whose target page doesn't exist but clearly matches an existing page (typo, casing, duplicate name) → rewrite the link to the correct existing page. | Purely structural; no new content; target is an existing page. |
 | **Missing `index.md` entries** | A page exists on disk but isn't in `index.md` → append it in the correct alphabetical section, in the existing `- [[Display Name]](path) — summary` format. | Pure structure; no editorial judgment. |
-| **Missing cross-references** | Two pages already relate in prose (one names the other / they share a concept) but lack `## See Also` `[[wikilinks]]` → add the See-Also entries. | The relationship is already stated by existing page content; adds no new claims. |
+| **Missing cross-references** | Two pages already relate in prose (one names the other / they share a concept) but lack `## See Also` `[[wikilinks]]` → add the See-Also entries.<br><br>**Trigger** = a page's own prose body names another existing page (a stated relationship) but that page is absent from that page's own `## See Also`. **Fix** = add the See-Also entry on that page only. **Out of scope → human-gated:** reciprocal back-linking (B linking A merely because A links B) and hub back-linking — those are curation calls, not stated-relationship gaps. Incidental/illustrative mentions where the See Also already curates the material targets are not defects. | The relationship is already stated by existing page content; adds no new claims. |
 
 ### Human-gated (loop surfaces with specifics, never resolves)
 
@@ -85,6 +85,9 @@ thin/orphan page that the next lint flags (churn), and it brushes the wiki's
 `/wiki-gardener [N]` — one autonomous run (default budget `N=10`):
 
 1. Run `wiki-ops lint`. Read its structured findings; map each to a class (§4).
+   **Wikilink extraction must be newline-tolerant** — a `[[...]]` split across a line break
+   (it occurs in `marketing-site.md`) is a valid link, neither falsely flagged as a typo nor
+   dropped from the link graph.
 2. If **zero gating-class (auto-fixable) defects** remain → **stop: done**. Go to step 6.
    (Human-gated defects do **not** block "done" and do **not** consume budget — a lint
    result containing only human-gated defects terminates here and surfaces them in step 6.)
