@@ -13,7 +13,7 @@ Fixed (auto):
     white-label contract, parallel to [[White-Label Architecture]]") named the page but its
     own See Also omitted it; added the See-Also entry on that page only.
 Surfaced (human-gated):
-  - Contradiction/stale claim on [[The Harbormill Ladder]] — internal rung-numbering is
+  - Contradiction on [[The Harbormill Ladder]] — internal rung-numbering is
     inconsistent: the main list numbers tiers 1–4 ("1. Get started … 4. Retainer") but the
     "Flag" section uses 0–3 ("Rungs 1–3 are fixed-scope; Rung 0 is hourly"), so "Get started"
     is Rung 1 in the list yet Rung 0 in the Flag (off-by-one). Needs a human to pick the
