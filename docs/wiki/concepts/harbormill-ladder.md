@@ -2,7 +2,7 @@
 title: The Harbormill Ladder
 type: concept
 created: 2026-06-17
-updated: 2026-06-20
+updated: 2026-06-24
 sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks]
 tags: [strategy, pricing, business-model, gtm]
 ---
@@ -51,7 +51,8 @@ and the external evidence supports the design:
 ## Flag (observation, not yet acted on)
 
 The productization literature stresses **clear fixed-scope deliverables** at each
-tier. Rungs 1–3 are fixed-scope; **Rung 0 is hourly**, which is less "productized."
+tier. Rungs 2–4 are scoped engagements; **Rung 1 (Get started) is hourly**, which is
+less "productized."
 A future option is a fixed-price starter package (e.g. a named "AI setup session")
 to make the entry rung a cleaner product. Recorded as a strategy flag.
 
