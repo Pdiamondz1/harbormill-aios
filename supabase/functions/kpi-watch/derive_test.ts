@@ -32,6 +32,12 @@ Deno.test("at_risk -> medium severity", () => {
   assertEquals(out[0].title, "KPI at risk: Revenue");
 });
 
+Deno.test("at_risk summary does not contradict its status (no 'off target')", () => {
+  const out = deriveBreachFindings([row({ status: "at_risk" })]);
+  assertEquals(out[0].summary_md.includes("off target"), false);
+  assertEquals(out[0].summary_md.includes("off track"), true);
+});
+
 Deno.test("null unit and null target -> clean summary + evidence omits null fields", () => {
   const out = deriveBreachFindings([
     row({ key: "nps", label: "NPS", value: "12", unit: null, target: null, status: "off_track" }),

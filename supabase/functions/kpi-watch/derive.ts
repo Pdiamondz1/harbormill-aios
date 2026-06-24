@@ -48,7 +48,7 @@ export function deriveBreachFindings(metrics: MetricRow[]): FindingPayload[] {
       title: `KPI ${word}: ${m.label}`,
       summary_md:
         `**${m.label}** is ${word}. Latest **${valueDisplay}**${targetClause} ` +
-        `(as of ${m.captured_at}). Auto-maintained by the KPI-watch loop while the metric is off target.`,
+        `(as of ${m.captured_at}). Auto-maintained by the KPI-watch loop while the metric is off track.`,
       evidence,
       source: "kpi-watch",
       fingerprint: `kpi-breach:${m.key}`,
