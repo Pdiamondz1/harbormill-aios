@@ -230,6 +230,12 @@ export const site = {
     cta: "Book a Loop Audit",
   },
 
+  trust: {
+    eyebrow: "Why it's safe to automate",
+    title: "Automation you can leave running",
+    body: "Black-box automation is unnerving — you can't tell when it's quietly gone wrong. So we only build automation where a clear rule decides when the job is done, and a wrong run is cheap to undo. That's what makes it safe to leave running without watching it. It's the same discipline we run on our own systems: loops that check their own work against a rule, fix what they safely can, and flag the rest for a human. We don't sell a black box we wouldn't run ourselves.",
+  },
+
   about: {
     eyebrow: "About",
     name: "Damon Williams",
