@@ -1,6 +1,6 @@
 # Validator Forge — 2026-06-23
 
-Capabilities analyzed: 4   Validators (existing): 5   Forgeable: 1   Taste-bound: 2
+Capabilities analyzed: 4   Validators (existing): 2   Forgeable: 1   Taste-bound: 1   (+1 non-skill validator credited: the build-and-verification gate)
 
 ---
 
@@ -51,7 +51,7 @@ Generates: (a) ingested/updated wiki pages; (b) a structured lint report listing
 Latent check: yes — the `lint` operation already identifies specific, named defect classes (contradictions, stale claims, orphan pages, missing pages, missing cross-refs, data gaps, index incompleteness)
 Done-rule: **Zero defects of the gating classes** (orphan `[[wikilinks]]`, missing `index.md` entries, missing cross-references). Contradictions and thin coverage remain human-gated and do not block the loop. Strength: **machine-checkable** — each gating defect class is enumerable by file scan
 Loop: `wiki-ops lint` → fix highest-severity auto-fixable defect → `wiki-ops lint` again → iterate until zero gating defects or budget `N`
-Note: The `lint` operation is the latent validator. Specific tweak to forge it: (1) define the gating class vs human-gated class split explicitly; (2) wire an iterate/stop condition (budget `N`). The full proposal is in `2026-06-23-wiki-gardener-loop.proposal.md`.
+Note: The `lint` operation is the latent validator. Specific tweak to forge it: (1) define the gating class vs human-gated class split explicitly; (2) wire an iterate/stop condition (budget `N`). The full proposal is in `2026-06-23-wiki-gardener-loop.proposal.md`. To be explicit: `wiki-ops lint` is credited as an existing validator (it already functions as a gate); the wiki-gardener does not propose it anew — it wires this existing validator into a generator→validator→iterate loop. The forgeable opportunity is the loop, not the validator.
 
 ---
 

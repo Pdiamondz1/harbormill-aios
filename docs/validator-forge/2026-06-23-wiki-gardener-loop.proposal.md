@@ -36,7 +36,7 @@ The loop generator may fix these without human approval:
 
 | Defect class | Fix action | Why auto-fixable |
 |---|---|---|
-| Orphan `[[wikilinks]]` | Create a stub page in the correct bucket, or remove the dangling link if clearly obsolete | Link targets are enumerable; stubs are low-blast-radius |
+| Orphan `[[wikilinks]]` | Create a stub page in the correct bucket, or add the missing cross-reference; delete the link only when its target is a confirmed typo or duplicate of an existing page — any "is this topic obsolete?" judgment is human-gated, not auto-fixable | Link targets are enumerable; stubs are low-blast-radius |
 | Missing `index.md` entries | Append the missing entry in alphabetical position | Pure structural; no editorial judgment |
 | Missing cross-references between related pages | Add `## See Also` entries with `[[wikilinks]]` | Relationship is stated by existing page content; no new claims |
 
