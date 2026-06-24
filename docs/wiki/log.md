@@ -1,5 +1,27 @@
 # Wiki Log
 
+## [2026-06-24] wiki-gardener | run (budget N=10)
+Iterations: 0   Stop reason: done
+Fixed (auto):
+  - (none) — lint found zero auto-fixable structural defects.
+Surfaced (human-gated):
+  - Contradiction/stale claim on [[The Harbormill Ladder]] — internal rung-numbering is
+    inconsistent: the main list numbers tiers 1–4 ("1. Get started … 4. Retainer") but the
+    "Flag" section uses 0–3 ("Rungs 1–3 are fixed-scope; Rung 0 is hourly"), so "Get started"
+    is Rung 1 in the list yet Rung 0 in the Flag (off-by-one). Needs a human to pick the
+    canonical base. NOT resolved.
+  - Thin / single-source coverage on [[Demo Seed Data]] — grounded in a single source
+    (`supabase/seed.sql`). Defensible (seed.sql is the authoritative artifact), but a
+    candidate to enrich. Autoresearch handoff topic: "AIOS demo seed data — what each seeded
+    KPI/briefing/finding/document demonstrates and how the demo tour uses them."
+  - Index-completeness / orphan / typo-wikilink / missing-page / missing-cross-reference
+    classes: all clean (36/36 pages indexed; every wikilink target resolves; every page has
+    ≥1 inbound link). The ~85 one-way See-Also edges were inspected and classified as
+    deliberate hub-and-spoke curation (e.g. [[Aria]], [[Harbormill AIOS]], [[Access Model]]
+    are linked-to widely but intentionally do not back-link every spoke), NOT structural
+    omissions — so NOT auto-fixed.
+Note: Clean-wiki acceptance run — detection + stop path validated; zero edits to wiki pages, only this ledger entry.
+
 ## [2026-06-20] update | Loop Audit offer page + "Rung" is client-invisible
 
 Session-end ingest of the Phase 2b work (PR #18) and a follow-up branding fix
