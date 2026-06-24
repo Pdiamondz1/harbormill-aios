@@ -2,8 +2,8 @@
 title: Self-Improving App
 type: concept
 created: 2026-06-17
-updated: 2026-06-17
-sources: [.claude/skills/autoresearch/SKILL.md, autoresearch/program.md]
+updated: 2026-06-24
+sources: [.claude/skills/autoresearch/SKILL.md, autoresearch/program.md, docs/wiki/log.md, docs/wiki/memory.md]
 tags: [architecture, autoresearch, ai, roadmap]
 ---
 
@@ -42,6 +42,23 @@ checks, which run during *production*; `loop-verify` is the *final, independent*
 so the loop never grades its own homework. The score is recorded per iteration in `log.md`,
 making each done-decision auditable. It is the reusable, concrete form of a `validator-forge`
 validator and the condition-#2 validator any loop can adopt.
+
+## Loop memory (two files per run)
+
+Each run writes **two records**, mirroring and then extending Karpathy's pattern:
+
+- **`docs/wiki/log.md`** — the append-only run **ledger** (his `results.tsv` analog): one raw
+  row per iteration (status, verifier score, sources, note), never pruned. *What happened, when.*
+- **`docs/wiki/memory.md`** — a curated, bounded **lessons file** (what works, what to avoid,
+  open flags to skip, what to try next) that the loop **reads at the start of every run** to
+  steer gap selection and **rewrites/prunes at the end**. *What the next run should do
+  differently.* This is what makes the loop **learn over runs** instead of re-discovering the
+  same dead-ends.
+
+This goes **beyond** Karpathy's original, whose only forward-carried "memory" is the git history
+of kept commits — the project adds an explicit, read-back prose memory. Both files are
+operational (no frontmatter, excluded from Aria-sync and `index.md`), distinct from the knowledge
+pages the loop produces.
 
 ## Roadmap
 

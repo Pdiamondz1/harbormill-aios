@@ -21,7 +21,9 @@ This skill **orchestrates two existing skills** — do not reimplement them:
 - **`wiki-ops`** — the 8-step ingest flow, query, and lint over `docs/wiki/`. Read its skill and
   `docs/KNOWLEDGE_WIKI.md` before writing pages.
 
-Read `docs/wiki/index.md` before any run so you know what already exists ("compound, don't duplicate").
+Read `docs/wiki/index.md` **and `docs/wiki/memory.md`** before any run — `index.md` so you know
+what already exists ("compound, don't duplicate"), and `memory.md` for the lessons carried from
+prior runs (what to avoid, open flags to skip, what to try next). See **Loop memory** below.
 
 ## Research domains
 
@@ -87,8 +89,10 @@ the score in the ledger.
 4. **Ingest** (if `kept`): follow the wiki-ops 8-step ingest flow — write the page into the correct
    bucket with valid frontmatter (`title`, `type`, `created`, `updated`, `sources`, `tags`), add
    `[[wikilinks]]` and a `## See Also`, update `index.md` (alphabetical), and append to `log.md`.
-5. **Log the outcome** to `docs/wiki/log.md` (see ledger format below) — including discards/flags,
-   which produce no page but are still recorded.
+5. **Write the run's two records** — (a) append the outcome to `docs/wiki/log.md` (ledger format
+   below; includes discards/flags, which produce no page but are still recorded), and
+   (b) **update `docs/wiki/memory.md`** with this run's distilled lesson — what worked / failed,
+   any new open flag, what to try next — pruning stale lines. See **Loop memory** below.
 
 ## `/autoresearch loop [N]` — autonomous (Karpathy adaptation)
 
@@ -99,15 +103,18 @@ loop is autonomous *within* the budget, then stops and summarizes. The budget is
 
 1. Run the wiki-ops **`lint`** check. Rank gaps: missing concept pages referenced by `[[wikilinks]]`,
    orphan pages, thin/single-source coverage, stale claims.
-2. Pick the highest-value gap as this iteration's "experiment."
+2. Pick the highest-value gap as this iteration's "experiment" — **steered by `memory.md`**: skip
+   its "avoid / dead-end" gaps, honor its "Open flags" (don't re-research), prefer its "Try next".
 3. Research it (web + repo, exactly as on-demand).
 4. Apply the gate via the **independent `loop-verify` subagent** (fresh context, scores 1-10,
    threshold 8) → `kept` / `discarded` / `flagged`.
-5. If `kept`, ingest via wiki-ops; else record the reason. Append a ledger line to `log.md`.
+5. If `kept`, ingest via wiki-ops; else record the reason. Append a ledger line to `log.md`,
+   **and update `memory.md`** with this iteration's distilled lesson (pruned, bounded).
 6. **Do not pause to ask permission mid-budget** (Karpathy's "NEVER STOP" — but bounded by `N`).
 
 **On exhaustion:** print a results summary — gaps closed, pages created/updated, items flagged,
-iterations spent.
+iterations spent — and ensure `memory.md` reflects the run's net lessons (what worked/failed,
+open flags carried forward, what to try next).
 
 ## Results ledger (the `results.tsv` analog)
 
@@ -126,6 +133,30 @@ Pages updated: [[Page]]   (omit if none)
 Note: <verifier's one-line rationale — why kept / discarded / flagged>
 ```
 
+## Loop memory (lessons learned)
+
+The loop writes **two records every run**: (1) the **Output** — the wiki page(s) it produced via
+the wiki-ops ingest flow — and (2) **`docs/wiki/memory.md`**, a curated, forward-carrying record
+of *what worked, what failed, and what to remember next run*. `memory.md` is what makes the loop
+**learn over time** instead of re-discovering the same dead-ends each run.
+
+Keep `memory.md` and `log.md` distinct:
+- **`log.md`** = the **append-only audit** (the `results.tsv` analog): one raw row per iteration,
+  never pruned. Answers *"what happened, when."*
+- **`memory.md`** = the **distilled lessons**, rewritten and **pruned each run**, bounded (~60
+  lines). Answers *"what should the next run do differently."* Sections: *What works*,
+  *What fails / avoid*, *Open flags — don't re-research*, *Well-covered*, *Try next*.
+
+**Protocol:**
+- **Read** `memory.md` at the **start** of every run (with `index.md`) and let it steer gap
+  selection — skip "avoid / dead-end" gaps, honor "Open flags", prefer "Try next".
+- **Update** `memory.md` at the **end** of every run / iteration: fold in the run's lesson, add
+  any new open flag, set "Try next", and **prune** stale or resolved lines so it stays bounded.
+
+Operational file like `log.md`: no frontmatter, never ingested into Aria's RAG, never in
+`index.md`. (The same memory convention is available to other loops, e.g. `wiki-gardener`, which
+would keep its own `memory.md`-style lessons — not wired yet.)
+
 ## `/autoresearch sync-aria` — teach the assistant (Phase 2, future)
 
 Pushes verified wiki knowledge into the AIOS knowledge base so [[Aria]] reasons over it — the second
@@ -133,7 +164,7 @@ learner on the same loop. Aria retrieves it through her existing `search_knowled
 retrieval change is needed.
 
 - **Scope:** only `concepts/`, `entities/`, `analyses/`. **Never** `raw/`, `sources/`, session pages,
-  `index.md`, or `log.md` (too granular/noisy for retrieval).
+  `index.md`, `log.md`, or `memory.md` (too granular/noisy/operational for retrieval).
 - **How (adapt before enabling):** for each in-scope page, push `{ title, content, path, tags }` into
   the knowledge base via the **`knowledge-sync`** edge function (`supabase/functions/knowledge-sync`),
   which embeds with OpenAI and upserts idempotently. **Verify that function's exact input contract,

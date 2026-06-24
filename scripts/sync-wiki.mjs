@@ -26,9 +26,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const WIKI_DIR = join(ROOT, "docs", "wiki");
 
-// index.md is a link catalog and log.md is the research ledger — navigation,
-// not knowledge. Everything else under docs/wiki/ is fair game for Aria.
-const EXCLUDE = new Set(["index.md", "log.md"]);
+// index.md is a link catalog, log.md is the append-only research ledger, and
+// memory.md is the autoresearch loop's distilled lessons — all loop-operational
+// /navigation, not knowledge. Everything else under docs/wiki/ is fair game for Aria.
+const EXCLUDE = new Set(["index.md", "log.md", "memory.md"]);
 
 // knowledge-sync caps items at 100/request; stay well under for headroom.
 const BATCH = 50;
