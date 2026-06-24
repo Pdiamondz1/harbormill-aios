@@ -10,8 +10,8 @@ compounds: the longer you run it, the more it knows your business.
 
 ## The ladder, in one line
 **Loop Audit** ($500–$2,500 fixed, *whole fee credited* toward the build) → **Focused Project**
-($2,500–$10,000, *50% deposit / 50% on delivery*) → **Retainer** (Operate **$3,000/mo** · Operate +
-Build **$5,000/mo** · Embedded **$8–10k/mo**).
+(**$5,000 fixed** — audit fee credited, *50% deposit / 50% on delivery*) → **Retainer** (Operate
+**$3,000/mo** · Operate + Build **$5,000/mo** · Embedded **$8–10k/mo**).
 
 ## The 4 Loop conditions (the Four-Condition Loop Test)
 A task is a Loop candidate *only if it passes all four*:
