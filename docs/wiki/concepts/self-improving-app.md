@@ -50,11 +50,13 @@ what stops the loop from polluting the wiki.
 
 ## Maintenance counterpart
 
-The autoresearch loop *grows* the wiki; a separate **wiki-gardener maintenance
-loop** (forthcoming, proposed) *prunes and validates* it — running `wiki-ops lint`
-as the objective done-rule so it qualifies under condition #2 of the
-[[Four-Condition Loop Test]]. This loop is expected to be emitted as a
-build-first proposal by the **`validator-forge`** skill
+The autoresearch loop *grows* the wiki; the **`wiki-gardener`** skill
+(`.claude/skills/wiki-gardener/SKILL.md`) *prunes and validates* it — running
+`wiki-ops lint` as the objective done-rule so it qualifies under condition #2 of
+the [[Four-Condition Loop Test]]. This maintenance counterpart is now
+**implemented**, completing the self-improving-wiki cycle: `autoresearch` grows
+the wiki, `wiki-gardener` keeps it clean. It was emitted as a build-first
+proposal by the **`validator-forge`** skill
 (`.claude/skills/validator-forge/SKILL.md`), which identifies which existing
 capability can become the validator that unblocks a blocked loop candidate.
 

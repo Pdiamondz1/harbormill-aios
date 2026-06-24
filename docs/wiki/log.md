@@ -1,5 +1,42 @@
 # Wiki Log
 
+## [2026-06-24] wiki-gardener | run (budget N=10)
+Iterations: 3   Stop reason: done
+Fixed (auto):
+  - Missing cross-reference on [[ROI-Discovery Audit]] — a7c644b — prose ("Loop Audit mode
+    extends this surface with the [[Four-Condition Loop Test]] gate") named the page but its
+    own See Also omitted it; added the See-Also entry on that page only.
+  - Missing cross-reference on [[Connector Library]] — c217be8 — prose ("the connector
+    registry mirrors the [[AI Tool Registry]] pattern") named the page but its own See Also
+    omitted it; added the See-Also entry on that page only.
+  - Missing cross-reference on [[Report-Ingest Seam]] — e4fdab0 — prose ("it's the
+    white-label contract, parallel to [[White-Label Architecture]]") named the page but its
+    own See Also omitted it; added the See-Also entry on that page only.
+Surfaced (human-gated):
+  - Contradiction on [[The Harbormill Ladder]] — internal rung-numbering is
+    inconsistent: the main list numbers tiers 1–4 ("1. Get started … 4. Retainer") but the
+    "Flag" section uses 0–3 ("Rungs 1–3 are fixed-scope; Rung 0 is hourly"), so "Get started"
+    is Rung 1 in the list yet Rung 0 in the Flag (off-by-one). Needs a human to pick the
+    canonical base. NOT resolved.
+  - Thin / single-source coverage on [[Demo Seed Data]] — grounded in a single source
+    (`supabase/seed.sql`). Defensible (seed.sql is the authoritative artifact), but a
+    candidate to enrich. Autoresearch handoff topic: "AIOS demo seed data — what each seeded
+    KPI/briefing/finding/document demonstrates and how the demo tour uses them."
+  - Remaining one-way See-Also edges left human-gated, NOT auto-fixed: incidental/illustrative
+    mentions ("the test harness for [[Harbormill AIOS]]", "the person behind [[Harbormill
+    AIOS]]") and parenthetical supporting citations ("see [[Access Model]]", "([[Per-Client
+    Deployment]])") where the page's See Also already curates its material targets, plus
+    deliberate hub spokes ([[Aria]], [[Harbormill AIOS]], [[Access Model]]). Per the clarified
+    class definition these are not stated-relationship defects (the trigger is prose naming a
+    *material* relationship the page's own See Also omits). Index-completeness, typo/duplicate
+    wikilinks, broken links, and orphans all clean (36/36 indexed; every target resolves;
+    every page ≥1 inbound; the newline-split `[[...]]` in marketing-site.md parsed correctly,
+    not flagged as a typo).
+Note: Re-run under the clarified missing-cross-references definition (prose-named-but-self-omitted
+= auto-fixable). Supersedes the prior 2026-06-24 N=10 "Iterations: 0 … clean" entry, which had
+under-classified this whole class as human-gated. 3 clear-cut See-Also additions applied (one per
+commit, page only); boundary held on the rest.
+
 ## [2026-06-20] update | Loop Audit offer page + "Rung" is client-invisible
 
 Session-end ingest of the Phase 2b work (PR #18) and a follow-up branding fix
