@@ -3,6 +3,7 @@ import { TrendingUp, Plus } from "lucide-react";
 import { useValueEvents, useValueSummary } from "@/hooks/useValue";
 import { useAccess } from "@/hooks/useAccess";
 import { VALUE_CATEGORY_LABELS, formatDollars, type ValueCategory } from "@/types/value";
+import { formatReconciliation } from "@/lib/reconciliation";
 import { PageHeader } from "@/components/PageHeader";
 import { EmptyState } from "@/components/EmptyState";
 import { Spinner } from "@/components/ui/spinner";
@@ -37,6 +38,21 @@ export default function Value() {
       />
 
       <ValueDeliveredCard linkToDetail={false} />
+
+      {summary?.reconciliation && summary.reconciliation.promised_annual_cents > 0 && (() => {
+        const r = formatReconciliation(summary.reconciliation!);
+        return (
+          <p className="mt-3 text-sm text-muted-foreground">
+            Promised at audit:{" "}
+            <span className="font-semibold text-foreground">{r.promised}/yr</span>
+            {" · "}Delivered to date:{" "}
+            <span className="font-semibold text-foreground">{r.delivered}</span>
+            {" · "}
+            <span className="font-semibold text-foreground">{r.pct}</span>
+            {" "}of promise.
+          </p>
+        );
+      })()}
 
       {isAdmin && adding && (
         <div className="mt-4">

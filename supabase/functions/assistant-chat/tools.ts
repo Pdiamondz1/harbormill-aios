@@ -385,4 +385,31 @@ export const TOOLS: Tool[] = [
       return { proposed: true, id: data.id, note: "Queued for an admin to approve — not yet applied." };
     },
   },
+  {
+    definition: {
+      name: "list_pending_loop_actions",
+      description:
+        "List automation-loop reminder actions awaiting admin approval (recipient, subject, estimated value). Use when the operator asks what's waiting for approval or about the automation queue. Admin-only.",
+      input_schema: { type: "object", properties: {} },
+    },
+    requiresAdmin: true,
+    execute: async (_args, ctx) => {
+      const { data, error } = await ctx.supabase
+        .from("loop_actions")
+        .select("id, target, payload, value_estimate_cents, created_at")
+        .eq("status", "proposed")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      // deno-lint-ignore no-explicit-any
+      const actions = (data ?? []) as any[];
+      return {
+        count: actions.length,
+        actions: actions.map((a) => ({
+          recipient: a.target?.recipient ?? null,
+          subject: a.payload?.subject ?? null,
+          estimated_value_cents: a.value_estimate_cents,
+        })),
+      };
+    },
+  },
 ];

@@ -30,6 +30,7 @@ import {
   parseIdToken,
   renameDriveFile,
   revokeToken,
+  sendGmail,
   signState,
   trashDriveFile,
   verifyState,
@@ -191,6 +192,22 @@ serve(async (req) => {
 
       case "append_metrics_to_sheet":
         return await appendMetrics(supabaseAdmin, user.id, true);
+
+      case "gmail_send": {
+        const { to, subject, body: emailBody } = body;
+        if (typeof to !== "string" || !to.trim()) {
+          return json({ error: "to is required", code: "bad_request" }, 400);
+        }
+        if (typeof subject !== "string" || !subject.trim()) {
+          return json({ error: "subject is required", code: "bad_request" }, 400);
+        }
+        if (typeof emailBody !== "string" || !emailBody.trim()) {
+          return json({ error: "body is required", code: "bad_request" }, 400);
+        }
+        const { token } = await getValidAccessToken(supabaseAdmin, user.id);
+        const result = await sendGmail(token, { to: to.trim(), subject: subject.trim(), body: emailBody });
+        return json({ success: true, id: result.id, threadId: result.threadId });
+      }
 
       default:
         return json({ error: `Unknown action "${action}"` }, 400);

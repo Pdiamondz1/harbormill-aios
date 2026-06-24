@@ -32,6 +32,7 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const SEVERITIES = new Set(["critical", "high", "medium", "low"]);
 const METRIC_STATUSES = new Set(["on_track", "at_risk", "off_track"]);
 const VALUE_CATEGORIES = new Set(["hours_saved", "revenue_captured", "cost_avoided", "other"]);
+const INVOICE_STATUSES = new Set(["open", "paid", "written_off"]);
 
 interface MetricPayload {
   key: string;
@@ -61,6 +62,15 @@ interface FindingPayload {
   fingerprint?: string;
 }
 
+interface InvoicePayload {
+  external_id: string;
+  customer_name: string;
+  amount_cents: number;
+  due_date: string;
+  status?: string;
+  customer_email?: string;
+}
+
 function validateMetric(m: unknown): string | null {
   const x = m as MetricPayload;
   if (!x || typeof x !== "object") return "metric must be an object";
@@ -80,6 +90,22 @@ function validateFinding(f: unknown): string | null {
   if (typeof x.summary_md !== "string" || !x.summary_md.trim()) return "summary_md is required";
   if (x.fingerprint !== undefined && typeof x.fingerprint !== "string")
     return "fingerprint must be a string";
+  return null;
+}
+
+function validateInvoice(i: unknown): string | null {
+  const x = i as InvoicePayload;
+  if (!x || typeof x !== "object") return "invoice must be an object";
+  if (typeof x.external_id !== "string" || !x.external_id.trim()) return "invoice.external_id is required";
+  if (typeof x.customer_name !== "string" || !x.customer_name.trim()) return "invoice.customer_name is required";
+  if (typeof x.amount_cents !== "number" || !Number.isFinite(x.amount_cents) || x.amount_cents < 0) {
+    return "invoice.amount_cents must be a number >= 0";
+  }
+  if (typeof x.due_date !== "string" || !x.due_date.trim()) return "invoice.due_date is required";
+  if (x.status !== undefined && !INVOICE_STATUSES.has(x.status))
+    return `invoice.status must be one of ${[...INVOICE_STATUSES].join("|")}`;
+  if (x.customer_email !== undefined && typeof x.customer_email !== "string")
+    return "invoice.customer_email must be a string";
   return null;
 }
 
@@ -279,6 +305,7 @@ serve(async (req) => {
       const x = e as {
         category?: string; label?: string; amount_cents?: number;
         occurred_at?: string; source?: string; project_id?: string; metadata?: Record<string, unknown>;
+        audit_opportunity_id?: string;
       };
       if (!x || typeof x !== "object") return json({ error: "value event must be an object" }, 400);
       if (!VALUE_CATEGORIES.has(x.category ?? "")) {
@@ -295,6 +322,7 @@ serve(async (req) => {
         source: x.source ?? "agent",
         occurred_at: x.occurred_at ?? new Date().toISOString(),
         project_id: x.project_id ?? null,
+        audit_opportunity_id: x.audit_opportunity_id ?? null,
         metadata: x.metadata ?? {},
       });
     }
@@ -306,9 +334,36 @@ serve(async (req) => {
     return json({ success: true, inserted: rows.length });
   }
 
+  // ── Invoices (batch, upsert on external_id) ──
+  // Vendor-neutral overdue-invoice store, fed by clients' accounting systems.
+  // Upsert on external_id so re-pushes update status (open → paid / written_off).
+  if (type === "invoices") {
+    const invoices: unknown[] = Array.isArray(rawPayload.invoices) ? rawPayload.invoices : [];
+    if (invoices.length === 0) return json({ error: "payload.invoices must be a non-empty array" }, 400);
+    if (invoices.length > 100) return json({ error: "max 100 invoices per request" }, 400);
+    for (const i of invoices) {
+      const problem = validateInvoice(i);
+      if (problem) return json({ error: problem }, 400);
+    }
+    const rows = (invoices as InvoicePayload[]).map((i) => ({
+      external_id: i.external_id.trim(),
+      customer_name: i.customer_name.trim(),
+      amount_cents: Math.round(i.amount_cents),
+      due_date: i.due_date,
+      status: i.status ?? "open",
+      customer_email: i.customer_email ?? null,
+    }));
+    const { error } = await supabase.from("ar_invoices").upsert(rows, { onConflict: "external_id" });
+    if (error) {
+      console.error("[report-ingest] invoices:", error.message);
+      return json({ error: error.message }, 500);
+    }
+    return json({ success: true, inserted: rows.length });
+  }
+
   // ── Briefing (single, upsert on week_start) ──
   if (type !== "briefing") {
-    return json({ error: `Unsupported type "${type}" — use 'metrics', 'briefing', 'findings', 'correction', or 'value'` }, 400);
+    return json({ error: `Unsupported type "${type}" — use 'metrics', 'briefing', 'findings', 'correction', 'value', or 'invoices'` }, 400);
   }
   const payload = rawPayload as BriefingPayload;
   if (!/^\d{4}-\d{2}-\d{2}$/.test(payload.week_start ?? "")) {
