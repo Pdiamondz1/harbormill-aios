@@ -14,6 +14,11 @@ onboarded → delivered → kept on retainer.** These assets operationalize the 
    (25%)              (35%)          (50%)
 ```
 
+> **Sweven layer (added 2026-06-24):** the partner's Sweven workspace supplies the **~50 warm
+> contacts** as a ready-made Warm-50+ and a demo-night intro channel, and the membership audit names
+> a **beachhead agency sub-type** to concentrate on. The funnel + ladder are unchanged — Sweven just
+> warms the top. See [sweven-channel.md](sweven-channel.md) + [beachhead-decision.md](beachhead-decision.md).
+
 ## Assets
 
 | # | Asset | File | Stage |
@@ -24,6 +29,9 @@ onboarded → delivered → kept on retainer.** These assets operationalize the 
 | 4 | Project proposal template | [project-proposal-template.md](project-proposal-template.md) | CONVERT |
 | 5 | Onboarding SOP + access intake | [onboarding-sop.md](onboarding-sop.md) | ONBOARD |
 | 6 | Productized retainer tiers | [retainer-tiers.md](retainer-tiers.md) | RETAIN |
+| 7 | Sweven membership audit | [sweven-audit.md](sweven-audit.md) | GET (Sweven layer) |
+| 8 | Sweven channel playbook + demo night | [sweven-channel.md](sweven-channel.md) | GET (Sweven layer) |
+| 9 | Flagship case studies | [case-studies/](case-studies/) | CONVERT (proof) |
 
 ## Weekly cadence
 
