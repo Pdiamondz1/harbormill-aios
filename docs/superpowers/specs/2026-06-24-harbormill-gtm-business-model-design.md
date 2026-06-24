@@ -7,6 +7,13 @@
   Wistia media `0ywbiyjuor`), the 19:00–60:00 segment covering the AIOS product thesis,
   live client demos, and the sell-and-deliver business model. Full timestamped transcript of
   that window was captured and processed; key claims are cited inline below.
+- **Relationship to existing GTM assets (read first):** This design **extends**, and does not
+  replace, Harbormill's existing 30-Day Playbook / `[[Harbormill Ladder]]` in `docs/gtm/`. The
+  **Loop Audit → Focused Project → Retainer** ladder and its pricing (the **$3–10k** retainer band)
+  remain the **single source of truth**. This spec adds only what was genuinely new from the
+  brainstorm: the **Sweven channel**, the **agency-niche concentration**, **dogfood case studies**,
+  and the **Phase-2 accelerator arc**. Where this document and `docs/gtm/` ever disagree on pricing
+  or the sales ladder, `docs/gtm/` wins.
 
 ---
 
@@ -98,44 +105,43 @@ sub-type is chosen by the Sweven membership audit (Phase 1, Step 1), not guessed
 
 ---
 
-## 4. The Offer (structure from the webinar; pricing adjusted for NYC/Hoboken)
+## 4. The Offer — use Harbormill's existing ladder (source of truth: `docs/gtm/`)
 
-Tyler's prices are Alabama prices. The NYC/Hoboken market commands a premium, and the ROI anchor is
-higher here: the manual labor displaced (a loaded NYC ops/admin FTE is ~$5–6k/mo) and the revenue
-unlocked are both larger, and sophisticated NYC buyers read *too cheap* as *low value*. Pricing is
-set ~1.4× Tyler's, rounded to clean premium anchors.
+This design introduces **no new pricing**. Harbormill already has a validated three-step ladder, and
+agencies — being higher-budget — simply land in its upper tiers. (An earlier draft of this spec
+proposed an "AI Exploration sprint" and a $3.5k/$6.5k/$15k ladder; **both are dropped** in favor of
+the existing assets below, which are already faster and cheaper to enter.)
 
-- **Paid "AI Exploration" milestone — $3,500**, credited toward month 1, refundable if undeliverable.
-  De-risks the buyer, funds scoping, filters tire-kickers. Functions as a build down-payment.
-  **Duration: a fast 3–6 *day* sprint** (verify APIs/data, map the workflow, build a rough MVP).
-  Speed is competitive, not just operational — a slow exploration lets the client cool off and a
-  competitor swoop in, and it contradicts the speed-to-value pitch the whole model is built on.
-  (The webinar did not pin a duration; 3–6 days is Harbormill's deliberate standard.)
-- **Tiered monthly retainers:**
-  | Tier | Price (NYC/Hoboken) | Tyler ref (AL) | Scope |
-  |---|---|---|---|
-  | Core | **$3,500/mo** | $2,500 | One pain point solved end-to-end |
-  | Growth | **$6,500/mo** | $4,500 | Expanded automations / multiple workflows |
-  | Full AIOS | **$15,000/mo** | $10,500 | Complete operating system build-out |
-  *~99% of clients start in Core or Growth; Full is the land-and-expand ceiling.*
-- **Founding-client offer** *(distinct from the exploration sprint above)* — to charge premium
-  *before* local case studies exist, the first ~2–3 paying agencies get **30–40% off the monthly
-  retainer for their first 3–6 months** in exchange for testimonial + case-study + referral rights.
-  The **exploration fee is still charged in full** (keeps commitment real). This discount applies to
-  the *ongoing retainer rate*, not to how long exploration takes — it deliberately trades early
-  margin for the Phase-1 deliverable (proof), then ramps to full NYC pricing once case studies exist.
-- **Land-and-expand** is the operating mindset: solve one pain cheaply, then let the AIOS sell its own
-  next phase as the client's "what else can it do?" instinct kicks in. *"I just let them upsell
-  themselves."* — webinar, ~56:00
+- **Wedge — the Loop Audit** (`docs/gtm/intro-call-script.md`): a paid **$500–$2,500** fixed-scope
+  audit, fee **credited toward the build**, delivering a ranked Opportunity Report in **48h** via the
+  Four-Condition Loop Test. *This already embodies the "fast, paid scoping" idea — the 48h turnaround
+  is faster than the 3–6 day sprint the earlier draft proposed, so no separate exploration step is
+  needed.*
+- **Focused Project** (`docs/gtm/project-proposal-template.md`): **$5,000** fixed, 50/50
+  deposit/delivery, 2–3 week timeline, audit fee credited.
+- **Retainer** (`docs/gtm/retainer-tiers.md`): Operate **$3,000/mo** · Operate+Build **$5,000/mo** ·
+  Embedded **$8–10k/mo** (published band **$3–10k**), pitched at delivery on the deck's
+  **"Value Delivered"** surface.
+- **Founding-client lever (optional, additive):** to seed the case studies the current outreach
+  lacks, the first ~2–3 agency clients may get a reduced first-few-months retainer (or an extra
+  credited audit) in exchange for testimonial + case-study + referral rights — kept **within the
+  published $3–10k band**.
+- **Land-and-expand** is already the retainer's spine: the Operate+Build tier ships one new loop/month
+  from the client's ranked audit, so the system compounds. *"I just let them upsell themselves."*
+  — webinar, ~56:00
 
 ---
 
 ## 5. Delivery Model
 
-- Built on **Harbormill's existing white-label AIOS base** → Claude Code + Cursor + starter-kit folder
-  structure; a per-client context layer assembled from discovery docs (call transcripts, business
-  info, financials, team roster) dropped into an inbox folder and processed by one prompt.
-- **One agency sub-type first** → each build yields a reusable template → speed-to-value compounds.
+- Delivery is Harbormill's **deployable AIOS deck** (the GitHub-template base → a per-client repo on
+  the client's own Supabase, white-labeled via `brand.ts` + CSS, with the **Aria** assistant,
+  **connectors** (Stripe/GA4 → live KPIs), a knowledge/RAG layer, and the **"Value Delivered" ROI
+  surface**) **plus a bespoke "loop"** (the automation from the Loop Audit). See
+  `docs/per-client-workflow.md` and `docs/client-setup.md`. *"Configure, don't fork"* keeps it a
+  product, not N forks.
+- **One agency sub-type first** → each loop yields a reusable template that flows back to the base →
+  speed-to-value compounds (client #3 is cheaper to serve than client #1).
 - **Honest capacity constraint:** early on, **Dame is the build bottleneck**. "Nearly infinitely
   scalable" is *conditional* on (a) templates first, then (b) Phase-2 builders/hires absorbing
   delivery. The model plans for this explicitly — it does not pretend scale is free. Concentration and
@@ -143,21 +149,23 @@ set ~1.4× Tyler's, rounded to clean premium anchors.
 
 ---
 
-## 6. Go-To-Market Motion (Sweven-powered)
+## 6. Go-To-Market Motion — Sweven as the engine for the *existing* funnel
 
-1. **Dogfood** — build real AIOS for the partner's restaurant and for Sweven's own operations
-   (member billing, tour/lead follow-up, bookings, community comms, events). Output: 2 flagship
-   case studies, a refined delivery process, and removal of the "we haven't run this ourselves" risk.
-2. **Sweven membership audit** — survey/segment members; identify the dominant agency sub-type →
-   sets the concentration vertical.
-3. **In-person demo night / workshop at Sweven** — "AIOS for your business." Warm pipeline at ~zero CAC.
-4. **Sales process** (from the webinar):
-   - Discovery call → identify the pain point.
-   - **Quantify** it (time / dollars / missed revenue) — this is what justifies the retainer.
-   - "Magic wand" question → scopes the exact build.
-   - **Paid exploration milestone** ($2,500) → verify APIs/data, map workflow, rough MVP/dashboard.
-   - **ROI proposal**, tiered → close on Core or Growth.
-   - Deliver → land-and-expand.
+The existing playbook's funnel is *Warm-50 → intros → Loop Audits → Projects → Retainers*
+(`docs/gtm/README.md`). Sweven supercharges its top: it is a **ready-made Warm-50+** and a **live
+intro-generation channel**, replacing cold list-building — not a new sales process.
+
+1. **Dogfood** — build the AIOS deck + first loop for the partner's restaurant and for Sweven's own
+   ops (member billing, tour/lead follow-up, events). Output: **2 flagship case studies** (the proof
+   current outreach lacks) + a rehearsed delivery, removing the "we haven't run this ourselves" risk.
+2. **Sweven membership audit** → name the dominant **agency sub-type** (the niche to concentrate on)
+   + a warm pilot shortlist; seed these straight into the Warm-50 tracker.
+3. **Demo night at Sweven** ("kill the busywork") → books **intro calls** at ~zero CAC — a
+   Sweven-native substitute for cold outreach (`docs/gtm/outreach-templates.md`).
+4. **Run the existing ladder unchanged:** intro call (`intro-call-script.md`) → **Loop Audit** →
+   **Focused Project** → **Retainer** (`retainer-tiers.md`). The agency niche only sharpens *which
+   loops to lead with* — their own lead-gen, client onboarding, and reporting — versus the generic
+   AR-follow-up default.
 
 ---
 
@@ -194,10 +202,10 @@ a proven sales script).
 
 1. Which agency sub-type does the Sweven audit surface (marketing/SMMA, creative, dev, recruiting…)?
 2. Is the partner formally bought in as flagship client #1 and to opening Sweven as a channel?
-3. ~~Pricing: adopt Tyler's ladder as-is, or adjust for the NYC/Hoboken market?~~ **Decided:**
-   NYC-adjusted ladder ($3,500 / $6,500 / $15,000 + $3,500 exploration) with a founding-client
-   discount for the first cohort (see §4). Revisit the exact discount % and founding-cohort size
-   during planning.
+3. ~~Pricing: adopt Tyler's ladder, or adjust for NYC?~~ **Resolved:** use the **existing Harbormill
+   ladder** (Loop Audit $500–$2,500 → Project $5,000 → Retainer $3–10k band) as the single source of
+   truth; the earlier NYC/exploration numbers are dropped (see §4). Optional founding-client lever
+   stays within the band.
 4. Who delivers builds beyond Dame in Phase 1 (partner? first hire? a Sweven member-builder)?
 5. What is the trigger metric to *start* Phase 2 (client count, MRR, or a specific case-study bar)?
 
