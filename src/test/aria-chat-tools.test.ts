@@ -1,21 +1,17 @@
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+// Import the Deno registry as raw text (Vite ?raw → typed string via vite/client).
+// We can't import tools.ts as a module here — it uses Deno globals — and node:fs
+// types aren't available under this tsconfig's `types: ["vitest/globals"]`.
+import toolsSource from "../../supabase/functions/assistant-chat/tools.ts?raw";
 import {
   READ_ONLY_TOOL_NAMES,
   CHAT_EXCLUDED_TOOL_NAMES,
 } from "../../supabase/functions/_shared/aria-chat-tools";
 
-// Extract every tool `name: "..."` from the Deno registry source (can't import
-// tools.ts here — it uses Deno globals).
+// Extract every tool `name: "..."` from the registry source.
 function registryToolNames(): string[] {
-  const filePath = resolve(
-    process.cwd(),
-    "supabase/functions/assistant-chat/tools.ts",
-  );
-  const src = readFileSync(filePath, "utf8");
   const names = new Set<string>();
-  for (const m of src.matchAll(/name:\s*"([a-z_]+)"/g)) names.add(m[1]);
+  for (const m of toolsSource.matchAll(/name:\s*"([a-z_]+)"/g)) names.add(m[1]);
   return [...names];
 }
 
