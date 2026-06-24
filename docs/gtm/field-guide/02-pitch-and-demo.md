@@ -13,9 +13,11 @@ demo here is the **1:1 adaptation** of the [demo-night run-of-show](../sweven-ch
 
 Everything is written **to be spoken.** Short sentences. Say it out loud once before a call.
 
-**Pricing used here** (from [`../retainer-tiers.md`](../retainer-tiers.md), and `docs/gtm/` wins on
-any conflict): Loop Audit **$500–$2,500** (fee fully credited toward the build), Focused Project
-**$5,000** fixed, Retainer **Operate $3,000 / Operate+Build $5,000 / Embedded $8–10k**. Demo numbers
+**Pricing used here** (retainer tiers from [`../retainer-tiers.md`](../retainer-tiers.md); Loop Audit
+from [`../intro-call-script.md`](../intro-call-script.md); Focused Project from
+[`../project-proposal-template.md`](../project-proposal-template.md) — `docs/gtm/` wins on any conflict):
+Loop Audit **$500–$2,500** (fee fully credited toward the build), Focused Project **$5,000** fixed,
+Retainer **Operate $3,000 / Operate+Build $5,000 / Embedded $8–10k**. Demo numbers
 on screen are **illustrative sample data** — never present them as a real client's results.
 
 ---
