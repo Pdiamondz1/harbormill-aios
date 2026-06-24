@@ -211,15 +211,16 @@ steps 1–3.
   "exploration sprint" line). Use `docs/gtm/` numbers verbatim.
 - **Two Vite apps** — `website/` is separate from the product `src/`; gate each on its own scripts.
 
-## Open questions (for the plan / founder)
+## Resolved decisions (was: open questions)
 
-1. **Demo Loop choice for Build A** — AR follow-up vs. lead-intake as the one running Loop? (Default:
-   AR follow-up — clearest dollar story; confirm with Dame.)
-2. **One-pager render path** — generate via the deck's `export_to_drive` (Google Doc → PDF) or a
-   standalone HTML/markdown→PDF template? (Default: standalone template; simplest, no live deck
-   dependency.)
-3. **How imminent is the first call?** — if days away, the plan front-loads Parts 1–3 + the screenshot
-   fallback and defers Build A; if weeks, Build A can land inside the first pass.
+1. **Demo Loop choice for Build A** — **AR follow-up** (clearest dollar story). Adopted as default;
+   Dame can swap to lead-intake at build time.
+2. **One-pager render path** — **standalone markdown/HTML → PDF template** (simplest; no live-deck
+   dependency). Adopted as default.
+3. **First-call imminence** — **days away (~1 week).** The plan front-loads Parts 1–3 + the
+   screenshot-fallback demo so Dame is call-ready first; **Build A (live deck) and Build B (website)
+   follow as an immediate second wave** (and, per the spec reviewer, are planned as separable
+   workstreams so a stall on either doesn't block the documentation core).
 
 ## See Also
 
