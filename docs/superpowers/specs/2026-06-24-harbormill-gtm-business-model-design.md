@@ -98,18 +98,27 @@ sub-type is chosen by the Sweven membership audit (Phase 1, Step 1), not guessed
 
 ---
 
-## 4. The Offer (mirrors Tyler's validated structure)
+## 4. The Offer (structure from the webinar; pricing adjusted for NYC/Hoboken)
 
-- **Paid "AI Exploration" milestone — ~$2,500**, credited toward month 1, refundable if undeliverable.
+Tyler's prices are Alabama prices. The NYC/Hoboken market commands a premium, and the ROI anchor is
+higher here: the manual labor displaced (a loaded NYC ops/admin FTE is ~$5–6k/mo) and the revenue
+unlocked are both larger, and sophisticated NYC buyers read *too cheap* as *low value*. Pricing is
+set ~1.4× Tyler's, rounded to clean premium anchors.
+
+- **Paid "AI Exploration" milestone — $3,500**, credited toward month 1, refundable if undeliverable.
   De-risks the buyer, funds scoping, filters tire-kickers. Functions as a build down-payment.
 - **Tiered monthly retainers:**
-  | Tier | Price | Scope |
-  |---|---|---|
-  | Core | **~$2,500/mo** | One pain point solved end-to-end |
-  | Growth | **~$4,500/mo** | Expanded automations / multiple workflows |
-  | Full AIOS | **~$10,500/mo** | Complete operating system build-out |
-  *~99% of clients start in Core or Growth; Full is the land-and-expand ceiling.* (Stated as Tyler's
-  real prices with live clients on every tier.)
+  | Tier | Price (NYC/Hoboken) | Tyler ref (AL) | Scope |
+  |---|---|---|---|
+  | Core | **$3,500/mo** | $2,500 | One pain point solved end-to-end |
+  | Growth | **$6,500/mo** | $4,500 | Expanded automations / multiple workflows |
+  | Full AIOS | **$15,000/mo** | $10,500 | Complete operating system build-out |
+  *~99% of clients start in Core or Growth; Full is the land-and-expand ceiling.*
+- **Founding-client offer** — to charge premium *before* local case studies exist, the first ~2–3
+  paying agencies get **30–40% off the retainer for 3–6 months** in exchange for testimonial +
+  case-study + referral rights. The **exploration fee is still charged in full** (keeps commitment
+  real). This deliberately trades early margin for the Phase-1 deliverable — proof — then ramps to
+  full NYC pricing once the case studies exist.
 - **Land-and-expand** is the operating mindset: solve one pain cheaply, then let the AIOS sell its own
   next phase as the client's "what else can it do?" instinct kicks in. *"I just let them upsell
   themselves."* — webinar, ~56:00
@@ -180,7 +189,10 @@ a proven sales script).
 
 1. Which agency sub-type does the Sweven audit surface (marketing/SMMA, creative, dev, recruiting…)?
 2. Is the partner formally bought in as flagship client #1 and to opening Sweven as a channel?
-3. Pricing: adopt Tyler's ladder as-is, or adjust for the NYC/Hoboken market?
+3. ~~Pricing: adopt Tyler's ladder as-is, or adjust for the NYC/Hoboken market?~~ **Decided:**
+   NYC-adjusted ladder ($3,500 / $6,500 / $15,000 + $3,500 exploration) with a founding-client
+   discount for the first cohort (see §4). Revisit the exact discount % and founding-cohort size
+   during planning.
 4. Who delivers builds beyond Dame in Phase 1 (partner? first hire? a Sweven member-builder)?
 5. What is the trigger metric to *start* Phase 2 (client count, MRR, or a specific case-study bar)?
 
