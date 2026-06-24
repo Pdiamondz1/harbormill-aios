@@ -94,7 +94,7 @@ git commit -m "docs(field-guide): scaffold directory + index stub"
   2. **Surface-by-surface tour** — a table with a row per page. For each: *what the operator sees/does*
      · *why it exists* · *the one sentence you say to a prospect.* Pages to cover (verify against
      `src/pages/` and `src/config/features.ts`): Overview, Briefings, Findings, Strategy,
-     Assistant (Aria), Workspace, Calendar, Projects, Audits, Loops, Value, Connectors, Login.
+     Assistant (Aria), Workspace, Calendar, Projects, Meetings, Audits, Loops, Value, Connectors, Login.
   3. **The architecture story in plain English** — the `report-ingest` seam (the deck never queries
      client business tables; any pipeline can feed it via `metric_snapshots`/`briefings`/`findings`);
      white-label by config; Aria grounded in metrics + knowledge base, not arbitrary table queries.
@@ -305,7 +305,9 @@ gh pr create -R Pdiamondz1/harbormill-aios --base main --head docs/gtm-field-gui
 > see memory `project-harbormill-supabase-keys`). Deploy steps that touch the live project are
 > **[Dame]-gated** (require his keys). The skin/seed authoring is buildable now.
 > **Beachhead caveat:** the agency sub-type is not yet locked (gated on the Sweven audit, GTM Task 1.3),
-> so build a **general marketing/agency** skin, explicitly re-skinnable.
+> so build a **general marketing/agency** skin, explicitly re-skinnable. NB: `docs/gtm/beachhead-decision.md`
+> is referenced in the GTM spec but **not authored yet** — don't go looking for it; the general skin
+> intentionally doesn't depend on it.
 
 ### Task 3.1: Create the `demo/agency-ops` brand skin
 
