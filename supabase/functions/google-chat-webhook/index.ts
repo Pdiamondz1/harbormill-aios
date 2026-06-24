@@ -30,6 +30,15 @@ const REFUSAL = "Sorry, I'm a private assistant and can't help here.";
 serve(async (req) => {
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 });
 
+  // 0. Fail closed if misconfigured. An empty PROJECT_NUMBER would make jose
+  // SKIP audience validation (it ignores a falsy `audience`), silently disabling
+  // the app-identity pin; an empty ALLOWED_EMAIL/USER_ID would break the identity
+  // gate. Refuse rather than run a degraded gate.
+  if (!PROJECT_NUMBER || !ALLOWED_EMAIL || !CHAT_USER_ID) {
+    console.error("[google-chat-webhook] missing required config (project number / allowed email / user id)");
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   // 1. Authenticity gate: verify the Google-signed Bearer JWT.
   const token = (req.headers.get("Authorization") ?? "").replace(/^Bearer\s+/i, "");
   if (!token) return new Response("Unauthorized", { status: 401 });

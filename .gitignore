@@ -39,3 +39,6 @@ supabase/.branches
 
 # Knowledge wiki: user-dropped external sources stay local-only
 docs/wiki/raw/external/
+
+# Deno edge-function lockfile (deps resolved at deploy)
+deno.lock

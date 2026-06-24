@@ -693,7 +693,7 @@ Record the UUID for `ARIA_CHAT_USER_ID`.
 
 - [ ] **Step 4a: Set the two known secrets now**
 
-Set on the project (dashboard or CLI `secrets set`): `ARIA_CHAT_ALLOWED_EMAIL=dwilliams@harbormill.net` and `ARIA_CHAT_USER_ID=<uuid from Step 3>`. (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `SUPABASE_*` already set.) `ARIA_CHAT_PROJECT_NUMBER` is set later in **Step 7c** — it doesn't exist until Damon's Google runbook (Step 7) produces it. **Hard dependency:** the webhook's JWT `audience` check rejects *every* request until that secret holds the real project number, so the live smoke (Step 8) cannot pass before Step 7 is done.
+Set on the project (dashboard or CLI `secrets set`): `ARIA_CHAT_ALLOWED_EMAIL=dwilliams@harbormill.net` and `ARIA_CHAT_USER_ID=<uuid from Step 3>`. (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `SUPABASE_*` already set.) `ARIA_CHAT_PROJECT_NUMBER` is set later in **Step 7c** — it doesn't exist until Damon's Google runbook (Step 7) produces it. **Hard dependency:** the webhook **fails closed** (returns 401, runs no Aria turn) until *all three* of these secrets are set — the handler's config guard refuses if `ARIA_CHAT_PROJECT_NUMBER` is empty (an empty value would otherwise make jose silently skip audience pinning). So the live smoke (Step 8) cannot pass before Step 7c is done.
 
 - [ ] **Step 5: Deploy the functions**
 
