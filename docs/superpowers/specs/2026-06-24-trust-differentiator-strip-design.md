@@ -51,18 +51,22 @@ jargon** (no "Rung", "validator", "wiki-gardener", "four-condition test").
 |------|----------------|
 | `website/src/config/site.ts` → new `trust` key | The strip's copy (eyebrow, title, body). Single source of truth, like every other section. |
 | `website/src/sections/TrustStrip.tsx` (new) | Presentational strip. Reuses the `PhilosophyStrip` visual pattern (glass card, icon, eyebrow/title/body) — a sibling component, not a refactor of `PhilosophyStrip`. |
-| The page composition file (where sections are ordered; e.g. `website/src/App.tsx` or `website/src/pages/*`) | Insert `<TrustStrip />` immediately **after** the Loop Audit section and **before** the Ladder. (The plan identifies the exact composition file.) |
+| `website/src/App.tsx` (the page composition — the only one; there is no `src/pages/`) | Insert `<TrustStrip />` immediately **after** `<LoopAudit />` (line 29) and **before** `<About />` (line 30). |
 
 Follow existing patterns: components stay presentational and read from `site`; never
 hardcode hex (use brand tokens like `text-primary`, `text-muted-foreground`, `border-border`).
 
 ## 4. Placement
 
-Immediately **after** the Loop Audit section (`#loop-audit`), before the Ladder. Rationale:
-the four conditions the reader just saw (esp. "a rule decides done" + "a wrong run is
-cheap") are the setup; this strip is the payoff — *"that's exactly why what we build is
-safe to leave running."* The trust claim reads as earned, not asserted, and reuses the
-concept just absorbed. No nav entry.
+Immediately **after** the Loop Audit section, before `<About />`, in `website/src/App.tsx`.
+The actual render order is Hero → Credibility → Philosophy → Problem → AIOS → Services →
+**Ladder → Loop Audit** → About → …, so Loop Audit is the *last* content section before
+About; the strip slots between `<LoopAudit />` and `<About />`. (Note: the Ladder precedes
+Loop Audit in render order, even though the nav lists "Loop Audit" before "Ladder" — placement
+is by the App.tsx render order, not the nav.) Rationale: the four conditions the reader just
+saw (esp. "a rule decides done" + "a wrong run is cheap") are the setup; this strip is the
+payoff — *"that's exactly why what we build is safe to leave running."* The trust claim reads
+as earned, not asserted, and reuses the concept just absorbed. No nav entry.
 
 ## 5. Copy (approved verbatim)
 
@@ -81,6 +85,11 @@ body:    Black-box automation is unnerving — you can't tell when it's quietly 
 (Emphasis on the word *done* may be rendered with the site's existing emphasis styling;
 exact markup is an implementation detail. Keep the copy otherwise verbatim.)
 
+This body deliberately **echoes** Loop Audit conditions #2 ("a rule decides done") and #3
+("a wrong run is cheap") — it does **not** restate the four-condition rubric. The strip's
+job is the *trust payoff* ("safe to leave running" + the self-proof), reusing those two
+ideas as a springboard, per §1/§4.
+
 ## 6. Visual / styling
 
 - Reuse the `PhilosophyStrip` layout (centered glass card, an icon tile, eyebrow +
@@ -93,7 +102,7 @@ exact markup is an implementation detail. Keep the copy otherwise verbatim.)
 
 This is a copy + small presentational component in the `website/` app. Verification:
 - `npm run build` in `website/` compiles cleanly (and `npm run lint` if the site has it).
-- The strip renders after the Loop Audit section, before the Ladder, in the dark theme,
+- The strip renders after the Loop Audit section, before About, in the dark theme,
   with the approved copy, styled consistently with `PhilosophyStrip`.
 - No nav entry was added; no existing section's copy changed; no hardcoded colors.
 
