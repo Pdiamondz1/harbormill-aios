@@ -7,6 +7,11 @@ onboarded → delivered → kept on retainer.** These assets operationalize the 
 **Goal this push:** 2 signed Focused Projects → Retainers, in 30 days, solo, ~20–35 hrs/wk.
 **Wedge:** AIOS deck (retainer engine) + AR/invoice follow-up (default first build), sold via the Loop Audit.
 
+> **Go to market with confidence → [The Field Guide](field-guide/00-index.md).** The founder's
+> entry point that sits on top of these assets: how to *know* the product, *pitch & demo* it, *run*
+> the discovery call, and *close → onboard → operate*. Start at
+> [`field-guide/00-index.md`](field-guide/00-index.md).
+
 ## The funnel (work backwards from 2 projects)
 
 ```
