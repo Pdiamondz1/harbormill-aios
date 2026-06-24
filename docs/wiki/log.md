@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-06-24] resolution | Harbormill Ladder rung-numbering contradiction
+Resolved the human-gated contradiction surfaced by the wiki-gardener run below. Canonical
+source `docs/PROJECT_CONTEXT.md` §8 numbers the ladder 1–4 (Rung 1 = Get started, hourly),
+so the main list was canonical; the Flag section's 0-based wording ("Rung 0 is hourly;
+Rungs 1–3 are fixed-scope") was the outlier and was aligned to 1–4 ("Rungs 2–4 are scoped
+engagements; Rung 1 (Get started) is hourly"). Human-directed (Damon), per the never-overwrite rule.
+Pages updated: [[The Harbormill Ladder]]
+
 ## [2026-06-24] wiki-gardener | run (budget N=10)
 Iterations: 3   Stop reason: done
 Fixed (auto):
