@@ -2,8 +2,8 @@
 title: Four-Condition Loop Test
 type: concept
 created: 2026-06-20
-updated: 2026-06-20
-sources: [.claude/skills/autoresearch/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, docs/PROJECT_CONTEXT.md]
+updated: 2026-06-24
+sources: [.claude/skills/autoresearch/SKILL.md, .claude/skills/validator-forge/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, website/src/sections/TrustStrip.tsx, supabase/functions/kpi-watch/index.ts, docs/PROJECT_CONTEXT.md]
 tags: [automation, methodology, loops, autoresearch, audits, framework]
 ---
 
@@ -96,6 +96,14 @@ first.
    ranked candidates. Deferred until the data contract is known — today it fails
    condition #4 (the per-client task data is not yet ingested).
 
+**A first in-product loop has shipped** (distinct from surface 3's Aria-scoring
+feature): the [[KPI-Watch Loop]] — a deterministic, no-LLM scheduled loop that
+watches `metric_latest` and files a finding for any breached KPI. It is the
+textbook condition-#2 loop: the `status != on_track` comparison *is* the
+validator, so no human taste decides when a run is done. It is live on both
+Supabase projects and is the live proof point behind the [[Marketing Site]] trust
+strip.
+
 ## See Also
 
 - [[Self-Improving App]]
@@ -105,4 +113,5 @@ first.
 - [[Extending AIOS]]
 - [[Marketing Site]]
 - [[Harbormill AIOS]]
+- [[KPI-Watch Loop]]
 - Condition-#2 companion skill: `.claude/skills/validator-forge/SKILL.md`

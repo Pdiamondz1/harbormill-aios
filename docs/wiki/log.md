@@ -1,5 +1,31 @@
 # Wiki Log
 
+## [2026-06-24] ingest | Session-end — Validators → Loops → KPI-watch
+
+Session-end extract of the "skills → validators → loops" arc (a user-shared slide:
+*"how could existing skills be tweaked into validators to create loops?"*), mapped onto
+three Harbormill surfaces + a productized in-product loop. Five things shipped: the
+`validator-forge` dev skill (PR #23), the `wiki-gardener` maintenance loop (PR #24), the
+[[The Harbormill Ladder]] rung-numbering fix (PR #25, logged separately below), the
+harbormill.net **trust strip** (PR #26), and the `kpi-watch` in-product loop (PR #27,
+**deployed + verified live on both `harbormill-aios-demo` and `harbormill-aios`**).
+
+Unifying idea: condition #2 of the [[Four-Condition Loop Test]] ("a rule decides 'done'")
+*is* a validator; a loop is only safe to run unattended when an objective rule — not human
+taste — decides each run is finished. Note: validator-forge + wiki-gardener were already
+folded into [[Four-Condition Loop Test]] and [[Self-Improving App]] in prior 2026-06-24
+entries; this ingest adds the two genuinely-uncaptured pieces (kpi-watch and the trust
+strip) and corrects stale framing.
+
+Source: `docs/wiki/raw/sessions/2026-06-24-validators-loops-kpi-watch.md`.
+Pages created: [[KPI-Watch Loop]] (concept).
+Pages updated: [[Marketing Site]] (trust strip section), [[Edge Functions]] (added the two
+scheduled loops connector-sync + kpi-watch; dropped the stale "four functions" framing),
+[[Four-Condition Loop Test]] (first in-product loop shipped, distinct from the future Aria
+surface), [[Operating Deck Data Model]] (kpi-watch as a second findings writer),
+[[Self-Improving App]] (See-Also fix: wiki-gardener is the maintenance companion, not
+validator-forge), index.md (1 new concept entry + 2 refreshed summaries). Wiki now 37 pages.
+
 ## [2026-06-24] resolution | Harbormill Ladder rung-numbering contradiction
 Resolved the human-gated contradiction surfaced by the wiki-gardener run below. Canonical
 source `docs/PROJECT_CONTEXT.md` §8 numbers the ladder 1–4 (Rung 1 = Get started, hourly),
