@@ -209,12 +209,13 @@ The genuine acceptance test: run the loop on the **real** wiki and verify it aga
 **Files:**
 - Produced by the run: edits + per-fix commits under `docs/wiki/`, plus a ledger entry appended to `docs/wiki/log.md`.
 
-- [ ] **Step 1: Record the pre-run HEAD**
+- [ ] **Step 1: Record the pre-run HEAD (and confirm a clean tree)**
 
 ```bash
+git status --porcelain   # expected: empty — start from a clean tree
 git rev-parse --short HEAD
 ```
-Note this SHA — it's the base for verifying which commits the run created.
+Note this SHA — it's the base for verifying which commits the run created. If the tree is **not** clean before starting, stop and commit/stash the unrelated changes first, so the Step 4 post-run cleanliness check is unambiguous.
 
 - [ ] **Step 2: Run the loop**
 
