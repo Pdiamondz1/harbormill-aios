@@ -22,7 +22,7 @@ export const site = {
 
   nav: [
     { label: "Services", href: "#services" },
-    { label: "AIOS", href: "#aios" },
+    { label: "See it", href: "#aios" },
     { label: "Loop Audit", href: "#loop-audit" },
     { label: "Ladder", href: "#ladder" },
     { label: "Proof", href: "#case-studies" },
@@ -37,7 +37,7 @@ export const site = {
     subtitle:
       "I'm Damon Williams — 15 years in enterprise IT, now building practical AI automation for small-business owners who are out of hours, not out of ambition. We start by teaching you AI, then automate what's slowing you down.",
     primaryCta: "Book a free 30-min intro",
-    secondaryCta: "See AIOS in action",
+    secondaryCta: "See it in action",
   },
 
   credibility: {
@@ -80,26 +80,26 @@ export const site = {
 
   aios: {
     eyebrow: "The flagship",
-    title: "Harbormill AIOS — your operating deck",
+    title: "Your whole business, on one screen",
     subtitle:
-      "The signature build: one place to see your live metrics, read an AI-written weekly brief, and ask an assistant that actually knows your business. Take the tour.",
+      "Your live numbers at a glance, a plain-English weekly rundown of what changed, and an assistant you can ask anything — answered from your real numbers, not the internet. The repeating work runs itself in the background. Take the tour.",
     note: "Illustrative sample data — not a live client account.",
     featuresTitle: "More than a dashboard",
     features: [
       {
         icon: "LayoutDashboard",
-        title: "Live metrics & weekly briefings",
-        body: "Your KPIs at a glance with status colors, plus an AI-written weekly brief that tells you what actually changed and what to do about it.",
+        title: "Your numbers + a weekly rundown",
+        body: "Your key numbers at a glance with simple status colors, plus a plain-English weekly write-up of what changed and what to do about it.",
       },
       {
         icon: "FileText",
         title: "Meeting transcripts → action steps",
-        body: "Hand AIOS a meeting transcript and get back a clean summary and concrete next action steps for the business — nothing lost after the call.",
+        body: "Hand it a meeting transcript and get back a clean summary and concrete next action steps for the business — nothing lost after the call.",
       },
       {
         icon: "ListChecks",
         title: "Your top priorities, daily",
-        body: "AIOS reads your day-to-day operations and surfaces the top priorities to focus on — so you start every morning knowing what matters most.",
+        body: "It reads your day-to-day operations and surfaces the top priorities to focus on — so you start every morning knowing what matters most.",
       },
       {
         icon: "Bell",
@@ -109,12 +109,12 @@ export const site = {
       {
         icon: "Sparkles",
         title: "Ask Aria, anything",
-        body: "A business-aware assistant grounded in your live metrics, briefs, and knowledge base — ask in plain language, get grounded answers.",
+        body: "A business-aware assistant grounded in your real numbers, your briefs, and your playbooks — ask in plain language and get answers from your actual business, not the internet.",
       },
       {
         icon: "Puzzle",
         title: "Integrations & plugins",
-        body: "AIOS plugs into the business software you already use — CRM, accounting, support, messaging, and more. If it has an API, we can wire it in.",
+        body: "It plugs into the business software you already use — CRM, accounting, support, messaging, and more. If it has an API, we can wire it in.",
       },
     ],
   },
@@ -131,8 +131,8 @@ export const site = {
       },
       {
         icon: "LayoutDashboard",
-        title: "Reporting & operating decks",
-        body: "Automated weekly KPI reports, dashboards, and the Harbormill AIOS deck — live metrics plus an AI brief, so you stop flying blind.",
+        title: "Reporting & dashboards",
+        body: "Automated weekly reports and dashboards — your live numbers plus a plain-English weekly brief, so you stop flying blind.",
       },
       {
         icon: "UserPlus",
