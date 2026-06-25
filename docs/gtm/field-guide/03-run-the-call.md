@@ -148,7 +148,8 @@ hand (run that through Formula A too if they ask).
 
 > **Why this works:** the number is what makes them *want* the audit. You're not selling a build on
 > the call — you're making the pain concrete enough that paying $500–$2,500 to map it cold is
-> obviously worth it. Hand the number to the [close](#4-the-close).
+> obviously worth it. Hand the number to [§4 — Justify the investment](#4-justify-the-investment) and
+> the [close](#5-the-close).
 
 ---
 
@@ -179,7 +180,54 @@ data-safety reframe anchors to **"Automation you can leave running"** and **you 
 
 ---
 
-## 4. The close
+## 4. Justify the investment
+
+You don't justify the price by explaining your effort — owners don't care how hard the build was. You
+make the **problem cost more than the price, out loud, before you ever name the price.** Then the
+number justifies itself. The prize from [§2](#2-make-the-prize-a-number-worksheet) is the whole lever;
+this is how you pull it.
+
+### The move, in order
+
+1. **Lead with the cost of the problem — their number, first.** Never let a price sit in a vacuum.
+   *"You've got ~$45k stuck past 30 days, and someone's losing hours a week chasing it — that's
+   roughly $[X] a month walking out the door."* Now $5k isn't expensive; it's a fraction of the leak.
+2. **Sell the payback period, not the price.** Owners understand payback in their sleep.
+   *"A one-time $5k that pulls back ~$15k a year pays for itself in about five weeks — then it keeps
+   paying, every month, on its own."* Price ÷ prize = the payback; say it as weeks.
+3. **Let the ladder carry the risk — that's what it's for.** They never gamble $5k cold.
+   *"You don't decide on the build today. You spend $500–$2,500 on the workup, see the exact number
+   for your business, and that fee comes off the build. You only go further once the math is in front
+   of you — and you keep the plan either way."* The credited fee + keep-the-plan promise is your risk
+   reversal. Say it out loud.
+4. **Anchor against what they'd otherwise do** (this is where it clicks for a small business):
+   - **A part-time hire / VA:** $2–4k *every month*, needs managing, forgets, quits, caps at human
+     speed. Yours is one build that runs 24/7 and gets better.
+   - **Their own time:** *"What's an hour of yours worth? You're spending [N] a week on this."*
+   - **Doing nothing:** the leak doesn't pause. *"Every month we wait, that $[X] goes out again."*
+5. **Then the monthly scoreboard re-justifies the retainer for you.** You don't argue the renewal —
+   the running value-vs-fee tally (the [Value page](01-know-the-product.md#2-surface-by-surface-tour))
+   shows it every month. When it's 3×+ the fee on screen, the retainer defends itself.
+
+### The honest part: target where the math works
+
+These prices aren't for every business — and forcing them on one too small for the math is how you
+lose. The price is justified when the **problem is costly enough that the return is obvious.** The
+audit is the qualifier:
+
+- Prize is multiples of the fee → no-brainer; press toward the build.
+- Business too small for the math to clear → the **$100/hr consulting or the audit itself** is the
+  right door, not a retainer. **Qualifying out is part of the system, not a failure** — it protects
+  your time and your proof. (Mirrors the BANT-lite budget check in the
+  [intro-call script](../intro-call-script.md).)
+
+> **The throughline:** you're not selling software hours — you're selling **cash recovered and hours
+> back, with proof.** Price to the value; justify with *their* number. If the number is big and the
+> payback is weeks, the price was never the real question.
+
+---
+
+## 5. The close
 
 The close is the [intro-call script's close](../intro-call-script.md#5-book-it-before-you-hang-up)
 — **book the paid Loop Audit before you hang up.** Run that section; don't re-write it here. The

@@ -13,33 +13,33 @@
 You didn't start your business to spend your week copy-pasting numbers into spreadsheets,
 chasing invoices, and re-keying leads by hand. That busywork quietly caps your growth — it
 eats the hours you'd rather spend on customers and judgment. Harbormill flips it: **AI agents
-run the recurring work, and you watch the ROI on one screen.** And we teach you to drive the
-AI yourself first — you come out understanding your tools, not dependent on a black box.
+run the recurring work, and you can see exactly what it's saving you.** And we teach you to drive
+the AI yourself first — you come out understanding your tools, not dependent on a black box.
 
 ---
 
-## What you get: the Harbormill AIOS deck
+## What you get
 
-- **Your live numbers + a weekly brief that's actually written.** Your KPIs at a glance with
-  status colors, plus an AI-written weekly briefing that tells you in plain English what moved
-  and what to do about it — not a wall of charts.
+- **Your numbers at a glance — plus a weekly read on what they mean.** Your key numbers with
+  simple status colors, and a short weekly write-up in plain English: what moved, and what to do
+  about it — not a wall of charts.
 
-- **A self-running automation tied to your biggest repeating pain.** We build one "Loop" — a
-  piece of recurring work an AI handles end-to-end (reporting, lead intake, invoice follow-ups,
-  inbox triage). Anything that touches a customer waits for your approval first.
+- **One piece of your busywork, running itself.** We take your biggest repeating task — invoice
+  follow-ups, lead intake, reporting, inbox triage — and set it up so it just happens, start to
+  finish, correctly. Anything that touches a customer waits for your okay first.
 
-- **ROI you can see.** A dedicated page logs the value delivered — hours saved, cash recovered,
-  cost avoided — totaled against your fee, so the scoreboard stays honest and in front of you.
+- **You see exactly what it's worth.** One page keeps a running tally of what it's saved you —
+  hours back, cash recovered, cost avoided — against what you pay. You're never guessing whether
+  it's working.
 
 ---
 
-## How we work together — low risk, climb as results prove out
+## How we work together — low risk, you climb as it proves out
 
-**Loop Audit → Focused Project → Retainer.** We start small. The **Loop Audit** ($500–$2,500,
-fixed scope — and the full fee is credited toward the build if you go ahead) maps your repeating
-work and hands you a ranked plan with the single highest-ROI automation to build first. You keep
-that plan whether or not we build it together. We climb only as the results earn it — you're
-never committing to a big build before you've seen ROI.
+**We start small.** A quick paid workup ($500–$2,500, fixed scope — and the whole fee comes off
+the build if you go ahead) finds where you're losing the most time and money, and the one fix
+worth doing first. You keep that plan whether or not we build it together. We only do more as the
+results earn it — you never commit to a big build before you've seen it pay off.
 
 ---
 
