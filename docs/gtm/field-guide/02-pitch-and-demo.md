@@ -41,7 +41,7 @@ the free intro / Loop Audit.
 > real money. It's hours your team bills out, and it's cash sitting in late invoices.*
 >
 > *I build AI agents that run that work for you — on a schedule, the same way every time. And it all
-> lands on one deck where you watch the ROI: exactly what was recovered, against what you pay.*
+> lands on one screen where you see exactly what it's recovered, against what you pay.*
 >
 > *It's not a chatbot. It's automation you can leave running. Worth a 30-minute look?"*
 
@@ -59,9 +59,9 @@ the free intro / Loop Audit.
 > it checks its own work against a rule before it acts, and anything that touches a client waits for
 > your one-click approval. It works while you sleep.*
 >
-> *And here's the part that makes it real: it all runs on one operating deck — your live numbers up
+> *And here's the part that makes it real: it all runs on one screen — your live numbers up
 > top, and a page whose only job is the scoreboard. It shows exactly what the automation recovered
-> this month, against the fee. No black box. You watch the ROI on one screen.*
+> this month, against the fee. No black box. You see what it's saving you, at a glance.*
 >
 > *The way in is a free 30-minute call. I map your repeating work and point at the one Loop worth
 > building first — and you keep that plan either way."*
@@ -88,7 +88,7 @@ the free intro / Loop Audit.
 > work that passes all four, I rank by value-per-effort, and we build the highest one first. That's
 > the Loop Audit. It's my signature method, and it's why you don't waste the first build.*
 >
-> ***Then the deck.*** *Everything runs on your own operating deck — your Supabase, your Google Cloud,
+> ***Then the screen it all lives on.*** *Everything runs on one screen that's yours — your Supabase, your Google Cloud,
 > your AI keys. Your data, your account, never mixed with anyone else's. Up top: your live KPIs, the
 > ones an agency owner actually watches. Every week, an AI-written brief in plain English — what moved,
 > what to watch. A Loop running the AR follow-up or the lead intake, with anything client-facing
@@ -106,8 +106,8 @@ the free intro / Loop Audit.
 > — five hundred to twenty-five hundred, fixed scope, and I credit the whole fee toward the build.
 > You keep the ranked plan either way. Want to grab a time?"*
 
-> **The one sentence under all three:** *AI agents run your repeating work — and you watch the ROI on
-> one screen.* If you forget everything else, land that.
+> **The one sentence under all three:** *AI agents run your repeating work — and you see exactly what
+> it's saving you.* If you forget everything else, land that.
 
 ---
 
@@ -202,7 +202,7 @@ the numbers are illustrative, but the surfaces are exactly what yours would be."
   prospecting **Audits** surface is *your* instrument behind it — don't show it; mention the
   deliverable: a ranked Opportunity Report within 48 hours).
 
-> Hand off to the close in [Part 3 §4](03-run-the-call.md#4-the-close) and the
+> Hand off to the close in [Part 3 §5](03-run-the-call.md#5-the-close) and the
 > [intro-call script's close](../intro-call-script.md#5-book-it-before-you-hang-up). **Book the Loop
 > Audit before you hang up.**
 

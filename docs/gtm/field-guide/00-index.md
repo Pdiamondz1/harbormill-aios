@@ -28,6 +28,7 @@ Know the Product  →  Pitch & Demo  →  Run the Call  →  Close / Onboard / O
 | 4 | [04-close-onboard-operate.md](04-close-onboard-operate.md) | **Close / Onboard / Operate.** Proposal → onboarding → retainer, the first-30-days cadence, and the retainer-at-delivery move. |
 | ★ | [product-cheat-sheet.md](product-cheat-sheet.md) | 1-page pre-call glance card (print / export to PDF). |
 | ★ | [one-pager.md](one-pager.md) | The prospect-facing leave-behind you email or hand a prospect (export to PDF). |
+| ★ | [say-this-not-that.md](say-this-not-that.md) | The no-jargon translation card — say the outcome, not the tech. Skim before any prospect call. |
 
 ## Call tomorrow? Read these three
 

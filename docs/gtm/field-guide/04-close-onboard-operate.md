@@ -22,7 +22,7 @@ build's ROI is what you stand on to pitch the retainer. Each handoff hands the n
 material.
 
 1. **Loop Audit → Opportunity Report.** *(Where the path starts.)* The paid audit you sold on the
-   call ([Part 3](03-run-the-call.md#4-the-close)) maps the prospect's repeating work, scores each
+   call ([Part 3](03-run-the-call.md#5-the-close)) maps the prospect's repeating work, scores each
    task on the [Four-Condition Loop Test](01-know-the-product.md#4-the-loop-concept--the-four-condition-loop-test),
    and ranks the survivors. The deliverable is a branded **Opportunity Report** — produced from the
    in-product **Audits** tool ([Part 1 surface table](01-know-the-product.md#2-surface-by-surface-tour))
@@ -125,5 +125,5 @@ month so the system compounds instead of going stale."*
   churn-defense logic (§3).
 - [Part 1 §2 — the surface table](01-know-the-product.md#2-surface-by-surface-tour) — the
   Value-Delivered surface and the deploy/white-label seams referenced here.
-- [Part 3 §4 — the close](03-run-the-call.md#4-the-close) — where the path before this one ends
+- [Part 3 §5 — the close](03-run-the-call.md#5-the-close) — where the path before this one ends
   (the Loop Audit, booked).
