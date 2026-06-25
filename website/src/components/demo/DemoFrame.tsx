@@ -1,13 +1,14 @@
 import type { ReactNode } from "react";
-import { LayoutDashboard, FileText, AlertTriangle, Sparkles } from "lucide-react";
+import { LayoutDashboard, FileText, AlertTriangle, TrendingUp, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type StepKey = "overview" | "briefing" | "aria";
+type StepKey = "overview" | "briefing" | "value" | "aria";
 
 const NAV: { key: StepKey | "findings"; label: string; icon: typeof LayoutDashboard }[] = [
   { key: "overview", label: "Overview", icon: LayoutDashboard },
   { key: "briefing", label: "Briefings", icon: FileText },
   { key: "findings", label: "Findings", icon: AlertTriangle },
+  { key: "value", label: "Value", icon: TrendingUp },
   { key: "aria", label: "Assistant", icon: Sparkles },
 ];
 

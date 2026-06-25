@@ -90,3 +90,23 @@ export const DEMO_EXCHANGES: DemoExchange[] = [
       "From your strategy docs: you sell **operational clarity** to mid-market operators who are flying blind between their tools. **Who:** 20–200 person services & SaaS businesses. **Wedge:** the weekly brief — the one artifact a busy operator actually reads. **Moat:** the assistant gets smarter on their data over time.",
   },
 ];
+
+export interface DemoValueEvent {
+  category: string;
+  label: string;
+  amount: string;
+}
+
+/** The Value-Delivered surface: ROI this month vs. the fee. Illustrative — not a real client. */
+export const DEMO_VALUE = {
+  thisMonth: "$18,400",
+  lastMonth: "$12,900",
+  cumulative: "$74,200",
+  retainer: "$5,000",
+  roiMultiple: "3.7×",
+  events: [
+    { category: "Cash recovered", label: "AR follow-up Loop collected overdue invoices", amount: "$11,200" },
+    { category: "Time saved", label: "Lead-intake automation (80 hrs @ $60/hr)", amount: "$4,800" },
+    { category: "Time saved", label: "Weekly report automation (40 hrs @ $60/hr)", amount: "$2,400" },
+  ] as DemoValueEvent[],
+};
