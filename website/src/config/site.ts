@@ -25,6 +25,7 @@ export const site = {
     { label: "AIOS", href: "#aios" },
     { label: "Loop Audit", href: "#loop-audit" },
     { label: "Ladder", href: "#ladder" },
+    { label: "Proof", href: "#case-studies" },
     { label: "About", href: "#about" },
     { label: "FAQ", href: "#faq" },
   ],
@@ -160,7 +161,7 @@ export const site = {
     eyebrow: "How we work together",
     title: "The Harbormill Ladder",
     subtitle:
-      "Start small and low-risk. We climb only as results prove out — you're never committing to a big build before you've seen ROI.",
+      "Start small and low-risk, and climb only as results prove out. It's a repeatable engine: a Loop Audit finds the highest-ROI automation, a Focused Project ships it, and a Retainer keeps it compounding — so you never commit to a big build before you've seen ROI.",
     rungs: [
       {
         name: "Get started",
@@ -169,7 +170,7 @@ export const site = {
         body: "One-on-one consulting sessions — get your Claude setup running, solve a real problem, learn the ropes. We build the relationship before anything bigger.",
       },
       {
-        name: "Paid audit",
+        name: "Loop Audit",
         price: "$500–$2,500",
         unit: "fixed scope",
         body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue.",
@@ -236,6 +237,31 @@ export const site = {
     body: "Black-box automation is unnerving — you can't tell when it's quietly gone wrong. So we only build automation where a clear rule decides when the job is done, and a wrong run is cheap to undo. That's what makes it safe to leave running without watching it. It's the same discipline we run on our own systems: loops that check their own work against a rule, fix what they safely can, and flag the rest for a human. We don't sell a black box we wouldn't run ourselves.",
   },
 
+  caseStudies: {
+    eyebrow: "Proof",
+    title: "Results, not promises",
+    subtitle:
+      "The deck tracks the ROI of every automation we ship — value delivered against what you pay. Our first flagship case studies are publishing soon; here's the shape of what we measure.",
+    items: [
+      {
+        industry: "Marketing agency",
+        pain: "Invoices aging past 45 days because follow-up was manual and easy to forget.",
+        loop: "An AR follow-up Loop that chases receivables on a schedule and flags exceptions for a human.",
+        result: "Publishing soon",
+        roi: "Publishing soon",
+        comingSoon: true,
+      },
+      {
+        industry: "Restaurant group",
+        pain: "Guest follow-up and review requests handled by hand, so most never went out.",
+        loop: "A guest follow-up Loop that sends the right message at the right time, automatically.",
+        result: "Publishing soon",
+        roi: "Publishing soon",
+        comingSoon: true,
+      },
+    ],
+  },
+
   about: {
     eyebrow: "About",
     name: "Damon Williams",
@@ -300,3 +326,4 @@ export type LadderRungItem = (typeof site.ladder.rungs)[number];
 export type ProblemItem = (typeof site.problem.items)[number];
 export type AiosFeature = (typeof site.aios.features)[number];
 export type LoopAuditCondition = (typeof site.loopAudit.conditions)[number];
+export type CaseStudyItem = (typeof site.caseStudies.items)[number];
