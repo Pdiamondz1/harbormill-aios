@@ -3,7 +3,7 @@ title: Education-First Philosophy
 type: concept
 created: 2026-06-17
 updated: 2026-07-15
-sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:ai-training-roi, external:tool-wars-panel-2026]
+sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:ai-training-roi, external:tool-wars-panel-2026, external:what-actually-matters-in-ai-2026]
 tags: [strategy, differentiator, gtm, education]
 ---
 
@@ -69,6 +69,24 @@ operates (metrics + brief + [[Aria]]) — capability embedded in the product, no
 locked behind the consultant. Contrast with the tool-heavy field in
 [[SMB AI-Automation Landscape]].
 
+## Practitioner corroboration, and a promotion (2026-07-15)
+
+The literature above says capability is the bottleneck. A first-hand account now says the same
+thing from inside the frontier ([[What Actually Matters in AI Right Now (2026)]]): Matt Wolfe —
+who can build anything he wants with these tools — observes that **anybody can now build
+anything, and yet by his own estimate the overwhelming majority of people build nothing.**
+Nate's version: model access is identical for everyone, so why is every business still
+completely different? Access went to zero; the gap did not close. That is the education-first
+thesis stated by someone with no stake in it.
+
+**This promotes education-first from differentiator to primary defense.** The same source shows
+the frontier labs absorbing the cross-surface tooling layer natively (see the contradiction flag
+on [[SMB AI-Automation Landscape]]), which pressures the *deck-as-artifact* differentiator but
+not this one — a subscription can hand an owner capability it cannot make them use. The
+**accountability layer** belongs here too: Wolfe keeps a human CPA for the answerable-party
+role, and neither a model nor a subscription can fill it. Neither argument is made anywhere on
+the [[Marketing Site]] today.
+
 ## See Also
 
 - [[Project Context]]
@@ -76,3 +94,5 @@ locked behind the consultant. Contrast with the tool-heavy field in
 - [[Marketing Site]]
 - [[SMB AI-Automation Landscape]]
 - [[Tool Wars Panel 2026]]
+- [[Four-Condition Loop Test]]
+- [[What Actually Matters in AI Right Now (2026)]]

@@ -3,7 +3,8 @@
 ## Sources
 
 - [[Project Context]](sources/project-context.md) — Harbormill identity, strategy, architecture, and operating instructions (2026-06-17)
-- [[Tool Wars Panel 2026]](sources/tool-wars-panel-2026.md) — Hyperagent panel (Kearns/Ebbelaar/Medin, moderated by Henneberry) on what clients buy in 2026; training demand surge, workshop→project→retainer pricing benchmarks ($5k–$20k entry), RAG deprioritized (2026-07-13)
+- [[Tool Wars Panel 2026]](sources/tool-wars-panel-2026.md) — Hyperagent panel (Kearns/Ebbelaar/Medin, moderated by Henneberry) on what clients buy in 2026; training demand surge, RAG deprioritized (2026-07-13). **Its price table is superseded — do not cite.**
+- [[What Actually Matters in AI Right Now (2026)]](sources/what-actually-matters-in-ai-2026.md) — Matt Wolfe × Nate (AIS LIVE, Hyperagent); corroborates the loop thesis and reveals the frontier labs shipping it natively
 
 ## Entities
 
@@ -36,6 +37,7 @@
 - [[Knowledge & RAG]](concepts/knowledge-and-rag.md) — knowledge table (pgvector 1536 + tsvector hybrid), match_knowledge, knowledge-sync
 - [[KPI-Watch Loop]](concepts/kpi-watch.md) — Deterministic daily loop: watches metric_latest, files a finding per breached KPI via report-ingest; the in-product Four-Condition Loop Test; live on both projects
 - [[Loop Memory]](concepts/loop-memory.md) — Two files per run: log.md (append-only audit) + memory.md (curated lessons read back next run); makes a loop learn instead of repeating itself
+- [[Media Ingest]](concepts/media-ingest.md) — The media→knowledge path: anything that plays → verified transcript → wiki → Aria's RAG; the signal gate, and the rule that third-party material stays local
 - [[Operating Deck Data Model]](concepts/operating-deck-data-model.md) — The three generic tables: metric_snapshots, briefings, findings
 - [[Per-Client Deployment]](concepts/per-client-deployment.md) — Clone-per-client off the template; upstream-merge discipline; config/data seams
 - [[Plug-and-Play Client Compatibility]](concepts/plug-and-play-client-compatibility.md) — Config + data + flags, never a fork: feature flags (features.ts), guided setup, env-only isolation
@@ -50,4 +52,4 @@
 
 ## Analyses
 
-- [[SMB AI-Automation Landscape]](analyses/smb-ai-automation-landscape.md) — 2026 market scan; fragmented tool ecosystem; Harbormill's deck + education-first wedge
+- [[SMB AI-Automation Landscape]](analyses/smb-ai-automation-landscape.md) — 2026 market scan; contradiction flagged 2026-07-15: the frontier labs are becoming the "AI OS" the page says doesn't exist

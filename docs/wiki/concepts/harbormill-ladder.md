@@ -3,7 +3,7 @@ title: The Harbormill Ladder
 type: concept
 created: 2026-06-17
 updated: 2026-07-15
-sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks, external:tool-wars-panel-2026]
+sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks, external:tool-wars-panel-2026, external:what-actually-matters-in-ai-2026]
 tags: [strategy, pricing, business-model, gtm]
 ---
 
@@ -122,6 +122,38 @@ hours were the wrong unit, and the low number was never the defect.
 lenses), including both bulls, converged on distribution. `docs/gtm/warm-50-tracker.md` still
 held only seed rows ("Jane Doe") when this was written.
 
+## Flag: discovery is commoditizing — the audit can't sell the list (2026-07-15)
+
+A second, sharper flag on the same rung, from
+[[What Actually Matters in AI Right Now (2026)]]. **Observation only — no repricing recommended
+from this source.**
+
+Matt Wolfe's closing advice, given free to an audience of AI agency owners, is to dictate a full
+account of your business to a frontier model and ask what it can take off your plate — and he
+reports it doing exactly that for him, triaging his work into stop / hand off / automate.
+**That is the discovery half of the Paid Audit, self-serve, at zero marginal cost.**
+
+The implication for Rung 2 is narrow but real: if an owner can obtain *the list of their
+repeating work* for free, the audit's value cannot be the list. What does not commoditize, on
+the same evidence:
+
+- **Implementation** — Wolfe is a 17-year technologist with coding agents open all day; the SMB
+  owner is not, and by his own estimate the overwhelming majority of people build nothing with
+  these tools even when they can.
+- **Accountability** — he keeps a *human* accountant precisely for the answerable-party role.
+  The [[ROI-Discovery Audit]]'s scored, sourced Opportunity Report is an accountable artifact; a
+  chat transcript is not.
+- **Condition #2** — his setup has no objective done-rule; a human reads every draft. Harbormill
+  sells the closed loop, not the suggestion. See [[Four-Condition Loop Test]].
+
+**Deliberately not concluded here.** This says nothing about *price* — it is evidence about
+what the audit should be *sold as*. It is also n=1 and drawn from an agency-owner audience, not
+SMB buyers. It sits alongside, and is independent of, the entry-rung reprice under review on the
+unmerged PR #39 branch (where a roast returned RESHAPE and storm-research found the supporting
+evidence absent). **Do not merge these two threads without customer evidence**;
+`docs/gtm/case-studies/` is still empty. Cross-reference the contradiction flag on
+[[SMB AI-Automation Landscape]].
+
 ## See Also
 
 - [[ROI-Discovery Audit]]
@@ -132,3 +164,4 @@ held only seed rows ("Jane Doe") when this was written.
 - [[Harbormill AIOS]]
 - [[Tool Wars Panel 2026]]
 - [[Education-First Philosophy]]
+- [[What Actually Matters in AI Right Now (2026)]]

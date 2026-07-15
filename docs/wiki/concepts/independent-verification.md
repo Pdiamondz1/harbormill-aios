@@ -2,8 +2,8 @@
 title: Independent Verification
 type: concept
 created: 2026-06-24
-updated: 2026-06-24
-sources: [.claude/skills/loop-verify/SKILL.md, raw/sessions/2026-06-24-loop-verify-and-loop-memory.md]
+updated: 2026-07-15
+sources: [.claude/skills/loop-verify/SKILL.md, raw/sessions/2026-06-24-loop-verify-and-loop-memory.md, external:what-actually-matters-in-ai-2026]
 tags: [loops, verification, autoresearch, quality, architecture]
 ---
 
@@ -42,9 +42,33 @@ truth before style.
 `deep-research`'s adversarial checks run *during* production; independent verification is the
 *final* gate on the assembled artifact. Two complementary layers.
 
+## External corroboration — and one correction (2026-07-15)
+
+Matt Wolfe's public **BuseyBench** independently reaches this page's core premise from the
+opposite direction ([[What Actually Matters in AI Right Now (2026)]]). It scores model output
+with **LLM-as-judge, but three judges drawn from three different labs**, averaged, with ties
+broken by a pairwise vote. His stated reason is precisely the blind-spot argument above: **a
+model is biased toward output it created**, so a single judge — especially one from the lab that
+produced the artifact — cannot be trusted.
+
+That is a **stronger** independence guarantee than this page currently specifies. Harbormill's
+verifier is independent by *context* (a fresh window, no producer transcript) but not by
+*model* — the same model family produces and grades. Wolfe's design says fresh context may not
+be sufficient where the producing lab has a house style to reward. **Recorded as an open
+question, not a change:** whether `loop-verify` should require a different model for the
+verifier than the producer. Cheap to test, not yet tested.
+
+His second point cuts the other way and is worth keeping honest: he trusts **his own eye over
+his own scoreboard**, and reports that the model winning on score is not the one that looks best
+to him. A rubric score is a proxy. Where the artifact is a matter of taste,
+condition #2 of the [[Four-Condition Loop Test]] is not really satisfied, and a human still
+decides. Independent verification protects against *self-flattery*, not against *the rubric
+measuring the wrong thing*.
+
 ## See Also
 - [[Four-Condition Loop Test]]
 - [[Self-Improving App]]
 - [[Loop Memory]]
 - [[Build & Verification Gate]]
+- [[What Actually Matters in AI Right Now (2026)]]
 - Skill: `.claude/skills/loop-verify/SKILL.md`
