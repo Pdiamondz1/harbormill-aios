@@ -22,10 +22,19 @@ upstream hop and hands off — it is deliberately **not** a second ingest pipeli
 
 ## Why it exists
 
-Three sessions arrived in a row with **no transcript and downloads disabled** (Jonathan Stark on
-value pricing; the *Tool Wars* panel; [[What Actually Matters in AI Right Now (2026)]]). It
-passes the [[Four-Condition Loop Test]] cleanly: it repeats, "done" is objectively checkable, a
-wasted run costs ~$0.20, and the tools exist — so it became a skill rather than a third one-off.
+Three sessions arrived in a row with **no transcript and downloads disabled**
+([[Ditching Hourly (Jonathan Stark, 2026)]]; the *Tool Wars* panel;
+[[What Actually Matters in AI Right Now (2026)]]). It passes the [[Four-Condition Loop Test]]
+cleanly: it repeats, "done" is objectively checkable, a wasted run costs ~$0.20, and the tools
+exist — so it became a skill rather than a third one-off.
+
+**All three are now captured** — Stark ingested 2026-07-15 as the skill's first run *as a skill*
+(48:19, gate passed at −24.2 dB, ~$0.29, 0 errors). That run surfaced a failure mode worth
+recording: the Frame.io player was **muted with its volume at zero**, and the page carried three
+`<video>` elements of which only the blob-backed one was live. Routing was already correct and
+the capture would still have been 48 minutes of silence. **Check that the source is actually
+emitting audio before trusting the routing** — the gate catches it, but only after you've spent
+the wall-clock.
 
 ## How it works
 
@@ -80,5 +89,6 @@ public. So the rule is editorial, not mechanical:
 - [[Self-Improving App]]
 - [[Knowledge & RAG]]
 - [[What Actually Matters in AI Right Now (2026)]]
+- [[Ditching Hourly (Jonathan Stark, 2026)]]
 - [[Aria]]
 - Skill: `.claude/skills/media-ingest/SKILL.md`

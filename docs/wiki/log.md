@@ -1,5 +1,70 @@
 # Wiki Log
 
+## [2026-07-15] ingest | Ditching Hourly (Jonathan Stark × Nate, AIS LIVE)
+
+Ingests a 47:40 Hyperagent session (GA Access, Day 2, published 2026-07-13): Jonathan Stark — a
+pricing specialist of 20 years — presenting to AI agency owners, Nate hosting. Fills the last of
+the three transcript gaps named on [[Media Ingest]].
+
+Unlike the sibling sessions this is **methodology, not market signal** — it makes no claim about
+what SMBs pay. Two things it settles, one it doesn't.
+
+**Settles: hourly is the wrong _unit_, not a low number.** The argument is incentive inversion —
+at one blended rate a slow worker out-earns a fast one for identical output, so you're paid more
+for being worse. Stronger than the coherence argument already in `docs/gtm/`, and it lands
+hardest here because Harbormill **sells the elimination of billable hours**. Corroborates the
+hourly retirement; changes nothing else.
+
+**Adds, genuinely new: the formula.** Price as a percentage of the client's first-year value —
+~10% floor, then exactly three *incremental* options at ~10/25/50% (steers to the middle), with
+**scope chosen last**. Plus the cost/value/price anchors (cost = seller's floor, value = buyer's
+ceiling) and the why-this/why-now/why-me conversation. Filed as [[Value-Based Pricing]]. Our
+Field Guide §4 had independently reached "make the problem cost more than the price before naming
+it" and payback-in-weeks; what it lacked was the percentage formula and the three-option proposal.
+
+**Doesn't settle — and is flagged, not resolved:** the method implies **no published rate card at
+all** (price is derived per client, live), yet the ladder publishes fixed prices. Likely
+resolution is that **the published ladder is the door, not the price** — recorded as a hypothesis
+on [[The Harbormill Ladder]]. Consequence: arguments about the published entry-rung number are
+arguments about the *door*. **Deliberately kept separate from** the entry-rung reprice under
+review on PR #39 / PR #40, same discipline as the Wolfe ingest.
+
+**The Harbormill conclusion (ours, not the source's):** the method's hard step is getting a
+credible value number, and the [[ROI-Discovery Audit]] **already computes it** —
+`audit_opportunities.annual_value_cents` is structurally the input the formula multiplies, and
+the promised-vs-delivered reconciliation then checks it. Compute the value, price off it, prove
+it afterwards. Recorded on [[ROI-Discovery Audit]] and [[Value-Based Pricing]].
+
+**Flag raised, not acted on:** `2026-06-22-aios-outcome-edition-design.md` prices a $10K project
+against a claimed $320K/yr of value — ~3%, under a third of the 10% floor. By this method **both
+halves are underpriced**, not just the retainer corrected earlier today on PR #40. Not repriced.
+Also corroborates the $3–10M-revenue targeting: value pricing caps small clients by design, and
+the stated soloist scale path is bigger clients for the same expertise.
+
+Method note: no captions or transcript existed and downloads were disabled, so audio was captured
+from playback (VB-Audio Virtual Cable) and transcribed with `scripts/transcribe-media.mjs`
+(whisper-1, 4 chunks, 89 blocks, 47,193 chars, 0 errors, ~$0.29). Signal gate passed at
+**mean_volume −24.2 dB** across the full 48:19. Whisper does not diarize — **speaker attribution
+is inferred from context** (two speakers, so easier than a panel, but not certain); nobody watched
+the video. **New failure mode recorded on [[Media Ingest]]:** the player was muted with volume at
+zero and the page held three `<video>` elements, only one live — routing was already correct and
+the capture would still have been 48 minutes of silence. Raw transcript stays local-only in
+`raw/external/` (both guards now on `main` as of PR #41).
+
+**Publication policy applied** per [[Media Ingest]]: gated paid content in a public repo, so the
+pages carry **Harbormill's conclusions in Harbormill's own words — no verbatim quotes, no
+blow-by-blow**. **Open item unchanged:** the sibling *Tool Wars* source page on the unmerged
+PR #39 branch still carries quoted pricing and has been public since 2026-07-15 — apply the same
+rule before it merges.
+
+Source: `docs/wiki/raw/external/ditching-hourly-jonathan-stark.md` (local-only).
+Pages created: [[Ditching Hourly (Jonathan Stark, 2026)]] (source), [[Value-Based Pricing]]
+(concept).
+Pages updated: [[The Harbormill Ladder]] (third flag — no-published-ladder tension, hourly
+corroborated, downmarket caution), [[ROI-Discovery Audit]] (the audit computes the value input +
+underpriced-spec flag), [[Media Ingest]] (third gap filled; muted-player failure mode), index.md
+(+1 source, +1 concept).
+
 ## [2026-07-15] ingest | What Actually Matters in AI Right Now (Matt Wolfe × Nate, AIS LIVE)
 
 Ingests a 33-min Hyperagent fireside chat (GA Access, Day 2, published 2026-07-13) between Matt

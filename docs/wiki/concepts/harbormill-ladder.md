@@ -56,6 +56,35 @@ less "productized."
 A future option is a fixed-price starter package (e.g. a named "AI setup session")
 to make the entry rung a cleaner product. Recorded as a strategy flag.
 
+## Flag: the method we're adopting implies no published ladder at all (2026-07-15)
+
+A third flag, from [[Ditching Hourly (Jonathan Stark, 2026)]] — a pricing specialist, presenting
+method rather than market data. **Observation only — no repricing recommended from this source.**
+
+Two things it settles, and one it doesn't.
+
+**Settled: hourly is the wrong _unit_, not merely a low number.** The argument is incentive
+inversion — at one blended rate a slow worker out-earns a fast one for identical output, so you
+are paid more for being worse. This is a stronger case than the coherence argument already in
+`docs/gtm/`, and it lands hardest here because **Harbormill sells the elimination of billable
+hours**. Corroborates the 2026-07-15 retirement of hourly; changes nothing else.
+
+**Unsettled — the real tension: the method sets price _per client, live_, as a percentage of
+that client's first-year value (~10% floor, three options at ~10/25/50%). It implies no
+published rate card at all.** This ladder publishes fixed prices on a public site. The likely
+resolution is that **the published ladder is the _door_, not the price** — a lead-gen artifact,
+while the actual number is set in the sales interview. That is a hypothesis, recorded as such.
+
+The consequence is worth stating plainly: **arguments about the published entry-rung number are
+arguments about the door**, not about what any client should pay. This sits alongside — and is
+independent of — the entry-rung reprice under review on the unmerged PR #39 / PR #40 branches.
+**Do not merge these threads.** See [[Value-Based Pricing]] for the method in full.
+
+One caution that cuts against the small end: value pricing caps small clients by design — a
+small shop's whole upside may be modest, and by definition it will not pay more than the work is
+worth to it. The stated scale path for a soloist is **bigger clients for the same expertise**.
+That corroborates the $3–10M-revenue targeting and cautions against moving downmarket.
+
 ## Flag: discovery is commoditizing — the audit can't sell the list (2026-07-15)
 
 A second, sharper flag on the same rung, from

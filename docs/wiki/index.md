@@ -2,6 +2,7 @@
 
 ## Sources
 
+- [[Ditching Hourly (Jonathan Stark, 2026)]](sources/ditching-hourly-jonathan-stark.md) — Jonathan Stark × Nate (AIS LIVE, Hyperagent); why hourly is the wrong unit, and the percentage-of-value pricing formula
 - [[Project Context]](sources/project-context.md) — Harbormill identity, strategy, architecture, and operating instructions (2026-06-17)
 - [[What Actually Matters in AI Right Now (2026)]](sources/what-actually-matters-in-ai-2026.md) — Matt Wolfe × Nate (AIS LIVE, Hyperagent); corroborates the loop thesis and reveals the frontier labs shipping it natively
 
@@ -46,6 +47,7 @@
 - [[Strategy Knowledge Library]](concepts/strategy-knowledge-library.md) — documents table + Strategy page; the human-authored side feeding Aria's RAG
 - [[Testing Setup]](concepts/testing-setup.md) — Vitest + testing-library + jsdom; one brand-contract test today; harness ready
 - [[The Harbormill Ladder]](concepts/harbormill-ladder.md) — Land-and-expand engagement + pricing ladder; externally benchmarked
+- [[Value-Based Pricing]](concepts/value-based-pricing.md) — Price the outcome, not the effort: cost/value/price anchors, the why conversation, price as ~10-50% of first-year value in three options; the audit computes the input
 - [[White-Label Architecture]](concepts/white-label-architecture.md) — One config (brand.ts + CSS vars) rebrands everything; per-client clone
 - [[Wiki-to-Aria Sync]](concepts/wiki-to-aria-sync.md) — `npm run sync:wiki` loads docs/wiki/ into Aria's RAG via knowledge-sync; idempotent; sb_secret_ key on new projects
 
