@@ -8,10 +8,13 @@
 > this file is the deeper toolkit for doing exactly that — for **any** pain, not just the three
 > loops the script already listens for.
 
-This is file 3 in the [Field Guide](00-index.md). Where this and `docs/gtm/` ever disagree on
-pricing, **`docs/gtm/` wins.** Pricing used here: Loop Audit **$500–$2,500** (fee fully credited),
-Focused Project **$5,000** fixed (audit credited, 50/50), Retainer **Operate $3,000 / Operate+Build
-$5,000 / Embedded $8–10k** — all from [`../retainer-tiers.md`](../retainer-tiers.md) and
+This is file 3 in the [Field Guide](00-index.md). **Jurisdiction:** `docs/PROJECT_CONTEXT.md` §8 is
+canon for the **ladder and its prices**; `docs/gtm/` is canon for **call mechanics** — payment
+terms, scripts, objections, retainer tiers. Where this file and `docs/gtm/` disagree on mechanics,
+`docs/gtm/` wins. Pricing used here: AI Setup Session **$250** fixed, Loop Audit **$500–$2,500**
+(fee fully credited), Focused Project **$5,000** fixed (audit credited, 50/50), Retainer **Operate
+$3,000 / Operate+Build $5,000 / Embedded $8–10k** — from
+[`../retainer-tiers.md`](../retainer-tiers.md) and
 [`../project-proposal-template.md`](../project-proposal-template.md).
 
 ---
@@ -216,10 +219,14 @@ lose. The price is justified when the **problem is costly enough that the return
 audit is the qualifier:
 
 - Prize is multiples of the fee → no-brainer; press toward the build.
-- Business too small for the math to clear → the **$100/hr consulting or the audit itself** is the
-  right door, not a retainer. **Qualifying out is part of the system, not a failure** — it protects
-  your time and your proof. (Mirrors the BANT-lite budget check in the
+- Business too small for the math to clear → the **AI Setup Session ($250) or the audit itself** is
+  the right door, not a retainer. **Qualifying out is part of the system, not a failure** — it
+  protects your time and your proof. (Mirrors the BANT-lite budget check in the
   [intro-call script](../intro-call-script.md).)
+  - *Unpublished fallback:* $100/hr still exists for genuine one-off asks that fit no rung. It is
+    **not on the site and not in the ladder** — never open with it, never let a prospect anchor on
+    it. We sell the elimination of billable hours; quoting our own by the hour prices us against
+    our own product.
 
 > **The throughline:** you're not selling software hours — you're selling **cash recovered and hours
 > back, with proof.** Price to the value; justify with *their* number. If the number is big and the

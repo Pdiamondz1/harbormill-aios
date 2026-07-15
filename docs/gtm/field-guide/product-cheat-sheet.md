@@ -9,9 +9,14 @@ repeating work, while teaching you to drive the AI yourself. The moat is the **c
 compounds: the longer you run it, the more it knows your business.
 
 ## The ladder, in one line
-**Loop Audit** ($500–$2,500 fixed, *whole fee credited* toward the build) → **Focused Project**
-(**$5,000 fixed** — audit fee credited, *50% deposit / 50% on delivery*) → **Retainer** (Operate
-**$3,000/mo** · Operate + Build **$5,000/mo** · Embedded **$8–10k/mo**).
+**AI Setup Session** ($250 fixed, 90 min — the low-friction door) → **Loop Audit** ($500–$2,500
+fixed, *whole fee credited* toward the build) → **Focused Project** (**$5,000 fixed** — audit fee
+credited, *50% deposit / 50% on delivery*) → **Retainer** (Operate **$3,000/mo** · Operate + Build
+**$5,000/mo** · Embedded **$8–10k/mo**).
+
+**Every price is fixed. We do not quote hourly** — we sell the elimination of billable hours, so
+an hourly rate prices us against our own product. ($100/hr exists as an unpublished one-off
+fallback; never open with it.)
 
 ## The 4 Loop conditions (the Four-Condition Loop Test)
 A task is a Loop candidate *only if it passes all four*:

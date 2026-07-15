@@ -31,8 +31,9 @@ instructions. Auto-loaded by Claude Code via a `CLAUDE.md` import.
 - Stack: React 18 + Vite + TS (strict), Tailwind + shadcn/ui, TanStack Query,
   Supabase (Postgres + RLS + Deno edge functions), Anthropic `claude-sonnet-4-6`
   + OpenAI embeddings.
-- Business model: the Harbormill Ladder — $100/hr consulting → $500–2.5k audit →
-  $2.5–10k project → $3–10k/mo retainer; free 30-min Google Meet intro via Calendly.
+- Business model: the Harbormill Ladder — $250 AI Setup Session → $500–2.5k audit
+  (fee credited) → $5k fixed project → $3–10k/mo retainer; every rung a fixed price,
+  no published hourly rate; free 30-min Google Meet intro via Calendly.
 - Marketing site lives in `website/` (separate Vite app, Vercel, harbormill.net).
 
 ## Notable Principles

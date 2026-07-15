@@ -1,5 +1,38 @@
 # Wiki Log
 
+## [2026-07-15] resolution | Ditch the hourly anchor — one ladder, priced to value
+
+Trigger: Jonathan Stark's *"Ditching Hourly: The Pricing Mindset That Changes Everything"*
+(AIS program, Day 2 video assets). Two long-standing pricing contradictions resolved on
+[[The Harbormill Ladder]]:
+
+1. **The `$100/hr` entry rung is gone from every client-facing surface**, replaced by the
+   **AI Setup Session ($250 fixed, 90 min)**. Harbormill sells AI automation — *the
+   elimination of billable hours* — so a published hourly rate priced us against our own
+   product. The [[GTM Field Guide]] had already adopted value pricing in the sales room
+   (03-run-the-call.md §4: make the problem cost more than the price *before* naming it;
+   price ÷ prize = payback in weeks) while the [[Marketing Site]] still anchored every
+   prospect on the exact rate the playbook used to **qualify people out**. $100/hr survives
+   unpublished as a one-off fallback. Note: $250/90min ≈ $167/hr effective — a raise, at a
+   lower commitment number.
+2. **Focused Project is $5,000 fixed**, not `$2,500–$10,000`. Both were live at once — the
+   range on the public site + [[Project Context]], the fixed price across all of `docs/gtm/`
+   — each claiming source-of-truth. Root cause fixed too: **jurisdiction is now split**
+   (PROJECT_CONTEXT §8 owns the ladder + prices; `docs/gtm/` owns call mechanics), since the
+   blanket both-are-canon claims are what let the two drift apart.
+
+Also: the credited-audit-fee risk reversal is now **on the website for the first time**
+(ladder footnote + Loop Audit price pill) despite being the Field Guide's core close.
+
+Closes the standing Flag on [[The Harbormill Ladder]] (recorded 2026-06-24, unacted) which
+had proposed this exact fix — *"a fixed-price starter package (e.g. a named 'AI setup
+session')"* — three weeks before the external trigger made it urgent.
+
+Pages updated: [[The Harbormill Ladder]] (rungs 1 & 3, +2 Key Decisions, Flag → resolved),
+[[Project Context]] (source mirror). Repo: `website/src/config/site.ts`,
+`docs/PROJECT_CONTEXT.md` §8, `docs/gtm/field-guide/{01,03,product-cheat-sheet}`,
+`docs/gtm/intro-call-script.md`.
+
 ## [2026-06-24] ingest | Session-end — Independent verification & loop memory
 
 Session-end extract of two `autoresearch` loop enhancements built and shipped this session (both

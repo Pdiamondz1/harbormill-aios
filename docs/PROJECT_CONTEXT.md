@@ -75,14 +75,26 @@ now" (the emails / messages / meetings worth attention) · Ask Aria · integrati
 
 ## 8. Business Model — The Harbormill Ladder
 
-Low-risk, climb-as-results-prove-out engagement ladder (and pricing):
-1. **Get started** — $100/hour one-on-one consulting (e.g. Claude setup).
+**This section is canon for the ladder and its prices.** Every other copy
+(`website/src/config/site.ts`, `docs/wiki/`, `docs/gtm/`) mirrors it. `docs/gtm/`
+is canon for *call mechanics* — payment terms, scripts, objections, retainer tiers.
+
+Low-risk, climb-as-results-prove-out engagement ladder (and pricing). **Every rung
+is a fixed price** — Harbormill does not publish an hourly rate; we sell the
+elimination of billable hours, so billing by the hour would price against our own
+product:
+1. **AI Setup Session** — $250 fixed, one 90-minute working session (e.g. Claude setup).
 2. **Paid audit** — $500–$2,500, fixed scope; map workflows, scope first build.
-3. **Focused project** — $2,500–$10,000; ship one workflow, prove ROI.
+   Fee is fully credited toward the build.
+3. **Focused project** — $5,000 fixed; ship one workflow, prove ROI. Audit fee
+   credited; 50% deposit / 50% on delivery.
 4. **Retainer** — $3,000–$10,000/month; ongoing, after trust and results.
 
 Every engagement starts with a free 30-minute intro (Calendly →
 calendly.com/dwilliams-harbormill/30min, Google Meet).
+
+$100/hour survives as an **unpublished** internal fallback for one-off asks and for
+prospects too small for the project math to clear — never a client-facing price.
 
 ## 9. Repo Layout
 

@@ -164,10 +164,10 @@ export const site = {
       "Start small and low-risk, and climb only as results prove out. It's a repeatable engine: a Loop Audit finds the highest-ROI automation, a Focused Project ships it, and a Retainer keeps it compounding — so you never commit to a big build before you've seen ROI.",
     rungs: [
       {
-        name: "Get started",
-        price: "$100",
-        unit: "per hour",
-        body: "One-on-one consulting sessions — get your Claude setup running, solve a real problem, learn the ropes. We build the relationship before anything bigger.",
+        name: "AI Setup Session",
+        price: "$250",
+        unit: "fixed",
+        body: "One 90-minute working session, one flat price. You leave with Claude set up on your business and one real problem solved — not a demo, something you use Monday morning.",
       },
       {
         name: "Loop Audit",
@@ -177,9 +177,9 @@ export const site = {
       },
       {
         name: "Focused project",
-        price: "$2,500–$10,000",
-        unit: "per project",
-        body: "We ship one workflow end to end and prove the ROI on something that matters — reporting, lead intake, AR follow-up, support triage.",
+        price: "$5,000",
+        unit: "fixed scope",
+        body: "We ship one workflow end to end and prove the ROI on something that matters — reporting, lead intake, AR follow-up, support triage. Your audit fee comes off this price, and it's half to start, half on delivery.",
       },
       {
         name: "Retainer",
@@ -188,7 +188,7 @@ export const site = {
         body: "Ongoing automation and support — but only after trust and results. We expand what's working and keep your systems sharp.",
       },
     ],
-    footnote: "Every engagement starts with a free 30-minute intro. One-on-one consulting is $100/hour.",
+    footnote: "Every engagement starts with a free 30-minute intro. Your audit fee comes off your build.",
   },
 
   loopAudit: {
@@ -226,7 +226,7 @@ export const site = {
         "A plan you keep — whether you build it with us or not.",
       ],
     },
-    priceNote: "$500–$2,500 · fixed scope",
+    priceNote: "$500–$2,500 fixed · fee credited to your build",
     closer: "You leave understanding the method — not dependent on us.",
     cta: "Book a Loop Audit",
   },
@@ -279,7 +279,7 @@ export const site = {
   faqs: [
     {
       q: "How much does this cost?",
-      a: "It starts low and stays proportional to results. One-on-one consulting is $100/hour, and you only move to larger fixed-scope projects once we've proven value together. The intro call is always free.",
+      a: "Every price is fixed and known before we start — no hourly meter, no surprise invoice. It starts low and stays proportional to results: a $250 setup session, or a $500–$2,500 audit that shows you exactly what the problem is costing you — and that audit fee comes off your build if you go ahead. You only climb once we've proven value together, and the intro call is always free.",
     },
     {
       q: "Will AI replace my staff?",
@@ -287,7 +287,7 @@ export const site = {
     },
     {
       q: "How long does it take to see results?",
-      a: "A one-on-one session can solve a real problem the same day. A focused project typically ships one working automation in a few weeks — deliberately scoped small so you see ROI fast.",
+      a: "An AI Setup Session can solve a real problem the same day. A focused project typically ships one working automation in a few weeks — deliberately scoped small so you see ROI fast.",
     },
     {
       q: "Is my business data safe?",

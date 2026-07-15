@@ -56,7 +56,7 @@ Put the audit discovery on the calendar live. Set the deliverable date (report w
 | Signal | Green (proceed) | Red (refer + exit gracefully) |
 |---|---|---|
 | **Repeating pain** | Clear, frequent, costly loop | No real recurring busywork |
-| **Budget** | Can fund a $2.5–10k project | "No budget for anything" |
+| **Budget** | Can fund a $5k project | "No budget for anything" |
 | **Authority** | Owner / decision-maker | "I'd have to ask someone" (book that someone) |
 | **Urgency** | Pain is felt now | "Maybe next year" |
 
