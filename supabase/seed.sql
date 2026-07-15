@@ -8,10 +8,13 @@
 -- single story so a sales demo reads as one believable operator, with the AR
 -- follow-up automation (the flagship hook) front and center.
 
--- Demo retainer = $2,500/mo, matching the AIOS Outcome Edition offer, so the ROI
--- hero on the Value page reflects the real pitch.
+-- Demo retainer = $5,000/mo — the published **Operate + Build** tier
+-- (`docs/gtm/retainer-tiers.md`). Never show a demo priced at a tier we don't
+-- sell: this was $2,500/mo to match an early AIOS Outcome Edition draft, but
+-- that number is dead (it sat *below* the $3,000 Operate floor) and the offer
+-- is now $10K + Embedded. See `docs/PROJECT_CONTEXT.md` §8 — canon for prices.
 insert into public.aios_dashboard_settings (key, value) values
-  ('monthly_retainer_cents', '250000'::jsonb)
+  ('monthly_retainer_cents', '500000'::jsonb)
 on conflict (key) do update set value = excluded.value;
 
 insert into public.metric_snapshots (key, label, value, unit, target, status) values
@@ -49,8 +52,10 @@ insert into public.findings (severity, title, summary_md, evidence, source, stat
   ('low', 'Install-crew overtime trending up', E'Overtime on the install crew is up week-over-week. Schedule looks rebalanceable — shift two jobs next week to even the load.', '{}'::jsonb, 'sweep-agent', 'acknowledged', 'ops:overtime:install', 1)
 on conflict (fingerprint) do nothing;
 
--- Value delivered this month (~$23k → ~9x the $2,500 retainer) so the ROI hero
+-- Value delivered this month (~$23k → ~4.6x the $5,000 retainer) so the ROI hero
 -- renders a compelling, on-pitch number on a fresh demo. Basis is in metadata.
+-- 4.6x clears the >=3x health target in `docs/gtm/retainer-tiers.md` — a real
+-- number we can defend, not a flattering one.
 -- Dates clamped to the current month so the this-month total renders in full
 -- regardless of which day the demo is reset.
 insert into public.value_events (occurred_at, category, label, amount_cents, source, metadata) values
