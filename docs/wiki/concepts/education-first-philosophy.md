@@ -32,25 +32,35 @@ exactly what education-first attacks:
 
 ## Corroborated by practitioners (2026-07-15)
 
-The [[Tool Wars Panel 2026]] is the strongest evidence yet, and it carries more weight than
-the market data above because the witnesses are hostile: **both speakers reporting the shift
-run build shops and would rather be building.**
+The [[Tool Wars Panel 2026]] is the strongest support yet, and it carries more weight than the
+market data above because the witnesses are hostile: **both practitioners reporting the shift
+run build shops and would rather be building.** (Summarized in our words — that page explains
+why.)
 
-- **Medin:** noticeably fewer requests to build; *"it's probably like 80% training that I'm
-  doing"* — a shift he says he never saw before. He is known publicly as an engineer and
-  "the RAG guy," not a trainer.
-- **Kearns:** interest in trainings *"just skyrocket"* in recent months; he now sells an
-  AI leadership workshop as a standard offer.
-- **Moderator Henneberry names the mechanism:** training is the front door that ends in a
-  retainer. Kearns agrees — *"they need quick time to value."*
-- The demand is specifically for **enablement on tools clients already bought**: Kearns lost
-  a deal to a vendor who simply offered to train staff on Claude and write skills, after the
-  client had bought licences nobody was using.
+- **Medin** reports roughly 80% of his work is now training rather than building, a reversal
+  he says is new. He is known publicly as an engineer, not a trainer.
+- **Kearns** reports a sharp rise in training interest and now sells an AI leadership workshop
+  as a standard offer.
+- **The moderator names the mechanism:** training opens the account and the retainer follows.
+  Kearns's condition for it working is fast, visible value.
+- The demand is specifically for **enablement on tools clients already bought.** Kearns lost a
+  deal to a vendor offering exactly that, after the client had bought licences nobody was using.
 
-This validates the thesis, and sharpens it: education-first isn't a softer alternative to
-building — per the panel it is *the highest-demand entry point*, and the one that leads to
-build work. Where it bites: [[The Harbormill Ladder]] sells this rung hourly at $100 while
-the panel sells it as a fixed-price product at $5k–$20k. See the flag there.
+This validates the thesis and sharpens it: education-first is not a softer alternative to
+building — on this evidence it is the *highest-demand entry point*, and the one that leads to
+build work.
+
+**Two cautions, both recorded 2026-07-15:**
+
+1. **The panel's prices are audience rent, not market rate** — see the verification note on
+   [[Tool Wars Panel 2026]]. This corroborates the *direction* (training demand is rising),
+   not any dollar figure. The reading that Harbormill was therefore underpricing did not
+   survive; see [[The Harbormill Ladder]] § Key Decisions.
+2. **Education-first has a shelf life.** Every prior cycle ended with the vendor giving the
+   training away — HubSpot Academy discontinued paid social-media training, and Salesforce and
+   HubSpot are thinning their partner programs on a published 2026 schedule. Treat teaching as
+   the *door*, not the business. The durable asset is accountability for a named number, which
+   a vendor structurally cannot sell.
 
 ## How it shows up in the build
 
