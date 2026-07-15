@@ -2,8 +2,8 @@
 title: Four-Condition Loop Test
 type: concept
 created: 2026-06-20
-updated: 2026-06-24
-sources: [.claude/skills/autoresearch/SKILL.md, .claude/skills/validator-forge/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, website/src/sections/TrustStrip.tsx, supabase/functions/kpi-watch/index.ts, docs/PROJECT_CONTEXT.md]
+updated: 2026-07-15
+sources: [.claude/skills/autoresearch/SKILL.md, .claude/skills/validator-forge/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, website/src/sections/TrustStrip.tsx, supabase/functions/kpi-watch/index.ts, docs/PROJECT_CONTEXT.md, external:what-actually-matters-in-ai-2026]
 tags: [automation, methodology, loops, autoresearch, audits, framework]
 ---
 
@@ -69,6 +69,31 @@ This is the same high-value / low-effort ordering the Opportunity Report already
 uses — a loop candidate is just an automation opportunity scored for *loop-ability*
 first.
 
+## External corroboration (2026-07-15)
+
+The method was arrived at independently, by someone with no exposure to Harbormill. In
+[[What Actually Matters in AI Right Now (2026)]], Matt Wolfe describes dictating an unstructured
+~20-minute account of his business to a frontier model and getting his work back triaged three
+ways: **stop doing it / hand it to a person / let the model do it**. He then connected the model
+to his messaging, mail, file storage, and meeting-notes tools so it reviews those surfaces
+continuously, points out the work he repeats, and offers to take it over.
+
+Mapped onto this page: that is **condition #1 (repeats)** detected from live surface data, and
+an **approve-first action queue** as the guardrail for **condition #3 (afford wasted runs)** —
+he approves, rewords, or archives each draft. Notably his setup has **no condition #2** at all:
+no objective done-rule, no independent verifier. A human reads every draft. That is a coherent
+design — it trades automation for taste — and it is the honest comparison point for Harbormill's
+insistence on a validator. Harbormill's claim is not *we thought of this*; it is *we close the
+loop where he leaves a human in it.*
+
+Two cautions, recorded so this isn't read as a win:
+
+- **He needed no consultant to build it.** The same evidence corroborating the method threatens
+  the business model around it — see the contradiction flag on [[SMB AI-Automation Landscape]].
+- **Discovery is the commoditizing half.** His closing advice to an audience of AI agency owners
+  was to run that same self-dictated audit themselves. The Loop Audit's *finding* step is now
+  free; see [[The Harbormill Ladder]].
+
 ## Why it fits Harbormill
 
 - **Education-first, not a black box.** The test is teachable: an operator can learn
@@ -124,5 +149,7 @@ strip.
 - [[Marketing Site]]
 - [[Harbormill AIOS]]
 - [[KPI-Watch Loop]]
+- [[SMB AI-Automation Landscape]]
+- [[What Actually Matters in AI Right Now (2026)]]
 - Condition-#2 companion skill: `.claude/skills/validator-forge/SKILL.md`
 - Independent condition-#2 verifier skill: `.claude/skills/loop-verify/SKILL.md`
