@@ -1,18 +1,25 @@
 ---
 name: media-ingest
-description: "Turn any media that plays — a webinar, a cohort session, an expiring Frame.io/Vimeo share, a recorded call — into a verified transcript, then hand it to wiki-ops for ingestion. Use for 'transcribe this video', 'ingest this session/webinar', 'we have no transcript for X', or when a share has downloads disabled. Works on anything that plays: it records audio off playback, never the video stream."
+description: "Turn any media that plays — a webinar, a cohort session, an expiring Frame.io/Vimeo share, a recorded call — into a verified transcript. Use for 'transcribe this video', 'ingest this session/webinar', 'we have no transcript for X', or when a share has downloads disabled. Works on anything that plays: it records audio off playback, never the video stream."
 ---
 
 # Media Ingest
 
-Closes the one missing hop in the media→knowledge path. Everything downstream of
-"we have a transcript" already exists — this skill produces it and hands off.
+Closes the one missing hop in the media→knowledge path: media that plays, but has
+no transcript and no download.
 
-**Interface:** media that plays → a *verified* transcript at
-`docs/wiki/raw/external/<slug>.md` → invoke `wiki-ops ingest` on that file.
+**Interface:** media that plays → a *verified* transcript at a path you name.
+This skill stops at a good transcript; what happens to it next is the project's business.
 
-**Do not** duplicate `wiki-ops`. Source pages, entity/concept updates, cross-refs,
-`index.md`, and `log.md` are its job. This skill stops at a good transcript.
+> **Source of truth:** maintained in the `harbormill-aios` repo at
+> `.claude/skills/media-ingest/`, and deployed to `~/.claude/skills/media-ingest/` so
+> every project can reach it. The two are byte-identical copies — if you are reading
+> this from `~/.claude/`, fix the repo version and re-copy, or they will drift.
+
+## Scope
+
+Machine-level capability — the hard-won parts below (VB-Cable routing, the Stereo Mix
+dead end, the −60 dB gate) are facts about **this laptop**, true in every project.
 
 ## Why it works
 
@@ -85,14 +92,19 @@ Verify on a short test capture *before* committing to a long one.
 
 ### 5. Transcribe
 
+The script ships beside this skill. Call it by absolute path — cwd varies by project:
+
 ```bash
-node scripts/transcribe-media.mjs <file> --prompt "<proper nouns>" [--out <path>]
+node ~/.claude/skills/media-ingest/scripts/transcribe-media.mjs \
+  <file> --prompt "<proper nouns>" [--out <path>]
 ```
 
 Run `--dry-run` first — it reports duration, chunk plan, and cost, and makes no
 network calls. Rate is ~$0.006/min (a 33-min session ≈ $0.20).
 
-`OPENAI_API_KEY` comes from the shell env or a repo-root `.env` (shell wins).
+`OPENAI_API_KEY` comes from the shell env (already set on this machine), or from a
+`.env` beside the script. Shell wins. Zero third-party deps — only `node:` builtins,
+so it runs from any directory with no install step.
 
 **`--prompt` is load-bearing.** Whisper reliably mangles proper nouns — verified
 `"Henneberry" → "Hanbury"`. Pass every name, product, and bit of jargon you expect:
@@ -105,20 +117,31 @@ labels (AssemblyAI, Deepgram) instead.
 
 ### 6. Hand off
 
-Invoke `wiki-ops ingest` on the transcript. When it appends to `docs/wiki/log.md`,
-the provenance note must record: no transcript existed / downloads disabled, audio
-captured from playback via VB-Cable, transcribed with `scripts/transcribe-media.mjs`,
-and **speaker attribution inferred from context**.
+Depends on the project:
+
+- **`harbormill-aios`** — write the transcript to `docs/wiki/raw/external/<slug>.md`
+  and invoke `wiki-ops ingest` on it. `wiki-ops` owns everything downstream: source
+  pages, entity/concept updates, cross-refs, `index.md`, `log.md`. Do not duplicate it.
+- **Any other project** — there is no wiki to feed. Leave the transcript where the
+  user asked and stop.
+
+Either way, the provenance note must record: no transcript existed / downloads
+disabled, audio captured from playback via VB-Cable, transcribed with
+`transcribe-media.mjs`, and **speaker attribution inferred from context**.
 
 ## Rules
 
-- **Raw third-party transcripts never leave the machine.** They live in
-  `docs/wiki/raw/external/` — gitignored, and excluded from Aria's RAG by
-  `EXCLUDE_DIRS` in `scripts/sync-wiki.mjs`. Do not commit them, do not sync them,
-  do not paste them into a durable file. Both guards are needed: `sync-wiki` walks
-  the filesystem, so gitignore alone protects nothing.
-- **The durable artifact is the summary** in `docs/wiki/sources/`, written by
-  `wiki-ops` — not someone else's content verbatim.
+- **Raw third-party transcripts never leave the machine.** Someone else's full text is
+  not yours to publish. Do not commit it, do not sync it into a RAG index, do not paste
+  it into a durable file.
+  - *In `harbormill-aios`:* they live in `docs/wiki/raw/external/` — gitignored **and**
+    excluded from Aria's RAG by `EXCLUDE_DIRS` in `scripts/sync-wiki.mjs`. Both guards
+    are needed: `sync-wiki` walks the filesystem, so gitignore alone protects nothing.
+  - *Elsewhere:* keep it out of the repo. Check what indexes the filesystem before you
+    assume gitignore is enough.
+- **The durable artifact is the summary, in your own words** — not someone else's
+  content verbatim. In `harbormill-aios` that's `docs/wiki/sources/`, written by
+  `wiki-ops`.
 - **This is third-party material.** It is input to Harbormill's own thinking. Do not
   republish it, and do not turn it into public/marketing copy that resells their
   content. Original insight informed by it is fine; their words as our content is not.
