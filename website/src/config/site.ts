@@ -23,7 +23,7 @@ export const site = {
   nav: [
     { label: "Services", href: "#services" },
     { label: "See it", href: "#aios" },
-    { label: "Loop Audit", href: "#loop-audit" },
+    { label: "Audit", href: "#audit" },
     { label: "Ladder", href: "#ladder" },
     { label: "Proof", href: "#case-studies" },
     { label: "About", href: "#about" },
@@ -161,7 +161,7 @@ export const site = {
     eyebrow: "How we work together",
     title: "The Harbormill Ladder",
     subtitle:
-      "Start small and low-risk, and climb only as results prove out. It's a repeatable engine: a Loop Audit finds the highest-ROI automation, a Focused Project ships it, and a Retainer keeps it compounding — so you never commit to a big build before you've seen ROI.",
+      "Start small and low-risk, and climb only as results prove out. It's a repeatable engine: an Audit finds the highest-ROI automation, a Focused Project ships it, and a Retainer keeps it compounding — so you never commit to a big build before you've seen ROI.",
     rungs: [
       {
         name: "AI Setup Session",
@@ -170,7 +170,7 @@ export const site = {
         body: "One 90-minute working session, one flat price. You leave with Claude set up on your business and one real problem solved — not a demo, something you use Monday morning.",
       },
       {
-        name: "Loop Audit",
+        name: "Audit",
         price: "$500–$2,500",
         unit: "fixed scope",
         body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue.",
@@ -191,6 +191,12 @@ export const site = {
     footnote: "Every engagement starts with a free 30-minute intro. Your audit fee comes off your build.",
   },
 
+  // Client-facing name is **"Audit"** — never "Loop Audit" (2026-07-15).
+  // "Loop Audit" is internal vocabulary, like "Rung": prospects don't know what a
+  // Loop is, and the offer shouldn't ask them to learn one to read a price. Internal
+  // identifiers (this key, `LoopAudit.tsx`, `LoopAuditCondition`, docs/gtm, the wiki)
+  // keep the full name. Same rule as docs/wiki/concepts/harbormill-ladder.md's
+  // "'Rung' is internal vocabulary" decision. Copy below must say "Audit".
   loopAudit: {
     eyebrow: "The signature audit",
     title: "Find the one automation worth building first",
@@ -228,7 +234,7 @@ export const site = {
     },
     priceNote: "$500–$2,500 fixed · fee credited to your build",
     closer: "You leave understanding the method — not dependent on us.",
-    cta: "Book a Loop Audit",
+    cta: "Book an Audit",
   },
 
   trust: {
@@ -246,7 +252,7 @@ export const site = {
       {
         industry: "Marketing agency",
         pain: "Invoices aging past 45 days because follow-up was manual and easy to forget.",
-        loop: "An AR follow-up Loop that chases receivables on a schedule and flags exceptions for a human.",
+        loop: "An AR follow-up loop that chases receivables on a schedule and flags exceptions for a human.",
         result: "Publishing soon",
         roi: "Publishing soon",
         comingSoon: true,
@@ -254,7 +260,7 @@ export const site = {
       {
         industry: "Restaurant group",
         pain: "Guest follow-up and review requests handled by hand, so most never went out.",
-        loop: "A guest follow-up Loop that sends the right message at the right time, automatically.",
+        loop: "A guest follow-up loop that sends the right message at the right time, automatically.",
         result: "Publishing soon",
         roi: "Publishing soon",
         comingSoon: true,

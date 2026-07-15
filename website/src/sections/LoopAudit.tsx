@@ -8,7 +8,7 @@ import { CalendlyButton } from "@/components/CalendlyButton";
 export function LoopAudit() {
   const { loopAudit } = site;
   return (
-    <Section id="loop-audit">
+    <Section id="audit">
       <SectionHeading
         eyebrow={loopAudit.eyebrow}
         title={loopAudit.title}
