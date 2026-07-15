@@ -1,5 +1,58 @@
 # Wiki Log
 
+## [2026-07-15] ingest | What Actually Matters in AI Right Now (Matt Wolfe × Nate, AIS LIVE)
+
+Ingests a 33-min Hyperagent fireside chat (GA Access, Day 2, published 2026-07-13) between Matt
+Wolfe (Future Tools) and Nate (founder, AIS). Audience was AI agency owners — competitor signal,
+not customer signal, and the pages say so.
+
+The finding is two-sided and comes from a single passage. Wolfe describes **Harbormill's product
+as his own personal workflow** — brain-dump the business, get work sorted into drop/delegate/
+automate, then wire the model to Slack/Gmail/Drive/Granola to watch for repeating work and draft
+replies for approval. Nate names the moat unprompted: value compounds because the assistant can
+see everything else. But Wolfe built it **from native frontier-lab connectors, with no agency**.
+So the strategy is corroborated and the business model around it is threatened by the same
+sentence. The counter, from the same source: capability isn't adoption (by his own estimate most
+people build nothing, though anyone can), and the accountability layer — he keeps a human
+accountant on purpose, for the answerable-party role — is something a subscription cannot supply.
+
+Contradiction **flagged, not resolved**, on [[SMB AI-Automation Landscape]] — the 2026-06-17
+"no dominant AI operating system for SMBs" claim is contested by first-hand evidence; both
+sources left standing. Net effect on positioning: education-first and accountability get
+promoted; deck-as-artifact is the differentiator under pressure. Ladder flag recorded
+(discovery is commoditizing, so the audit can't sell the list) and **deliberately kept separate
+from** the entry-rung reprice under review on PR #39 — no repricing recommended from an n=1
+agency-owner audience. `docs/gtm/case-studies/` is still the binding evidence gap.
+
+Also corrects [[Independent Verification]]: Wolfe's BuseyBench uses three judges from three
+*different labs* because a model favors its own output — a stronger independence guarantee than
+`loop-verify`'s fresh-context-but-same-model design. Recorded as an open question, not a change.
+
+Method note: no captions or transcript existed and downloads were disabled, so audio was
+captured from playback (VB-Audio Virtual Cable; per-app routing) and transcribed with
+`scripts/transcribe-media.mjs` (~$0.20, 60 blocks, 0 errors). Whisper does not diarize —
+**speaker attribution is inferred from context**, easier here than on a panel but not certain.
+Whisper also mangled Cole Medin and Dave Ebbelaar, and hallucinated a trailing "Transcribed by
+otter.ai" line that nobody said. Raw transcript stays local-only in `raw/external/`. This run
+also produced the `media-ingest` skill, which encodes the capture method as a repeatable loop.
+
+**Publication policy applied.** This repo is public and the session was gated (GA Access,
+downloads disabled, expiring). The source page was rewritten to carry **Harbormill's conclusions
+in Harbormill's own words — no verbatim quotes, no blow-by-blow** — and all quotes were stripped
+from the concept/analysis pages too. The `raw/external` guards protect the transcript but not the
+summary, and summaries are public; the rule is editorial and now lives on [[Media Ingest]].
+**Open item:** the sibling *Tool Wars* source page on the unmerged PR #39 branch still carries
+quoted pricing and has been public since 2026-07-15 — apply the same rule before it merges.
+
+Source: `docs/wiki/raw/external/what-actually-matters-in-ai-2026.md` (local-only).
+Pages created: [[What Actually Matters in AI Right Now (2026)]] (source), [[Media Ingest]]
+(concept).
+Pages updated: [[SMB AI-Automation Landscape]] (contradiction flag + open questions + sharpened
+risk), [[Four-Condition Loop Test]] (external corroboration), [[The Harbormill Ladder]]
+(discovery-commoditizing flag), [[Education-First Philosophy]] (promoted to primary defense),
+[[Independent Verification]] (multi-lab judge open question), index.md (1 source, 1 concept, 1
+analysis summary).
+
 ## [2026-06-24] ingest | Session-end — Independent verification & loop memory
 
 Session-end extract of two `autoresearch` loop enhancements built and shipped this session (both
