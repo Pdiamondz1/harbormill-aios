@@ -106,6 +106,66 @@ are needed and no price card saves the plan.
   "two flagship case studies" that do not exist; `beachhead-decision.md` is referenced twice and
   is missing; the $2,500 workshop has no curriculum, agenda, or deliverable spec anywhere.
 
+## What the briefing changed
+
+**Evidence briefing:** [./harbormill-entry-rung-reprice-briefing.html](./harbormill-entry-rung-reprice-briefing.html)
+(27 load-bearing claims checked against primary sources: **9 false or unsourced, 12 corrected, 6 survived
+clean, 5 demoted for conflict of interest**.)
+
+**The verdict stands at RESHAPE, but narrows sharply: keep the ladder you have.** The roast said "reprice,
+but that's not the point." The briefing says the reprice was argued from evidence that does not exist, and
+that two of the four rungs are already correct for structural reasons the roast missed.
+
+What verification overturned:
+
+1. **The "$2,500 signature-authority threshold" — the one principled basis for the number — is FALSE.**
+   It traces to a vendor's content-marketing post that contradicts itself within the same article
+   ($500/$1,000/$5,000/$7,500). Webster & Wind and Johnston & Bonoma contain no dollar thresholds;
+   COSO/AICPA require entity-specific ones. **$2,500 is arbitrary after all — the Contrarian was right.**
+2. **"Free audits convert best" (the roast's unanimous correction) is FALSE as sourced** — one uncited
+   sentence on a prospecting vendor's blog, and "1–3% visitor→lead" is the ordinary B2B baseline cited as
+   if exceptional. The roast corrected a real error with a fake fact.
+3. **The paid audit is right, but for a mechanism nobody named: screening, not commitment.** Ashraf, Berry
+   & Shapiro (2010, *AER*) — a field RCT built to separate them — finds "economically important screening
+   effects... no consistent evidence of sunk-cost effects." **Consequence: the audit price should be set to
+   filter, not to earn.** Non-zero matters; large doesn't. Raising it toward $5k buys nothing.
+4. **Price-as-quality-signal is weak and weakest for services** (Völckner & Hofmann 2007: r = .286,
+   ~9% of variance). The anchoring argument is an extrapolation — anchors are demonstrated within one
+   issue; no study shows a rate anchoring a project price.
+5. **The outcome guarantee is dead three times over** — Moorthy & Srinivasan's model needs mid-range seller
+   transaction costs (a solo forfeits 100% of sunk labour); it presupposes an experience good while
+   consulting is a *credence* good; and it inverts adverse selection onto the seller. The Practitioner's
+   version is blunter: the dispute is never "did it work," it's **"did you use it."**
+6. **The budget bomb is worse than the roast thought, and pointed the other way.** The ~$18k median SMB AI
+   spend is **fabricated** (unsourced, self-attributed, "modeled from industry patterns"). Primary data:
+   Atlanta Fed — >half of firms expect ≤$200/employee; Ramp (70k+ businesses) — median $11.38/employee/month;
+   JPMC — ~$78/month. A 40-person firm's *entire annual AI budget* is ~$1k–$8k. **The roast worried a $15k
+   ladder consumed 83% of the AI budget. It's actually 2–15x the whole budget.**
+7. **Census kills the "SMB AI demand is booming" premise**: "AI use increased among firms with at least 20
+   employees but didn't change significantly among firms with fewer than 20 employees." Adoption is
+   diverging *away* from the segment. The Goldman "67%" and business.com "57%" counterclaims are
+   self-selected opt-in panels measuring *intent*.
+
+**The move the briefing adds, which no roast persona found:** price against the **labour line**, never the
+AI line. Against a $200/employee tooling budget a $2,500/mo retainer is 200x over; against a $4,500/mo hire
+not made, it's cheap. Same number, different pocket, 20x deeper.
+
+**Revised recommendation:**
+
+| Rung | Roast said | Briefing says |
+|---|---|---|
+| Entry | Workshop $2,500 (kill hourly) | Kill hourly — but don't invent a workshop tier. The audit *is* the entry. |
+| Audit | Free-to-$2,500 | **Keep $500–$2,500, credited. Price it to screen.** Already correct. |
+| Project | Floor $10,000 | **Keep under $10k** — the sub-$10k ceiling is load-bearing (single signature, 30–60 day cycle). |
+| Retainer | $3–10k/mo, unchanged | Unchanged — but justify it against a *salary*, not a software budget. |
+
+**What did not change:** distribution is the binding constraint. Every lens and every persona converged
+there independently. The 48-hour test is unaltered — delete Jane Doe, put 50 real names in the tracker,
+book 5 intros.
+
+**Two things to stop repeating** (I asserted both as fact this session and both are wrong): the MIT "95% of
+pilots fail / 150 interviews / $250k membership" framing, and the "$18k median SMB AI spend."
+
 ## See Also
 
 - [[The Harbormill Ladder]]
