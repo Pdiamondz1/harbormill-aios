@@ -94,6 +94,43 @@ Two cautions, recorded so this isn't read as a win:
   was to run that same self-dictated audit themselves. The Loop Audit's *finding* step is now
   free; see [[The Harbormill Ladder]].
 
+## Scope flag: the gate cannot see new capability (2026-07-15)
+
+From [[The Client Didn't Ask for AI (2026)]]. **Observation about this test's boundary — no
+change to the gate is proposed, and none should be.**
+
+Amy Simpson's best-paid engagement was a visual quote configurator for a yacht maker
+(~$3k grown to ~$10k, then reused as a vertical framework). Run it through this page:
+
+| Condition | Verdict |
+|---|---|
+| #1 Repeats | **Fails** — nobody was doing this work. The buying experience didn't exist to recur. |
+| #2 Rule decides "done" | **Fails** — no objective acceptance check for "a buyer felt confident choosing a hull colour." |
+| #3 Afford wasted runs | Passes. |
+| #4 AI has data + tools | Passes. |
+
+Outcome: `not-a-loop` on #1, `blocked` on #2. **The Loop Audit could not have proposed it.**
+
+The temptation is to read this as a missing revenue category. It isn't — Stage 2 already scores
+`revenue_captured`. The boundary is **upstream, in Stage 1**. Revenue from *automating existing
+repeating work* passes the gate cleanly ([[KPI-Watch Loop]] and AR follow-up both do: the work
+recurs, and "invoice paid" is a done-rule). Revenue from **capability the business does not yet
+have** can never reach the ranking, because there is no recurrence to detect and no done-rule to
+write.
+
+**This is the test working as specified.** It is a test for *which repeating work to turn into a
+loop*, and it says so in the first line. Loosening #1 or #2 to admit capability work would
+destroy the thing that makes a loop a loop — condition #2 is the whole difference between
+Harbormill's position and the human-reads-every-draft setup described in
+[[What Actually Matters in AI Right Now (2026)]].
+
+The flag is narrower and worth holding: this gate is Harbormill's **only discovery instrument**,
+and the [[ROI-Discovery Audit]] is the front door. So the front door is structurally blind to a
+category that demonstrably pays — and the blindness is by construction, not by oversight. If
+Harbormill ever wants that work, it needs a **second instrument**, not a wider gate. Nothing
+here argues that it should; `docs/gtm/case-studies/` is still empty and the source is a
+practitioner, not a buyer.
+
 ## Why it fits Harbormill
 
 - **Education-first, not a black box.** The test is teachable: an operator can learn
@@ -151,5 +188,6 @@ strip.
 - [[KPI-Watch Loop]]
 - [[SMB AI-Automation Landscape]]
 - [[What Actually Matters in AI Right Now (2026)]]
+- [[The Client Didn't Ask for AI (2026)]]
 - Condition-#2 companion skill: `.claude/skills/validator-forge/SKILL.md`
 - Independent condition-#2 verifier skill: `.claude/skills/loop-verify/SKILL.md`

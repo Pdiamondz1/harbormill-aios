@@ -3,6 +3,7 @@
 ## Sources
 
 - [[Project Context]](sources/project-context.md) — Harbormill identity, strategy, architecture, and operating instructions (2026-06-17)
+- [[The Client Didn't Ask for AI (2026)]](sources/the-client-didnt-ask-for-ai-2026.md) — Amy Simpson (AIS LIVE Day 2, Hyperagent); her best-paid build is one the Loop Audit's gate could never surface — a scope flag, not a reprice
 - [[What Actually Matters in AI Right Now (2026)]](sources/what-actually-matters-in-ai-2026.md) — Matt Wolfe × Nate (AIS LIVE, Hyperagent); corroborates the loop thesis and reveals the frontier labs shipping it natively
 
 ## Entities

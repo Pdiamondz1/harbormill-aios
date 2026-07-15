@@ -1,5 +1,42 @@
 # Wiki Log
 
+## [2026-07-15] ingest | The Client Didn't Ask for AI (Amy Simpson, AIS LIVE Day 2)
+
+Ingests a 34:48 Hyperagent solo session (GA Access, Day 2, published 2026-07-13) by Amy Simpson,
+partner/creative director at a 21-year marketing studio who added AI to that practice rather than
+starting an AI company. Sibling to the Matt Wolfe session below — same cohort, same day, and the
+**same audience discount applies**: owners selling services, not SMB owners buying them.
+
+**Provenance.** No transcript existed and the share has downloads disabled, so audio was captured
+off playback via VB-Cable and transcribed with `scripts/transcribe-media.mjs` (see
+[[Media Ingest]]). **Speaker attribution is inferred from context** — Whisper does not diarize.
+**The transcript covers 1:49 → 34:48 only**; playback was already underway when capture started,
+so the first 1:49 (apparently the host's introduction) was not recorded. Her thesis and origin
+story are intact and nothing filed here rests on the missing span. A top-up capture was attempted
+and correctly rejected by the volumedetect gate at −91.0 dB (silence — the video was never
+re-seeked), so it was not transcribed.
+
+**The finding is a scope boundary, and it is narrower than it first looked.** Her best-paid build
+— a visual quote configurator for a yacht maker, ~$3k grown to ~$10k, then reused as a vertical
+framework — fails the [[Four-Condition Loop Test]] gate on #1 (nobody was doing that work) and #2
+(no done-rule for "the buyer felt confident"). The Loop Audit could not have proposed it. The
+tempting read is "we have no revenue axis"; that read is **wrong** — Stage 2 already scores
+`revenue_captured`. The boundary is upstream in Stage 1: revenue from automating *existing
+repeating work* passes fine, revenue from *new capability* can never reach the ranking. Filed as
+a flag with **no gate change proposed** — loosening #1/#2 would destroy what makes a loop a loop.
+
+**Deliberately not acted on.** Her pricing position (efficiency is not a discount) points the
+same way as unmerged PR #40, but it is the same evidence class already ruled insufficient — one
+practitioner, to practitioners, n=1 — and PR #39's roast returned RESHAPE precisely because
+*customer* evidence was absent. `docs/gtm/case-studies/` remains empty. **`harbormill-ladder.md`
+was intentionally left untouched**: PRs #39 and #40 both rewrite it and an edit here would
+conflict. Her headline thesis ("don't become an AI agency, upgrade your existing non-AI book")
+does not transfer — Harbormill has no non-AI book — and her de-jargon lesson was already shipped
+in `say-this-not-that.md` and the site de-jargon pass.
+
+Pages created: [[The Client Didn't Ask for AI (2026)]]
+Pages updated: [[Four-Condition Loop Test]], [[What Actually Matters in AI Right Now (2026)]], index
+
 ## [2026-07-15] ingest | What Actually Matters in AI Right Now (Matt Wolfe × Nate, AIS LIVE)
 
 Ingests a 33-min Hyperagent fireside chat (GA Access, Day 2, published 2026-07-13) between Matt
