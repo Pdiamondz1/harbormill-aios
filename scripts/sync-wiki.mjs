@@ -31,6 +31,14 @@ const WIKI_DIR = join(ROOT, "docs", "wiki");
 // /navigation, not knowledge. Everything else under docs/wiki/ is fair game for Aria.
 const EXCLUDE = new Set(["index.md", "log.md", "memory.md"]);
 
+// raw/external/ holds third-party source material dropped in verbatim — transcripts,
+// articles, PDFs. It's gitignored, but this script walks the filesystem, so being
+// untracked is no protection: without this, someone else's content lands in Aria's
+// RAG in full. The durable, shareable artifact is the summary in sources/ — sync that
+// instead. (raw/sessions/ is Harbormill's own session extracts and stays in scope.)
+// Whole-file transcripts also blow past text-embedding-3-small's ~8k-token limit.
+const EXCLUDE_DIRS = new Set(["raw/external"]);
+
 // knowledge-sync caps items at 100/request; stay well under for headroom.
 const BATCH = 50;
 
@@ -82,8 +90,11 @@ function walk(dir) {
   const out = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...walk(full));
-    else if (entry.name.endsWith(".md") && !EXCLUDE.has(entry.name)) out.push(full);
+    if (entry.isDirectory()) {
+      const rel = relative(WIKI_DIR, full).split("\\").join("/"); // posix for stable compare
+      if (EXCLUDE_DIRS.has(rel)) continue;
+      out.push(...walk(full));
+    } else if (entry.name.endsWith(".md") && !EXCLUDE.has(entry.name)) out.push(full);
   }
   return out;
 }

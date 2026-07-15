@@ -3,6 +3,7 @@
 ## Sources
 
 - [[Project Context]](sources/project-context.md) — Harbormill identity, strategy, architecture, and operating instructions (2026-06-17)
+- [[Tool Wars Panel 2026]](sources/tool-wars-panel-2026.md) — Hyperagent panel (Kearns/Ebbelaar/Medin, moderated by Henneberry) on what clients buy in 2026; training demand surge, workshop→project→retainer pricing benchmarks ($5k–$20k entry), RAG deprioritized (2026-07-13)
 
 ## Entities
 
