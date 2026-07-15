@@ -40,6 +40,22 @@ makes capture the clock-bound step. Say so.
 **Never imply you watched it.** Until step 5 produces a transcript, you have a
 title, a duration, and a screenshot. State that plainly.
 
+**The automation tab cannot play video — don't try, and don't debug it.** The MCP tab
+runs `visibilityState: "hidden"`, and Chrome will not load media in a hidden tab: the
+player mounts, shows a spinner, reports `readyState: 0` / `networkState: 2` forever, and
+`currentTime` never advances. Clicking play "works" and changes nothing. Verify with
+`javascript_tool`: `document.visibilityState` — if it's `hidden`, stop.
+
+This costs you nothing, because **the capture never needed that tab**. ffmpeg records the
+*audio device*, so the video plays in the user's own visible tab and the automation tab is
+only ever for identifying the asset (title, duration, speaker, slides). Frame.io's player
+also reports `duration: null`; read the duration off the UI instead (switch the time format
+from Timecode to Standard).
+
+Some players expose a direct asset URL in the DOM (e.g. `assets.frame.io/encode/…`).
+**Do not fetch it.** Downloads are disabled on these shares deliberately; capturing off
+playback is the sanctioned path precisely so we don't circumvent that.
+
 ### 2. Route audio (manual — the user must do this)
 
 Windows: route **just the source app**, not the whole system, so notifications and
@@ -58,7 +74,11 @@ and channel count. It is a phantom endpoint. Use VB-Cable.
 
 ### 3. Capture
 
-Have the user seek to 0:00 and press play, then run for the full duration plus margin:
+**Start ffmpeg first, then have the user seek to 0:00 and play.** In that order — audio
+already playing when capture starts is audio you have permanently lost, and you cannot
+tell from the file. Run for the full duration **plus generous margin** (40 min for a 35-min
+talk): trailing silence is trimmed for free in step 4, a missing head is not recoverable
+without another real-time pass.
 
 ```bash
 ffmpeg -thread_queue_size 1024 -f dshow \
@@ -68,6 +88,9 @@ ffmpeg -thread_queue_size 1024 -f dshow \
 
 Run this in the background and let it finish — capture is real-time. List devices
 with `ffmpeg -list_devices true -f dshow -i dummy` if the name doesn't match.
+
+Ask the user to keep other audio quiet for the duration: this captures everything the
+app sends to CABLE Input, so a notification chime lands in the transcript.
 
 ### 4. Verify signal — this is a gate, not a suggestion
 
@@ -90,6 +113,29 @@ it. `max_volume` equal to `mean_volume` is the giveaway for true digital silence
 
 Verify on a short test capture *before* committing to a long one.
 
+**Confirm something was actually playing before you blame the routing.** A silent take has
+two causes — wrong routing, or nothing playing — and the dB reading cannot tell them apart.
+Check playback first (in the user's tab: is it running? did `currentTime` advance?), *then*
+interpret the gate. Sending the user to re-do their audio routing when the real problem was
+a paused video wastes their time and your credibility.
+
+**Reconstruct what you actually got with `silencedetect` before transcribing:**
+
+```bash
+ffmpeg -i out.wav -af silencedetect=noise=-50dB:d=2 -f null -
+```
+
+Speech-end minus the known duration tells you where the recording sits inside the talk. If
+speech ends at 1978s on a 2088s video, capture began 110s late and **you are missing the
+first 1:50** — say so plainly rather than presenting a partial transcript as complete.
+
+**Trim trailing silence before step 5.** Whisper hallucinates text over long digital
+silence, so feeding it dead minutes actively pollutes the transcript (and you pay for it):
+
+```bash
+ffmpeg -i out.wav -t <speech_end_seconds> -c copy body.wav
+```
+
 ### 5. Transcribe
 
 The script ships beside this skill. Call it by absolute path — cwd varies by project:
@@ -106,9 +152,22 @@ network calls. Rate is ~$0.006/min (a 33-min session ≈ $0.20).
 `.env` beside the script. Shell wins. Zero third-party deps — only `node:` builtins,
 so it runs from any directory with no install step.
 
+**Always pass `--out` explicitly.** The default output path is derived from the script's
+own location (`__dirname/..`), which was repo-relative by design — in the deployed copy it
+resolves to `~/.claude/skills/media-ingest/docs/wiki/raw/external/…`, inside the skill
+directory. `--dry-run` prints the resolved path; read it.
+
 **`--prompt` is load-bearing.** Whisper reliably mangles proper nouns — verified
 `"Henneberry" → "Hanbury"`. Pass every name, product, and bit of jargon you expect:
 speakers, companies, "Harbormill", "Aria". Only the first ~224 tokens are used.
+
+**…but `--prompt` bleeds.** Whisper often echoes the prompt back as the opening
+"speech" — especially when the audio starts mid-stream — and will pull names *from your
+prompt list* into that echo. Verified: a prompt naming both the uploader and the speaker
+produced an opening line attributing the talk to the wrong person. **Treat the first block
+as suspect**, check it against the audio's real start, and never source a speaker
+attribution from it. Pass only names you expect to actually be said; every extra name is a
+hallucination target.
 
 **Whisper does not diarize.** A multi-speaker recording returns one unattributed
 stream. Attribute speakers from context, and say in the output that attribution is
@@ -153,3 +212,11 @@ disabled, audio captured from playback via VB-Cable, transcribed with
   → `docs/wiki/sources/tool-wars-panel-2026.md`. The run that produced this method,
   including the Stereo Mix dead end and the `raw/external` RAG leak found by a
   `sync:wiki` dry-run during verification.
+- AIS LIVE Day 2, "The Client Didn't Ask for AI" (2026-07-15) — 34:48, downloads disabled.
+  → `docs/wiki/sources/the-client-didnt-ask-for-ai-2026.md`. First run of the deployed
+  global copy. Produced the hidden-tab finding (step 1), the prompt-bleed finding (step 5),
+  and the `--out` wart. Also the cautionary one: a −91 dB test capture was misread as a
+  routing failure when the real cause was a paused video, and capture was started *after*
+  playback — permanently losing the first 1:49. Both are why steps 3 and 4 now say what
+  they say. The gate did its job twice: it caught the dead take, and correctly rejected a
+  silent top-up attempt rather than paying to transcribe nothing.
