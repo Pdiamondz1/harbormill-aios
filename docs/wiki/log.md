@@ -1,5 +1,43 @@
 # Wiki Log
 
+## [2026-07-15] resolution | Hourly retired — the ladder holds, the evidence for repricing didn't
+
+Closes the "Rung 1 is hourly" flag (opened 2026-06-24) — but not the way the [[Tool Wars Panel 2026]]
+ingest suggested. The panel appeared to show Harbormill pricing its entry rung 25–200x under market.
+An adversarial roast (5 personas) and a storm-research pass (5 lenses + 6 verification agents,
+**27 claims checked: 9 false or unsourced, 12 corrected, 6 clean, 5 demoted for undisclosed conflict
+of interest**) took that apart.
+
+**What was wrong:** the panel is audience rent (Medin ~204k subs, Ebbelaar ~257k) and none of its three
+prices could be independently verified. The whole "productize and raise your fees" literature traces to
+a vendor selling fee coaching *to consultants*, sample selected on the outcome variable, **independent
+corroboration: none found**. Price→perceived-quality is r=.286 and *weakest for services* (Völckner &
+Hofmann 2007). The "$18k median SMB AI spend" figure is **fabricated** — unsourced and self-attributed.
+
+**What decided it:** primary data. >half of firms expect ≤$200/employee/year on AI (Atlanta Fed 2026);
+Ramp's median across 70k+ businesses is $11.38/employee/month; Census: *"AI use increased among firms
+with at least 20 employees but didn't change significantly among firms with fewer than 20 employees."*
+A ~40-person firm's whole annual AI budget is ~$1k–$8k — so the AI budget is the wrong pocket, and the
+rule is **sell against the labour line** (a $4,500/mo hire not made), never the AI budget.
+
+**Decisions:** hourly retired — not because $100 was low but because hours are the wrong *unit* and a
+fixed price forces a defined deliverable. Not replaced by a workshop tier; the audit already is the
+entry. Audit kept at $500–$2,500 credited — it works by **screening**, not commitment (Ashraf, Berry &
+Shapiro 2010, *AER*), so the fee filters rather than earns; raising *or* freeing it were both wrong.
+Sub-$10k build ceiling kept deliberately (single signature). **No outcome guarantees** — fails as a
+signal for a solo, doesn't transfer to a credence good, and inverts adverse selection.
+
+**The constraint was never price.** Ten independent attacks, including both bulls, converged on
+distribution. `docs/gtm/warm-50-tracker.md` still holds only "Jane Doe".
+
+Source: `docs/vetting/2026-07-15-harbormill-entry-rung-reprice/` (roast-verdict.md + briefing.html).
+Pages updated: [[The Harbormill Ladder]] (Rung 1 removed; 4 Key Decisions added; Flag → resolved),
+[[Tool Wars Panel 2026]] (verification note — its price table is superseded, do not cite),
+`docs/PROJECT_CONTEXT.md` §8 (canonical ladder + labour-line rule + decisions on the record),
+`website/src/config/site.ts` (ladder rung removed — the subtitle already told a 3-rung story),
+`docs/gtm/field-guide/03-run-the-call.md` (hourly fallback removed; labour-line framing added).
+Wiki still 47 pages.
+
 ## [2026-07-15] ingest | Tool Wars Panel — what actually makes money in 2026
 
 Ingest of a 36-min Hyperagent panel (published 2026-07-13, share expires ~2026-07-24) in which

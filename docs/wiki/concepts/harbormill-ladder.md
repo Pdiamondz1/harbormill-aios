@@ -12,18 +12,50 @@ tags: [strategy, pricing, business-model, gtm]
 Harbormill Automation's engagement model **and** pricing, in one ladder. Low-risk
 entry, climb only as ROI proves out:
 
-1. **Get started** — $100/hr one-on-one consulting (e.g. Claude setup).
-2. **Paid audit** — $500–$2,500, fixed scope; map workflows, scope the first build.
-   Now operationalized in-product by the [[ROI-Discovery Audit]] tool (Opportunity
-   Report → ROI vs the retainer), which is also the engine for selling Rung 4.
-3. **Focused project** — $2,500–$10,000; ship one workflow, prove ROI.
-4. **Retainer** — $3,000–$10,000/mo; ongoing, after trust and results.
+1. **Loop Audit** — $500–$2,500, fixed scope, **fee credited toward the build**; map
+   workflows, scope the first build. **This is the front door.** Operationalized
+   in-product by the [[ROI-Discovery Audit]] tool (Opportunity Report → ROI vs the
+   retainer), which is also the engine for selling Rung 3.
+2. **Focused project** — $2,500–$10,000; ship one workflow, prove ROI. The sub-$10k
+   ceiling is deliberate — it keeps the decision inside one owner's signature.
+3. **Retainer** — $3,000–$10,000/mo; ongoing, after trust and results.
+
+*(Hourly consulting was Rung 1 until 2026-07-15 — retired, see Key Decisions.)*
 
 Every climb starts with a free 30-min intro. Surfaced on the marketing site
 (`website/src/config/site.ts`) and in [[Project Context]].
 
 ## Key Decisions
 
+- **Hourly retired; the audit is the front door (2026-07-15).** Rung 1 ($100/hr) is
+  gone. The founder confirmed it was an unconsidered default, not a loss-leader. It
+  capped delivery at the calendar, crowded out the outbound hours that fill the
+  pipeline, and — the real defect — let an engagement be sold with *no defined
+  deliverable*, which a fixed price makes impossible. **Not replaced with a workshop
+  tier:** the $500 audit already is the low-friction entry, and it sits under any
+  plausible single-signature line. The website's own ladder subtitle already told a
+  three-rung story (audit → project → retainer), so Rung 1 was vestigial.
+- **The audit fee screens; it does not earn (2026-07-15).** Ashraf, Berry & Shapiro
+  (2010, *AER*), a field RCT built to separate the mechanisms, finds paying produces
+  "economically important screening effects… no consistent evidence of sunk-cost
+  effects." So the fee needs only be non-zero enough to filter tyre-kickers — raising
+  it toward $5k buys nothing the screen already provides and costs volume. Being paid
+  also preserves the right to say "AI is the wrong answer here," which a free audit
+  financially forbids. This overturns *both* earlier proposals: raising the audit and
+  making it free.
+- **No outcome guarantees (2026-07-15).** "If it isn't doing X by day 30, don't pay
+  me" was proposed as a substitute for missing case studies, and is rejected on three
+  independent grounds: a solo's refund forfeits 100% of sunk labour, so it fails as a
+  separating signal (Moorthy & Srinivasan 1995); consulting is a *credence* good, so
+  the model doesn't transfer; and it inverts adverse selection — the clients who
+  self-select in have the worst-instrumented processes and are likeliest to dispute.
+  In practice the argument is never "did it work," it is **"did you use it."**
+- **Sell against the labour line, never the "AI budget" (2026-07-15).** More than half
+  of firms expect ≤$200/employee/year on AI (Atlanta Fed 2026); Ramp's median across
+  70k+ businesses is $11.38/employee/month. A ~40-person firm's *entire* annual AI
+  budget is ~$1k–$8k, so any real build is multiples of the whole pocket. Priced
+  against a $4,500/mo hire not made, the same number is cheap. See
+  [[Tool Wars Panel 2026]] and `docs/vetting/2026-07-15-harbormill-entry-rung-reprice/`.
 - **"Rung" is internal vocabulary — never shown to or said to clients (2026-06-20).**
   The ladder/rung model is how Harbormill reasons about the engagement internally;
   client-facing surfaces refer to a tier by its **name** ("Paid audit") or a numeric
@@ -48,45 +80,47 @@ and the external evidence supports the design:
 - Productized consultants commonly serve **40–80 clients/yr** at $5k–$25k MRR as
   they scale ([Assembly](https://assembly.com/blog/productized-services)).
 
-## Flag (observation, not yet acted on)
+## Flag → RESOLVED 2026-07-15 (hourly retired)
 
-The productization literature stresses **clear fixed-scope deliverables** at each
-tier. Rungs 2–4 are scoped engagements; **Rung 1 (Get started) is hourly**, which is
-less "productized."
-A future option is a fixed-price starter package (e.g. a named "AI setup session")
-to make the entry rung a cleaner product. Recorded as a strategy flag.
+The flag recorded 2026-06-24 — *"Rungs 2–4 are scoped engagements; Rung 1 is hourly, which
+is less productized"* — is closed. Rung 1 is gone. But **the reasoning that closed it is not
+the reasoning that opened it**, and the difference is worth keeping, because the obvious
+argument was wrong.
 
-**Corroborated with prices (2026-07-15).** The [[Tool Wars Panel 2026]] turned this flag
-from a literature-derived hunch into an evidenced gap. Three practitioners each sell the
-entry rung as a **fixed-price product**, none hourly, and all price it far above Rung 1:
+**What triggered the review:** the [[Tool Wars Panel 2026]] appeared to show Harbormill
+pricing its entry rung 25–200x below market (Medin ~$20k/4-hr workshop; Kearns ~$5k;
+Ebbelaar $10–20k fixed prototype). The apparent conclusion — *raise everything* — did not
+survive an adversarial roast or primary-source verification.
 
-| Tier | Panel | Ladder |
-|---|---|---|
-| Entry / workshop | $5,000 (Kearns) – $20,000 (Medin, 4 hrs) | **$100/hr** |
-| Audit / blueprint | folded into the workshop step | $500–$2,500 |
-| First build | $10,000–$20,000 fixed, 2–4 wks (Ebbelaar) | $2,500–$10,000 |
-| Retainer | the shared destination | $3,000–$10,000/mo — **in line** |
+**What the evidence actually said** (full audit trail:
+`docs/vetting/2026-07-15-harbormill-entry-rung-reprice/`):
 
-Two structural problems the prices expose, beyond the numbers themselves:
+- **The panel is audience rent, not market rate.** Medin has ~204k YouTube subscribers,
+  Ebbelaar ~257k. Verification could not independently confirm the panel or a single one of
+  its three prices. Three self-reported figures, from a stage, where stating a high price is
+  itself marketing.
+- **The "productize and raise your fees" evidence base is conflicted folklore.** Every
+  headline stat traces to a vendor selling fee coaching *to consultants*, on the same pages,
+  with no disclosed methodology and a convenience sample selected on the outcome variable.
+  **Independent corroboration: none found.**
+- **Price does not signal quality here.** Völckner & Hofmann (2007), 71 effects:
+  r = .286 (~9% of variance), *significantly weaker for services*. The "hourly anchors the
+  project price" argument is an extrapolation — anchors are demonstrated within one issue.
+- **Raising the audit was wrong, and so was making it free.** The audit works by
+  **screening** (Ashraf/Berry/Shapiro 2010, *AER*), so its fee should filter, not earn. It is
+  already the right instrument at the right price.
+- **The sub-$10k build ceiling is load-bearing**, not timid — single signature, 30–60 day cycle.
+- **The AI budget is the wrong pocket entirely.** >half of firms expect ≤$200/employee/year
+  (Atlanta Fed 2026); Ramp's median is $11.38/employee/month. A ~40-person firm's *whole*
+  annual AI budget is ~$1k–$8k. Sell against the labour line instead.
 
-1. **Rung 2 is cheaper than the panel's entry rung.** The audit produces the blueprint that
-   sells the project, yet it's priced below Kearns's cheapest workshop. The ordering is
-   inverted.
-2. **Hourly anchors everything above it.** A $100/hr front door invites the buyer to read a
-   $10,000 project as "100 hours of Damon" and audit the timesheet. A fixed-price workshop
-   reframes the same project as a multiple of a known-good outcome. This bears directly on
-   the Outcome Edition's $10k + $2.5k/mo target.
+**So hourly was retired for one reason that survived everything:** a fixed price forces a
+defined deliverable and hourly permits none. Not because $100 was too low a number — because
+hours were the wrong unit, and the low number was never the defect.
 
-**Counterweight — price follows proof.** Medin's $20k is backed by a large public audience
-generating inbound; Kearns co-founded a studio with 50+ deployments. Harbormill's
-`docs/gtm/case-studies/` still holds only a template. The panel sets the *ceiling* these
-prices can reach, not the price Harbormill can charge on Monday. Kearns's ~$5k is the nearer
-comparable, and Harbormill's own de-risking credential — 15 yrs enterprise IT/security at
-Nike, Assurant, IAA, LEGACY ([[Damon Williams]]) — speaks directly to the board-defensibility
-that Kearns says decides deals at signature.
-
-Founder confirmed 2026-07-15 that **$100/hr was a default, not a deliberate loss-leader.**
-Still recorded as a flag rather than a decision — the number is the founder's to set.
+**The constraint was never price.** Ten independent attacks (5 roast personas + 5 research
+lenses), including both bulls, converged on distribution. `docs/gtm/warm-50-tracker.md` still
+held only seed rows ("Jane Doe") when this was written.
 
 ## See Also
 

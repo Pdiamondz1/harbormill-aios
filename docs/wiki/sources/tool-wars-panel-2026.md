@@ -79,10 +79,31 @@ context and is high-confidence but not certain. Proper nouns were mangled in pla
   POC works: clients must see it running in their own business, and it triggers demand — ship
   one agent and they come back with thirteen more.
 
-## Contradiction with current Harbormill pricing
+## ⚠ Verification note (2026-07-15) — read before citing any price below
 
-Flagged, not silently resolved — the number is the founder's to set. The panel prices the
-entry rung far above [[The Harbormill Ladder]]:
+The pricing comparison in this section **did not survive primary-source verification** and
+must not be used as market evidence. See
+`docs/vetting/2026-07-15-harbormill-entry-rung-reprice/` for the full audit.
+
+- **These are audience rents, not market rates.** Medin has ~204k YouTube subscribers;
+  Ebbelaar ~257k. Their prices include trust their audiences already granted them —
+  unavailable to an unknown operator by definition.
+- **None of the three prices could be independently verified.** n=3, self-reported, from a
+  stage, where stating a high price is itself marketing.
+- **The primary data points the opposite way.** More than half of firms expect to spend
+  ≤$200/employee/year on AI (Atlanta Fed 2026); Ramp's median across 70k+ businesses is
+  $11.38/employee/month. A ~40-person firm's *entire* annual AI budget is ~$1k–$8k, so a
+  $10–20k build is multiples of the whole pocket, not a line item in it.
+- **What survives is the direction, not the level:** training demand rising is corroborated
+  (there is less incentive to misreport mix than price). The dollar figures are not.
+
+The resolution — hourly retired, audit kept at $500–$2,500 as a *screen*, sub-$10k build
+ceiling kept deliberately — is recorded in [[The Harbormill Ladder]] § Key Decisions.
+
+## Contradiction with current Harbormill pricing (as it appeared before verification)
+
+Retained for the audit trail. **Superseded by the note above** — do not cite these as
+benchmarks. The panel appears to price the entry rung far above [[The Harbormill Ladder]]:
 
 | Tier | Panel | Harbormill |
 |---|---|---|
