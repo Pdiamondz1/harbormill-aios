@@ -1,5 +1,43 @@
 # Wiki Log
 
+## [2026-07-15] resolution | Hourly retired — the ladder holds, the evidence for repricing didn't
+
+Closes the "Rung 1 is hourly" flag (opened 2026-06-24) — but not the way the [[Tool Wars Panel 2026]]
+ingest suggested. The panel appeared to show Harbormill pricing its entry rung 25–200x under market.
+An adversarial roast (5 personas) and a storm-research pass (5 lenses + 6 verification agents,
+**27 claims checked: 9 false or unsourced, 12 corrected, 6 clean, 5 demoted for undisclosed conflict
+of interest**) took that apart.
+
+**What was wrong:** the panel is audience rent (Medin ~204k subs, Ebbelaar ~257k) and none of its three
+prices could be independently verified. The whole "productize and raise your fees" literature traces to
+a vendor selling fee coaching *to consultants*, sample selected on the outcome variable, **independent
+corroboration: none found**. Price→perceived-quality is r=.286 and *weakest for services* (Völckner &
+Hofmann 2007). The "$18k median SMB AI spend" figure is **fabricated** — unsourced and self-attributed.
+
+**What decided it:** primary data. >half of firms expect ≤$200/employee/year on AI (Atlanta Fed 2026);
+Ramp's median across 70k+ businesses is $11.38/employee/month; Census: *"AI use increased among firms
+with at least 20 employees but didn't change significantly among firms with fewer than 20 employees."*
+A ~40-person firm's whole annual AI budget is ~$1k–$8k — so the AI budget is the wrong pocket, and the
+rule is **sell against the labour line** (a $4,500/mo hire not made), never the AI budget.
+
+**Decisions:** hourly retired — not because $100 was low but because hours are the wrong *unit* and a
+fixed price forces a defined deliverable. Not replaced by a workshop tier; the audit already is the
+entry. Audit kept at $500–$2,500 credited — it works by **screening**, not commitment (Ashraf, Berry &
+Shapiro 2010, *AER*), so the fee filters rather than earns; raising *or* freeing it were both wrong.
+Sub-$10k build ceiling kept deliberately (single signature). **No outcome guarantees** — fails as a
+signal for a solo, doesn't transfer to a credence good, and inverts adverse selection.
+
+**The constraint was never price.** Ten independent attacks, including both bulls, converged on
+distribution. `docs/gtm/warm-50-tracker.md` still holds only "Jane Doe".
+
+Source: `docs/vetting/2026-07-15-harbormill-entry-rung-reprice/` (roast-verdict.md + briefing.html).
+Pages updated: [[The Harbormill Ladder]] (Rung 1 removed; 4 Key Decisions added; Flag → resolved),
+[[Tool Wars Panel 2026]] (verification note — its price table is superseded, do not cite),
+`docs/PROJECT_CONTEXT.md` §8 (canonical ladder + labour-line rule + decisions on the record),
+`website/src/config/site.ts` (ladder rung removed — the subtitle already told a 3-rung story),
+`docs/gtm/field-guide/03-run-the-call.md` (hourly fallback removed; labour-line framing added).
+Wiki still 47 pages.
+
 ## [2026-07-15] ingest | What Actually Matters in AI Right Now (Matt Wolfe × Nate, AIS LIVE)
 
 Ingests a 33-min Hyperagent fireside chat (GA Access, Day 2, published 2026-07-13) between Matt
@@ -52,6 +90,46 @@ risk), [[Four-Condition Loop Test]] (external corroboration), [[The Harbormill L
 (discovery-commoditizing flag), [[Education-First Philosophy]] (promoted to primary defense),
 [[Independent Verification]] (multi-lab judge open question), index.md (1 source, 1 concept, 1
 analysis summary).
+
+## [2026-07-15] ingest | Tool Wars Panel — what actually makes money in 2026
+
+Ingest of a 36-min Hyperagent panel (published 2026-07-13, share expires ~2026-07-24) in which
+**Devin Kearns** (CustomAI Studio), **Dave Ebbelaar** (Datalumina) and **Cole Medin**
+(oTTomator), moderated by **Russ Henneberry**, describe what clients are buying and what they
+charge. Answers the founder's question — *can Harbormill build a sound, scalable business
+around this?* — with: **the strategy is corroborated, the pricing is not.**
+
+Three practitioners independently describe [[The Harbormill Ladder]] (workshop → blueprint →
+project → retainer), report training demand overtaking build demand (Medin: ~80% of his work
+now training), and confirm de-risking decides deals at signature — Kearns lost a deal pitching
+AI transformation to a vendor offering plain Claude enablement. But all three sell the entry
+rung as a **fixed-price product** at **$5k–$20k**, versus Harbormill's **$100/hr**; Ebbelaar
+opens with a **$10–20k** fixed 2–4 week prototype versus Harbormill's $2.5–10k project. Only
+the retainer band lines up. This closes the evidence gap on the pre-existing "Rung 1 is
+hourly" flag (recorded 2026-06-24 from literature alone). Founder confirmed the $100/hr was a
+**default, not a deliberate loss-leader**. Flagged, not silently rewritten — the number is the
+founder's to set, and the panel's prices are backed by public audiences and case studies that
+`docs/gtm/case-studies/` does not yet have.
+
+Two secondary findings worth acting on separately: (1) Ebbelaar reports the easy AI use cases
+are now commoditized into tools clients already own — a caution for generic-by-design product
+positioning ([[Harbormill AIOS]]); (2) all three have deprioritized semantic RAG for
+single-client knowledge bases, with Medin putting the crossover near **10,000 documents** —
+below that, agentic markdown navigation wins. The wiki is 46 pages, so [[Knowledge & RAG]] /
+[[Wiki-to-Aria Sync]] may be over-engineered for [[Aria]]'s actual corpus.
+
+Method note: no captions or transcript existed and the share had downloads disabled, so audio
+was captured from playback (VB-Audio Virtual Cable; Stereo Mix is a phantom endpoint on this
+hardware) and transcribed with the new `scripts/transcribe-media.mjs` (PR #39). Whisper does
+not diarize — **speaker attribution is inferred from context**, high-confidence but not
+certain.
+
+Source: `docs/wiki/raw/external/tool-wars-panel-2026.md` (gitignored, local-only).
+Pages created: [[Tool Wars Panel 2026]] (source).
+Pages updated: [[The Harbormill Ladder]] (Flag — corroborated with prices + founder
+confirmation), [[Education-First Philosophy]] (practitioner corroboration section),
+index.md (+1 source entry). Wiki now 47 pages.
+
 
 ## [2026-06-24] ingest | Session-end — Independent verification & loop memory
 

@@ -3,6 +3,7 @@
 ## Sources
 
 - [[Project Context]](sources/project-context.md) — Harbormill identity, strategy, architecture, and operating instructions (2026-06-17)
+- [[Tool Wars Panel 2026]](sources/tool-wars-panel-2026.md) — Hyperagent panel (Kearns/Ebbelaar/Medin, moderated by Henneberry) on what clients buy in 2026; training demand surge, RAG deprioritized (2026-07-13). **Its price table is superseded — do not cite.**
 - [[What Actually Matters in AI Right Now (2026)]](sources/what-actually-matters-in-ai-2026.md) — Matt Wolfe × Nate (AIS LIVE, Hyperagent); corroborates the loop thesis and reveals the frontier labs shipping it natively
 
 ## Entities
