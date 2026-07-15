@@ -14,7 +14,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "sync:wiki": "node scripts/sync-wiki.mjs",
-    "setup:client": "node scripts/setup-client.mjs"
+    "setup:client": "node scripts/setup-client.mjs",
+    "transcribe": "node scripts/transcribe-media.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
