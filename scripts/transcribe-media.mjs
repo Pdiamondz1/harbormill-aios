@@ -28,6 +28,25 @@
 // unattributed stream of text — speakers must be inferred from context. If
 // attribution matters, use a service with speaker labels (AssemblyAI, Deepgram).
 //
+// Capturing audio that only streams (Windows):
+//   Stereo Mix is a trap on some hardware — the Conexant ISST driver enumerates
+//   it in both DirectShow and WASAPI, and the Sound panel shows it enabled with
+//   jack info, but it never opens: dshow reports "could not find output pin" and
+//   WASAPI returns AUDCLNT_E_DEVICE_IN_USE (0x8889000a) at every format. It is a
+//   phantom endpoint. Don't burn time on it; install VB-Audio Virtual Cable.
+//
+//   Route just the source app (Settings → System → Sound → Volume mixer → <app>
+//   → Output device → CABLE Input) rather than the whole system — notifications
+//   then stay out of the recording. To hear it while capturing, tick Listen on
+//   CABLE Output. Then:
+//     ffmpeg -thread_queue_size 1024 -f dshow \
+//       -i "audio=CABLE Output (VB-Audio Virtual Cable)" \
+//       -t <seconds> -c:a pcm_s16le out.wav
+//
+//   Always verify signal before a long capture — a silent take looks like a
+//   successful one until it transcribes to nothing:
+//     ffmpeg -i out.wav -af volumedetect -f null -    # speech ≈ -25 dB mean
+//
 // Raw transcripts of third-party material belong in docs/wiki/raw/external/,
 // which is gitignored on purpose — summarize into docs/wiki/sources/ instead of
 // committing someone else's content verbatim.
@@ -266,8 +285,14 @@ async function main() {
     }
 
     if (!segments.length) {
-      console.error("\nNo transcript produced. If the capture was silent, check that audio was");
-      console.error("routing to Stereo Mix and the output device was not muted.");
+      // Whisper returns zero segments for silence *and* for non-speech audio, so
+      // "no output" alone doesn't tell you which. Check the level before assuming
+      // the capture failed — music-only intros transcribe to nothing too.
+      console.error("\nNo transcript produced — the audio held no recognizable speech.");
+      console.error("Check whether it was actually silent:");
+      console.error(`  ffmpeg -i "${INPUT}" -af volumedetect -f null -`);
+      console.error("mean_volume near -91 dB means silence (check routing/mute). A healthy");
+      console.error("level with no transcript means the audio had no speech in it.");
       process.exit(1);
     }
 
