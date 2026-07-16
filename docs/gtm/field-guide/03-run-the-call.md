@@ -8,11 +8,21 @@
 > this file is the deeper toolkit for doing exactly that — for **any** pain, not just the three
 > loops the script already listens for.
 
-This is file 3 in the [Field Guide](00-index.md). Where this and `docs/gtm/` ever disagree on
-pricing, **`docs/gtm/` wins.** Pricing used here: Loop Audit **$500–$2,500** (fee fully credited),
-Focused Project **$5,000** fixed (audit credited, 50/50), Retainer **Operate $3,000 / Operate+Build
-$5,000 / Embedded $8–10k** — all from [`../retainer-tiers.md`](../retainer-tiers.md) and
+This is file 3 in the [Field Guide](00-index.md). **Jurisdiction:** `docs/PROJECT_CONTEXT.md` §8
+owns the ladder and every published price; `docs/gtm/` (this file included) owns **call
+mechanics** — scripts, objection handling, payment terms, retainer-tier structure. Where those
+disagree on *mechanics*, `docs/gtm/` wins; where they disagree on a *price*, **§8 wins.**
+
+Mechanics used here: fee fully credited on the audit; 50/50 on the project; Retainer tiers
+**Operate $3,000 / Operate+Build $5,000 / Embedded $8–10k** — from
+[`../retainer-tiers.md`](../retainer-tiers.md) and
 [`../project-proposal-template.md`](../project-proposal-template.md).
+
+> **⚠️ Price discrepancy to resolve (2026-07-16).** This file and `docs/gtm/` describe the
+> **Focused Project as `$5,000` fixed**, but the canonical §8 ladder (rewritten by PR #39) lists it
+> as **`$2,500–$10,000`**. Both are live. This is a pricing decision, not a docs fix — surfaced
+> here, deliberately **not** silently reconciled. Until it's settled, quote the §8 range on a call.
+> The Audit (**$500–$2,500**, fee credited) is unaffected — both sources agree.
 
 ---
 
@@ -216,10 +226,20 @@ lose. The price is justified when the **problem is costly enough that the return
 audit is the qualifier:
 
 - Prize is multiples of the fee → no-brainer; press toward the build.
-- Business too small for the math to clear → the **$100/hr consulting or the audit itself** is the
-  right door, not a retainer. **Qualifying out is part of the system, not a failure** — it protects
-  your time and your proof. (Mirrors the BANT-lite budget check in the
-  [intro-call script](../intro-call-script.md).)
+- Business too small for the math to clear → **the audit is the only door**, not a retainer, and
+  "AI is the wrong answer for you right now" is a legitimate audit finding. **Qualifying out is part
+  of the system, not a failure** — it protects your time and your proof. (Mirrors the BANT-lite
+  budget check in the [intro-call script](../intro-call-script.md).) There is no hourly rung to fall
+  back to: hourly was retired 2026-07-15, and the paid audit is what does this job — its fee exists
+  to *screen*, not to earn.
+
+**Never price into their "AI budget."** More than half of firms expect to spend ≤$200/employee/year
+on AI (Atlanta Fed 2026) — a 40-person business has a *total* AI budget of roughly $1k–$8k, so any
+real build is several multiples of the whole pocket and the answer is no before you finish the
+sentence. Price against the **labour line** instead: the part-time hire they didn't make, the 15
+hrs/week of retyping, the collections person they keep almost hiring. Against a $4,500/mo hire, a
+$2,500/mo retainer is cheap. Same number, 20x deeper pocket. The worksheet above already computes
+this — it lands in the labour pocket, so say so out loud.
 
 > **The throughline:** you're not selling software hours — you're selling **cash recovered and hours
 > back, with proof.** Price to the value; justify with *their* number. If the number is big and the

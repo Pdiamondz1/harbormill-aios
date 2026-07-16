@@ -74,9 +74,40 @@ to stakeholders. This is sales data, not client data.
   per-opportunity gate and a "build-first" recommendation. See
   `docs/loop-audit-playbook.md`.
 
+## The audit computes the number value pricing needs (2026-07-15)
+
+**Harbormill's conclusion, not a source's claim.** Recorded from
+[[Ditching Hourly (Jonathan Stark, 2026)]].
+
+[[Value-Based Pricing]] prices work as a percentage of the client's **first-year value** (~10%
+floor; three options at ~10/25/50%). Its hard step is obtaining that value number at all — the
+prescribed answer is a skilled interview, which is exactly the skill most operators lack and
+which produces a figure nobody can check afterwards.
+
+**This audit already computes it.** `audit_opportunities.annual_value_cents` is a scored,
+sourced, per-opportunity annual value — structurally the same input the formula multiplies.
+Two consequences:
+
+- **A project price can be derived from the audit's own number** rather than any fixed figure on
+  the ladder. Not proposed as a change here — the ladder's published prices are canon in
+  [[Project Context]] §8, and the entry-rung reprice was already settled on PR #39 (hourly
+  retired, prices unchanged); this is a separate idea about how the project rung could be priced.
+- **The estimate gets checked.** The promised-vs-delivered reconciliation (spec
+  `2026-06-22-aios-outcome-edition-design.md`, `value_events_audit_link`) compares the audit's
+  promise against delivered `value_events`. Most consultants talk their way to a value number and
+  never revisit it; this one is falsifiable after the fact.
+
+That combination — compute the value, price off it, then prove it — is a structural advantage
+this tool already has and the GTM material does not yet use.
+
+**Flag:** the same spec prices a $10K project against a claimed $320K/yr of value (~3%, under a
+third of the 10% floor). Recorded on [[Value-Based Pricing]]; not repriced.
+
 ## See Also
 
 - [[The Harbormill Ladder]]
+- [[Value-Based Pricing]]
+- [[Ditching Hourly (Jonathan Stark, 2026)]]
 - [[Four-Condition Loop Test]]
 - [[Access Model]]
 - [[AIOS Pages]]

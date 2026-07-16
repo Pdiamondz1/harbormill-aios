@@ -2,14 +2,16 @@
 
 ## Sources
 
+- [[Ditching Hourly (Jonathan Stark, 2026)]](sources/ditching-hourly-jonathan-stark.md) — Jonathan Stark × Nate (AIS LIVE, Hyperagent); why hourly is the wrong unit, and the percentage-of-value pricing formula
 - [[Project Context]](sources/project-context.md) — Harbormill identity, strategy, architecture, and operating instructions (2026-06-17)
 - [[The Client Didn't Ask for AI (2026)]](sources/the-client-didnt-ask-for-ai-2026.md) — Amy Simpson (AIS LIVE Day 2, Hyperagent); her best-paid build is one the Loop Audit's gate could never surface — a scope flag, not a reprice
+- [[Tool Wars Panel 2026]](sources/tool-wars-panel-2026.md) — Hyperagent panel (Kearns/Ebbelaar/Medin, moderated by Henneberry) on what clients buy in 2026; training demand surge, RAG deprioritized (2026-07-13). **Its price table is superseded — do not cite.**
 - [[What Actually Matters in AI Right Now (2026)]](sources/what-actually-matters-in-ai-2026.md) — Matt Wolfe × Nate (AIS LIVE, Hyperagent); corroborates the loop thesis and reveals the frontier labs shipping it natively
 
 ## Entities
 
 - [[AI Providers]](entities/ai-providers.md) — Anthropic (claude-sonnet-4-6, chat) + OpenAI (text-embedding-3-small, RAG); per-client keys
-- [[Aria]](entities/aria.md) — The operator's AI co-pilot; pluggable tool registry in assistant-chat/tools.ts
+- [[Aria]](entities/aria.md) — The operator's AI co-pilot; streaming "Donny-grade" engine (PR #21) + pluggable tool registry; Gmail/Calendar tools designed (M2a)
 - [[Damon Williams]](entities/damon-williams.md) — Founder & AI Solutions Engineer; 15 yrs enterprise IT; education-first
 - [[Edge Functions]](entities/edge-functions.md) — The Deno functions: report-ingest, assistant-chat, knowledge-sync, google-workspace-proxy + the scheduled loops connector-sync & kpi-watch
 - [[Google Workspace Bridge]](entities/google-workspace-bridge.md) — Per-user OAuth gateway to Drive/Sheets; tokens stay server-side
@@ -23,7 +25,7 @@
 - [[AI Tool Registry]](concepts/ai-tool-registry.md) — Aria's pluggable TOOLS array in assistant-chat/tools.ts; six tools, add by appending
 - [[AIOS App Shell]](concepts/aios-app-shell.md) — Front-end: React Router, AppLayout, AuthContext, ProtectedRoute, env-only client, data hooks
 - [[AIOS Pages]](concepts/aios-pages.md) — The user-facing surfaces: Overview, Briefings, Findings, Strategy, Assistant, Workspace, Login
-- [[Assistant Chat Loop]](concepts/assistant-chat-loop.md) — Aria's agentic loop: history, 8 tool rounds, model, injection defense, cost logging
+- [[Assistant Chat Loop]](concepts/assistant-chat-loop.md) — Aria's agentic loop: NDJSON streaming, tool-aware memory + pairing-repair, 12 tool rounds + "answer now" fallback, extended thinking, action chips (PR #21)
 - [[Build & Verification Gate]](concepts/build-and-verification-gate.md) — npm scripts + CI (Node 22, npm install vs ci/EBADPLATFORM); Deno excluded
 - [[Calendly Booking Flow]](concepts/calendly-booking-flow.md) — Free 30-min intro via Calendly (Google Meet); popup + inline embed; lead funnel
 - [[Connector Library]](concepts/connector-library.md) — Managed pg_cron + connector-sync runtime that pulls SaaS data (Stripe first) into metric_snapshots on an hourly schedule
@@ -47,6 +49,7 @@
 - [[Strategy Knowledge Library]](concepts/strategy-knowledge-library.md) — documents table + Strategy page; the human-authored side feeding Aria's RAG
 - [[Testing Setup]](concepts/testing-setup.md) — Vitest + testing-library + jsdom; one brand-contract test today; harness ready
 - [[The Harbormill Ladder]](concepts/harbormill-ladder.md) — Land-and-expand engagement + pricing ladder; externally benchmarked
+- [[Value-Based Pricing]](concepts/value-based-pricing.md) — Price the outcome, not the effort: cost/value/price anchors, the why conversation, price as ~10-50% of first-year value in three options; the audit computes the input
 - [[White-Label Architecture]](concepts/white-label-architecture.md) — One config (brand.ts + CSS vars) rebrands everything; per-client clone
 - [[Wiki-to-Aria Sync]](concepts/wiki-to-aria-sync.md) — `npm run sync:wiki` loads docs/wiki/ into Aria's RAG via knowledge-sync; idempotent; sb_secret_ key on new projects
 

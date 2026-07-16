@@ -22,16 +22,21 @@ truth): product-forward hero with a live-looking AIOS deck preview, a
 Nike/Assurant/IAA credibility strip, the [[Education-First Philosophy]] strip, a
 problem section, an **interactive AIOS demo tour** (Overview → Briefing → Ask
 Aria, backend-free, seed data), six service cards, [[The Harbormill Ladder]], a
-**Loop Audit offer section** (`#loop-audit`, after the Ladder — the public pitch
+**Audit offer section** (`#audit`, after the Ladder — the public pitch
 for the paid [[Four-Condition Loop Test]] deliverable: the four-condition method
-as a 4-card grid, a "what you receive" deliverable card, and a "Book a Loop Audit"
+as a 4-card grid, a "what you receive" deliverable card, and a "Book an Audit"
 Calendly CTA), About (founder), FAQ, a free-guide email opt-in, an inline
 **Calendly** booking (free 30-min intro, Google Meet), and the footer.
 
-The nav order is Services · AIOS · Loop Audit · Ladder · About · FAQ. Note the
-public pricing copy never uses the internal word "Rung" (see [[The Harbormill
-Ladder]]) — tiers are shown by name ("Paid audit") or a numeric badge, and the
-Loop Audit price pill reads simply `$500–$2,500 · fixed scope`.
+The nav order is Services · AIOS · Audit · Ladder · About · FAQ.
+
+**Client-facing names vs. internal vocabulary.** Two words never reach the public copy:
+**"Rung"** (tiers show by name or numeric badge) and **"Loop Audit"** — the site says
+**"Audit"** (2026-07-16). Prospects don't know what a Loop is, and the offer shouldn't ask
+them to learn one to read a price. The section anchor is `#audit` (the fragment shows in the
+URL). Internal identifiers keep the full name: the `site.loopAudit` config key,
+`website/src/sections/LoopAudit.tsx`, `docs/gtm/`, the `loop-audit` skill, and this wiki. Only
+*rendered copy* changes. The Audit price pill reads `$500–$2,500 · fixed scope`.
 
 ## Trust strip — "Automation you can leave running"
 

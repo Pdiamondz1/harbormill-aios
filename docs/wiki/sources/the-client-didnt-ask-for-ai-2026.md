@@ -88,14 +88,15 @@ customer signal.
    a loop.
 
 2. **Her pricing advice is not the missing evidence, and must not be spent as if it were.** It
-   points the same way as the unmerged PR #40 (retire the hourly anchor, price to value) — but
-   it is the **same class of evidence already judged insufficient**: one practitioner, speaking
-   to practitioners, about her own book. PR #39's roast returned RESHAPE and storm-research
-   found the supporting evidence absent precisely because *customer* evidence was missing, and
-   `docs/gtm/case-studies/` is still empty. This page adds a second agency owner agreeing with
-   the first; it does not add a buyer. Do not treat it as resolving #39 vs #40. Consistent with
-   the standing rule on [[The Harbormill Ladder]] — deliberately not edited here, as both open
-   PRs rewrite it.
+   points the same way as the 2026-07-15 reprice (retire the hourly anchor, price to value) —
+   but it is the **same class of evidence already judged insufficient**: one practitioner,
+   speaking to practitioners, about her own book. PR #39's roast returned RESHAPE and
+   storm-research found the supporting evidence absent precisely because *customer* evidence was
+   missing, and `docs/gtm/case-studies/` is still empty. That reprice resolved the way it did on
+   exactly this basis — PR #39 retired hourly but raised no price, and PR #40 (which *did* raise
+   prices) was closed. This page adds a second agency owner agreeing on direction; it does not
+   add a buyer, so it changes nothing. Consistent with the standing decisions on
+   [[The Harbormill Ladder]] — deliberately not edited here.
 
 3. **Her headline thesis does not transfer — applying it literally would be a category error.**
    Her argument, in our words: *don't become an AI company; apply AI to the non-AI services you

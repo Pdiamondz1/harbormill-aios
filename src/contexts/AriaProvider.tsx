@@ -7,7 +7,7 @@ import type { AriaStage } from "@/types/aria";
 // floating panel and the full-page Assistant share one live conversation
 // (messages, optimistic pending turn, thinking state).
 export function AriaProvider({ children }: { children: ReactNode }) {
-  const { messages, pending, sendMessage, isThinking, error } = useAssistant();
+  const { messages, pending, sendMessage, isThinking, error, streamingText, statusLabel, actions } = useAssistant();
   const [stage, setStage] = useState<AriaStage>("closed");
 
   const open = useCallback(() => setStage("tray"), []);
@@ -33,6 +33,9 @@ export function AriaProvider({ children }: { children: ReactNode }) {
     pending,
     isThinking,
     error,
+    streamingText,
+    statusLabel,
+    actions,
     sendMessage,
     sendAndOpen,
   };
