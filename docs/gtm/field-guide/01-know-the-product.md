@@ -214,7 +214,13 @@ from §3, made concrete.
 ## 7. References
 
 - **`docs/PROJECT_CONTEXT.md`** — the single source of truth for Harbormill's identity, strategy,
-  architecture keystones, and the engagement ladder. Read this first if you only read one thing.
+  architecture keystones, and **the engagement ladder and its prices** (§8). Read this first if you
+  only read one thing. *Jurisdiction:* §8 owns the ladder and every published price; `docs/gtm/`
+  owns **call mechanics** — scripts, objection handling, payment terms, retainer-tier structure.
+  Neither overrides the other; they cover different things. Where a `docs/gtm/` file quotes a
+  price, it must match §8. (Before 2026-07-16 both claimed blanket source-of-truth, which is how
+  the field guide and §8 came to quote different Focused-Project prices — see the flag in
+  `03-run-the-call.md`.)
 - **`docs/wiki/`** — the knowledge wiki. Most relevant here:
   `concepts/four-condition-loop-test.md`, `concepts/kpi-watch.md`, `concepts/report-ingest-seam.md`,
   `concepts/aios-pages.md`, and `entities/aria.md`. Query or extend it with the `wiki-ops` skill.

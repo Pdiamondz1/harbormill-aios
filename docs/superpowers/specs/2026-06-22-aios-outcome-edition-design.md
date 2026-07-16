@@ -2,8 +2,14 @@
 
 ## Context
 
-**Why this exists.** Harbormill wants an AIOS product it can sell as a **$10K project + $2,500/mo
-retainer** that delivers **8× value** ($320K/yr) to **$3–10M-revenue SMBs**. Today's AIOS deck is a
+> **Pricing corrected 2026-07-15 — do not use this spec's original numbers.** An earlier draft of
+> this section proposed a **$10K project + $2,500/mo retainer**. The retainer figure was wrong and
+> is superseded; see "Pricing" below. The $10K project price stands. Canon for the ladder and its
+> prices is [`docs/PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md) §8; `docs/gtm/` owns call
+> mechanics. This spec introduces **no new tier** — it targets an existing published one.
+
+**Why this exists.** Harbormill wants an AIOS product it can sell as a **$10K project + the
+Embedded retainer ($8–10k/mo)** to **$3–10M-revenue SMBs**. Today's AIOS deck is a
 **visibility layer** — it reads data and displays it, including an already-built **Value Delivered /
 ROI surface**. What it cannot do is *take action in the world* to actually produce that value. This
 spec adds the missing half: a **Loop Engine** that runs hard-dollar automation loops on a cadence,
@@ -42,6 +48,51 @@ Value page, reconciled against what was promised at the audit.
 
 **Out of scope (follow-on specs, same pattern):** lead-intake loop, renewal/re-engagement loop,
 external CRM *write* connectors, **auto-send mode** (approve-first ships first), webhook ingestion.
+
+## Pricing (corrected 2026-07-15)
+
+**$10K project + Embedded retainer ($8–10k/mo)** — both inside the published ladder. No new tier.
+
+### Why the original $2,500/mo was wrong
+
+The draft's headline — *"8× value ($320K/yr)"* — was computed against **first-year total** cost:
+$10K project + ($2,500 × 12) = $40K, and 8 × $40K = $320K. Internally consistent, but it blends a
+one-time fee into an ongoing ratio, which **hides the steady-state number**. From year two on the
+project fee is gone:
+
+| | Fee | Value | Multiple |
+|---|---|---|---|
+| Year 1 (as drafted) | $40K | $320K | 8× |
+| **Year 2+ (as drafted)** | **$30K/yr ($2,500/mo)** | **$320K** | **10.7×** |
+| Year 2+ (corrected) | $96–120K/yr ($8–10k/mo) | $320K | **2.7–3.3×** |
+
+`docs/gtm/retainer-tiers.md` sets the health metric at **≥3× the monthly fee**. At $2,500/mo the
+steady-state multiple is **10.7× — roughly 3.5× below what our own target permits.** To land at 3×,
+the fee is ~$8,900/mo; at a comfortable 4×, ~$6,700/mo. Either lands in **Embedded ($8–10k/mo)**.
+
+Two further tells that the original number was picked for what felt sellable rather than off the
+client's prize — the exact hourly-brain habit [[The Harbormill Ladder]]'s 2026-07-15 decision
+removed from the rest of the business:
+
+- **$2,500/mo sits *below* the $3,000 Operate floor** — the cheapest published tier — while serving
+  our *largest* clients ($3–10M revenue) and delivering our *highest* value. The biggest client
+  would have paid the least per month.
+- **$10K against $320K/yr is payback in ~11 days.** The Field Guide sells payback *in weeks*. If
+  either half of this was mispriced, it was never the project fee.
+
+### Why the $10K project price stands
+
+At zero published case studies, the project's job is **proof**, not margin — a fixed, obviously-fair
+price maximizes shipped-and-provable wins. The retainer is where value compounds, so that is where
+the correction belongs.
+
+### Gate before selling this
+
+This spec is **unshipped**, and the $3–10M-revenue segment cannot be sold Embedded on an empty
+proof page (`website/src/config/site.ts` → `caseStudies` currently reads "Publishing soon" ×2).
+**Do not publish this as a second model.** Sell the standard ladder, bank two case studies with real
+reconciled ROI, then revisit — at which point the promised-vs-delivered reconciliation below is
+exactly the artifact that earns the Embedded ask.
 
 ## Architecture
 
@@ -143,7 +194,8 @@ totals the `/value` page reads — add a `reconciliation` object rather than int
 the page must also call) to compute, for the won audit: **promised** (sum of
 `audit_opportunities.annual_value_cents`) vs **delivered** (sum of linked `value_events`).
 Surface on `/value` (`Value.tsx`) as: *"Promised at audit: $X/yr · Delivered to date: $Y · Z% of
-promise"*. This makes the 8× claim a reconciled fact, not a brochure number.
+promise"*. This turns the value multiple into a reconciled fact rather than a brochure number — and
+it is what makes the Embedded ask defensible at renewal (see Pricing).
 
 ## Security / RLS
 - `loops`, `loop_actions`, `ar_invoices`: admin-only RLS using existing `is_admin()` / `has_role`
