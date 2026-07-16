@@ -1,5 +1,285 @@
 # Wiki Log
 
+## [2026-07-15] ingest | Ditching Hourly (Jonathan Stark × Nate, AIS LIVE)
+
+Ingests a 47:40 Hyperagent session (GA Access, Day 2, published 2026-07-13): Jonathan Stark — a
+pricing specialist of 20 years — presenting to AI agency owners, Nate hosting. Fills the last of
+the three transcript gaps named on [[Media Ingest]].
+
+Unlike the sibling sessions this is **methodology, not market signal** — it makes no claim about
+what SMBs pay. Two things it settles, one it doesn't.
+
+**Settles: hourly is the wrong _unit_, not a low number.** The argument is incentive inversion —
+at one blended rate a slow worker out-earns a fast one for identical output, so you're paid more
+for being worse. Stronger than the coherence argument already in `docs/gtm/`, and it lands
+hardest here because Harbormill **sells the elimination of billable hours**. Corroborates the
+hourly retirement; changes nothing else.
+
+**Adds, genuinely new: the formula.** Price as a percentage of the client's first-year value —
+~10% floor, then exactly three *incremental* options at ~10/25/50% (steers to the middle), with
+**scope chosen last**. Plus the cost/value/price anchors (cost = seller's floor, value = buyer's
+ceiling) and the why-this/why-now/why-me conversation. Filed as [[Value-Based Pricing]]. Our
+Field Guide §4 had independently reached "make the problem cost more than the price before naming
+it" and payback-in-weeks; what it lacked was the percentage formula and the three-option proposal.
+
+**Doesn't settle — and is flagged, not resolved:** the method implies **no published rate card at
+all** (price is derived per client, live), yet the ladder publishes fixed prices. Likely
+resolution is that **the published ladder is the door, not the price** — recorded as a hypothesis
+on [[The Harbormill Ladder]]. Consequence: arguments about the published entry-rung number are
+arguments about the *door*. **Deliberately kept separate from** the entry-rung reprice under
+review on PR #39 / PR #40, same discipline as the Wolfe ingest.
+
+**The Harbormill conclusion (ours, not the source's):** the method's hard step is getting a
+credible value number, and the [[ROI-Discovery Audit]] **already computes it** —
+`audit_opportunities.annual_value_cents` is structurally the input the formula multiplies, and
+the promised-vs-delivered reconciliation then checks it. Compute the value, price off it, prove
+it afterwards. Recorded on [[ROI-Discovery Audit]] and [[Value-Based Pricing]].
+
+**Flag raised, not acted on:** `2026-06-22-aios-outcome-edition-design.md` prices a $10K project
+against a claimed $320K/yr of value — ~3%, under a third of the 10% floor. By this method **both
+halves are underpriced**, not just the retainer corrected earlier today on PR #40. Not repriced.
+Also corroborates the $3–10M-revenue targeting: value pricing caps small clients by design, and
+the stated soloist scale path is bigger clients for the same expertise.
+
+Method note: no captions or transcript existed and downloads were disabled, so audio was captured
+from playback (VB-Audio Virtual Cable) and transcribed with `scripts/transcribe-media.mjs`
+(whisper-1, 4 chunks, 89 blocks, 47,193 chars, 0 errors, ~$0.29). Signal gate passed at
+**mean_volume −24.2 dB** across the full 48:19. Whisper does not diarize — **speaker attribution
+is inferred from context** (two speakers, so easier than a panel, but not certain); nobody watched
+the video. **New failure mode recorded on [[Media Ingest]]:** the player was muted with volume at
+zero and the page held three `<video>` elements, only one live — routing was already correct and
+the capture would still have been 48 minutes of silence. Raw transcript stays local-only in
+`raw/external/` (both guards now on `main` as of PR #41).
+
+**Publication policy applied** per [[Media Ingest]]: gated paid content in a public repo, so the
+pages carry **Harbormill's conclusions in Harbormill's own words — no verbatim quotes, no
+blow-by-blow**. **Open item unchanged:** the sibling *Tool Wars* source page on the unmerged
+PR #39 branch still carries quoted pricing and has been public since 2026-07-15 — apply the same
+rule before it merges.
+
+Source: `docs/wiki/raw/external/ditching-hourly-jonathan-stark.md` (local-only).
+Pages created: [[Ditching Hourly (Jonathan Stark, 2026)]] (source), [[Value-Based Pricing]]
+(concept).
+Pages updated: [[The Harbormill Ladder]] (third flag — no-published-ladder tension, hourly
+corroborated, downmarket caution), [[ROI-Discovery Audit]] (the audit computes the value input +
+underpriced-spec flag), [[Media Ingest]] (third gap filled; muted-player failure mode), index.md
+(+1 source, +1 concept).
+
+## [2026-07-15] resolution | Hourly retired — the ladder holds, the evidence for repricing didn't
+
+Closes the "Rung 1 is hourly" flag (opened 2026-06-24) — but not the way the [[Tool Wars Panel 2026]]
+ingest suggested. The panel appeared to show Harbormill pricing its entry rung 25–200x under market.
+An adversarial roast (5 personas) and a storm-research pass (5 lenses + 6 verification agents,
+**27 claims checked: 9 false or unsourced, 12 corrected, 6 clean, 5 demoted for undisclosed conflict
+of interest**) took that apart.
+
+**What was wrong:** the panel is audience rent (Medin ~204k subs, Ebbelaar ~257k) and none of its three
+prices could be independently verified. The whole "productize and raise your fees" literature traces to
+a vendor selling fee coaching *to consultants*, sample selected on the outcome variable, **independent
+corroboration: none found**. Price→perceived-quality is r=.286 and *weakest for services* (Völckner &
+Hofmann 2007). The "$18k median SMB AI spend" figure is **fabricated** — unsourced and self-attributed.
+
+**What decided it:** primary data. >half of firms expect ≤$200/employee/year on AI (Atlanta Fed 2026);
+Ramp's median across 70k+ businesses is $11.38/employee/month; Census: *"AI use increased among firms
+with at least 20 employees but didn't change significantly among firms with fewer than 20 employees."*
+A ~40-person firm's whole annual AI budget is ~$1k–$8k — so the AI budget is the wrong pocket, and the
+rule is **sell against the labour line** (a $4,500/mo hire not made), never the AI budget.
+
+**Decisions:** hourly retired — not because $100 was low but because hours are the wrong *unit* and a
+fixed price forces a defined deliverable. Not replaced by a workshop tier; the audit already is the
+entry. Audit kept at $500–$2,500 credited — it works by **screening**, not commitment (Ashraf, Berry &
+Shapiro 2010, *AER*), so the fee filters rather than earns; raising *or* freeing it were both wrong.
+Sub-$10k build ceiling kept deliberately (single signature). **No outcome guarantees** — fails as a
+signal for a solo, doesn't transfer to a credence good, and inverts adverse selection.
+
+**The constraint was never price.** Ten independent attacks, including both bulls, converged on
+distribution. `docs/gtm/warm-50-tracker.md` still holds only "Jane Doe".
+
+Source: `docs/vetting/2026-07-15-harbormill-entry-rung-reprice/` (roast-verdict.md + briefing.html).
+Pages updated: [[The Harbormill Ladder]] (Rung 1 removed; 4 Key Decisions added; Flag → resolved),
+[[Tool Wars Panel 2026]] (verification note — its price table is superseded, do not cite),
+`docs/PROJECT_CONTEXT.md` §8 (canonical ladder + labour-line rule + decisions on the record),
+`website/src/config/site.ts` (ladder rung removed — the subtitle already told a 3-rung story),
+`docs/gtm/field-guide/03-run-the-call.md` (hourly fallback removed; labour-line framing added).
+Wiki still 47 pages.
+
+## [2026-07-15] ingest | What Actually Matters in AI Right Now (Matt Wolfe × Nate, AIS LIVE)
+
+Ingests a 33-min Hyperagent fireside chat (GA Access, Day 2, published 2026-07-13) between Matt
+Wolfe (Future Tools) and Nate (founder, AIS). Audience was AI agency owners — competitor signal,
+not customer signal, and the pages say so.
+
+The finding is two-sided and comes from a single passage. Wolfe describes **Harbormill's product
+as his own personal workflow** — brain-dump the business, get work sorted into drop/delegate/
+automate, then wire the model to Slack/Gmail/Drive/Granola to watch for repeating work and draft
+replies for approval. Nate names the moat unprompted: value compounds because the assistant can
+see everything else. But Wolfe built it **from native frontier-lab connectors, with no agency**.
+So the strategy is corroborated and the business model around it is threatened by the same
+sentence. The counter, from the same source: capability isn't adoption (by his own estimate most
+people build nothing, though anyone can), and the accountability layer — he keeps a human
+accountant on purpose, for the answerable-party role — is something a subscription cannot supply.
+
+Contradiction **flagged, not resolved**, on [[SMB AI-Automation Landscape]] — the 2026-06-17
+"no dominant AI operating system for SMBs" claim is contested by first-hand evidence; both
+sources left standing. Net effect on positioning: education-first and accountability get
+promoted; deck-as-artifact is the differentiator under pressure. Ladder flag recorded
+(discovery is commoditizing, so the audit can't sell the list) and **deliberately kept separate
+from** the entry-rung reprice under review on PR #39 — no repricing recommended from an n=1
+agency-owner audience. `docs/gtm/case-studies/` is still the binding evidence gap.
+
+Also corrects [[Independent Verification]]: Wolfe's BuseyBench uses three judges from three
+*different labs* because a model favors its own output — a stronger independence guarantee than
+`loop-verify`'s fresh-context-but-same-model design. Recorded as an open question, not a change.
+
+Method note: no captions or transcript existed and downloads were disabled, so audio was
+captured from playback (VB-Audio Virtual Cable; per-app routing) and transcribed with
+`scripts/transcribe-media.mjs` (~$0.20, 60 blocks, 0 errors). Whisper does not diarize —
+**speaker attribution is inferred from context**, easier here than on a panel but not certain.
+Whisper also mangled Cole Medin and Dave Ebbelaar, and hallucinated a trailing "Transcribed by
+otter.ai" line that nobody said. Raw transcript stays local-only in `raw/external/`. This run
+also produced the `media-ingest` skill, which encodes the capture method as a repeatable loop.
+
+**Publication policy applied.** This repo is public and the session was gated (GA Access,
+downloads disabled, expiring). The source page was rewritten to carry **Harbormill's conclusions
+in Harbormill's own words — no verbatim quotes, no blow-by-blow** — and all quotes were stripped
+from the concept/analysis pages too. The `raw/external` guards protect the transcript but not the
+summary, and summaries are public; the rule is editorial and now lives on [[Media Ingest]].
+**Open item:** the sibling *Tool Wars* source page on the unmerged PR #39 branch still carries
+quoted pricing and has been public since 2026-07-15 — apply the same rule before it merges.
+
+Source: `docs/wiki/raw/external/what-actually-matters-in-ai-2026.md` (local-only).
+Pages created: [[What Actually Matters in AI Right Now (2026)]] (source), [[Media Ingest]]
+(concept).
+Pages updated: [[SMB AI-Automation Landscape]] (contradiction flag + open questions + sharpened
+risk), [[Four-Condition Loop Test]] (external corroboration), [[The Harbormill Ladder]]
+(discovery-commoditizing flag), [[Education-First Philosophy]] (promoted to primary defense),
+[[Independent Verification]] (multi-lab judge open question), index.md (1 source, 1 concept, 1
+analysis summary).
+
+## [2026-07-15] ingest | Tool Wars Panel — what actually makes money in 2026
+
+Ingest of a 36-min Hyperagent panel (published 2026-07-13, share expires ~2026-07-24) in which
+**Devin Kearns** (CustomAI Studio), **Dave Ebbelaar** (Datalumina) and **Cole Medin**
+(oTTomator), moderated by **Russ Henneberry**, describe what clients are buying and what they
+charge. Answers the founder's question — *can Harbormill build a sound, scalable business
+around this?* — with: **the strategy is corroborated, the pricing is not.**
+
+Three practitioners independently describe [[The Harbormill Ladder]] (workshop → blueprint →
+project → retainer), report training demand overtaking build demand (Medin: ~80% of his work
+now training), and confirm de-risking decides deals at signature — Kearns lost a deal pitching
+AI transformation to a vendor offering plain Claude enablement. But all three sell the entry
+rung as a **fixed-price product** at **$5k–$20k**, versus Harbormill's **$100/hr**; Ebbelaar
+opens with a **$10–20k** fixed 2–4 week prototype versus Harbormill's $2.5–10k project. Only
+the retainer band lines up. This closes the evidence gap on the pre-existing "Rung 1 is
+hourly" flag (recorded 2026-06-24 from literature alone). Founder confirmed the $100/hr was a
+**default, not a deliberate loss-leader**. Flagged, not silently rewritten — the number is the
+founder's to set, and the panel's prices are backed by public audiences and case studies that
+`docs/gtm/case-studies/` does not yet have.
+
+Two secondary findings worth acting on separately: (1) Ebbelaar reports the easy AI use cases
+are now commoditized into tools clients already own — a caution for generic-by-design product
+positioning ([[Harbormill AIOS]]); (2) all three have deprioritized semantic RAG for
+single-client knowledge bases, with Medin putting the crossover near **10,000 documents** —
+below that, agentic markdown navigation wins. The wiki is 46 pages, so [[Knowledge & RAG]] /
+[[Wiki-to-Aria Sync]] may be over-engineered for [[Aria]]'s actual corpus.
+
+Method note: no captions or transcript existed and the share had downloads disabled, so audio
+was captured from playback (VB-Audio Virtual Cable; Stereo Mix is a phantom endpoint on this
+hardware) and transcribed with the new `scripts/transcribe-media.mjs` (PR #39). Whisper does
+not diarize — **speaker attribution is inferred from context**, high-confidence but not
+certain.
+
+Source: `docs/wiki/raw/external/tool-wars-panel-2026.md` (gitignored, local-only).
+Pages created: [[Tool Wars Panel 2026]] (source).
+Pages updated: [[The Harbormill Ladder]] (Flag — corroborated with prices + founder
+confirmation), [[Education-First Philosophy]] (practitioner corroboration section),
+index.md (+1 source entry). Wiki now 47 pages.
+
+## [2026-06-24] ingest | Session-end — Independent verification & loop memory
+
+Session-end extract of two `autoresearch` loop enhancements built and shipped this session (both
+from evaluated prompt-cards): the **independent fresh-context verifier** (`loop-verify` skill,
+PR #29, merged cd95071) that turns the acceptance gate into a separate 1-10 scored subagent, and
+**loop memory** (`docs/wiki/memory.md`, PR #31, merged f67970c) — a curated, read-back lessons
+file that makes the loop learn over runs. Both go beyond Karpathy's original, which self-grades
+and carries lessons only in git history.
+
+Source: `docs/wiki/raw/sessions/2026-06-24-loop-verify-and-loop-memory.md`.
+Pages created: [[Independent Verification]] (concept), [[Loop Memory]] (concept).
+Pages updated: [[Self-Improving App]] (See Also), [[Four-Condition Loop Test]] (See Also —
+condition-#2 independent done-rule), index.md (+2 concept entries). Wiki now 43 pages.
+
+## [2026-06-24] ingest | Session-end — Validators → Loops → KPI-watch
+
+Session-end extract of the "skills → validators → loops" arc (a user-shared slide:
+*"how could existing skills be tweaked into validators to create loops?"*), mapped onto
+three Harbormill surfaces + a productized in-product loop. Five things shipped: the
+`validator-forge` dev skill (PR #23), the `wiki-gardener` maintenance loop (PR #24), the
+[[The Harbormill Ladder]] rung-numbering fix (PR #25, logged separately below), the
+harbormill.net **trust strip** (PR #26), and the `kpi-watch` in-product loop (PR #27,
+**deployed + verified live on both `harbormill-aios-demo` and `harbormill-aios`**).
+
+Unifying idea: condition #2 of the [[Four-Condition Loop Test]] ("a rule decides 'done'")
+*is* a validator; a loop is only safe to run unattended when an objective rule — not human
+taste — decides each run is finished. Note: validator-forge + wiki-gardener were already
+folded into [[Four-Condition Loop Test]] and [[Self-Improving App]] in prior 2026-06-24
+entries; this ingest adds the two genuinely-uncaptured pieces (kpi-watch and the trust
+strip) and corrects stale framing.
+
+Source: `docs/wiki/raw/sessions/2026-06-24-validators-loops-kpi-watch.md`.
+Pages created: [[KPI-Watch Loop]] (concept).
+Pages updated: [[Marketing Site]] (trust strip section), [[Edge Functions]] (added the two
+scheduled loops connector-sync + kpi-watch; dropped the stale "four functions" framing),
+[[Four-Condition Loop Test]] (first in-product loop shipped, distinct from the future Aria
+surface), [[Operating Deck Data Model]] (kpi-watch as a second findings writer),
+[[Self-Improving App]] (See-Also fix: wiki-gardener is the maintenance companion, not
+validator-forge), index.md (1 new concept entry + 2 refreshed summaries). Wiki now 37 pages.
+
+## [2026-06-24] resolution | Harbormill Ladder rung-numbering contradiction
+Resolved the human-gated contradiction surfaced by the wiki-gardener run below. Canonical
+source `docs/PROJECT_CONTEXT.md` §8 numbers the ladder 1–4 (Rung 1 = Get started, hourly),
+so the main list was canonical; the Flag section's 0-based wording ("Rung 0 is hourly;
+Rungs 1–3 are fixed-scope") was the outlier and was aligned to 1–4 ("Rungs 2–4 are scoped
+engagements; Rung 1 (Get started) is hourly"). Human-directed (Damon), per the never-overwrite rule.
+Pages updated: [[The Harbormill Ladder]]
+
+## [2026-06-24] wiki-gardener | run (budget N=10)
+Iterations: 3   Stop reason: done
+Fixed (auto):
+  - Missing cross-reference on [[ROI-Discovery Audit]] — a7c644b — prose ("Loop Audit mode
+    extends this surface with the [[Four-Condition Loop Test]] gate") named the page but its
+    own See Also omitted it; added the See-Also entry on that page only.
+  - Missing cross-reference on [[Connector Library]] — c217be8 — prose ("the connector
+    registry mirrors the [[AI Tool Registry]] pattern") named the page but its own See Also
+    omitted it; added the See-Also entry on that page only.
+  - Missing cross-reference on [[Report-Ingest Seam]] — e4fdab0 — prose ("it's the
+    white-label contract, parallel to [[White-Label Architecture]]") named the page but its
+    own See Also omitted it; added the See-Also entry on that page only.
+Surfaced (human-gated):
+  - Contradiction on [[The Harbormill Ladder]] — internal rung-numbering is
+    inconsistent: the main list numbers tiers 1–4 ("1. Get started … 4. Retainer") but the
+    "Flag" section uses 0–3 ("Rungs 1–3 are fixed-scope; Rung 0 is hourly"), so "Get started"
+    is Rung 1 in the list yet Rung 0 in the Flag (off-by-one). Needs a human to pick the
+    canonical base. NOT resolved.
+  - Thin / single-source coverage on [[Demo Seed Data]] — grounded in a single source
+    (`supabase/seed.sql`). Defensible (seed.sql is the authoritative artifact), but a
+    candidate to enrich. Autoresearch handoff topic: "AIOS demo seed data — what each seeded
+    KPI/briefing/finding/document demonstrates and how the demo tour uses them."
+  - Remaining one-way See-Also edges left human-gated, NOT auto-fixed: incidental/illustrative
+    mentions ("the test harness for [[Harbormill AIOS]]", "the person behind [[Harbormill
+    AIOS]]") and parenthetical supporting citations ("see [[Access Model]]", "([[Per-Client
+    Deployment]])") where the page's See Also already curates its material targets, plus
+    deliberate hub spokes ([[Aria]], [[Harbormill AIOS]], [[Access Model]]). Per the clarified
+    class definition these are not stated-relationship defects (the trigger is prose naming a
+    *material* relationship the page's own See Also omits). Index-completeness, typo/duplicate
+    wikilinks, broken links, and orphans all clean (36/36 indexed; every target resolves;
+    every page ≥1 inbound; the newline-split `[[...]]` in marketing-site.md parsed correctly,
+    not flagged as a typo).
+Note: Re-run under the clarified missing-cross-references definition (prose-named-but-self-omitted
+= auto-fixable). Supersedes the prior 2026-06-24 N=10 "Iterations: 0 … clean" entry, which had
+under-classified this whole class as human-gated. 3 clear-cut See-Also additions applied (one per
+commit, page only); boundary held on the rest.
+
 ## [2026-06-23] update | Aria "Donny-grade" engine (M1, PR #21) + M2 comms roadmap
 
 Session-end extract of the **M1** assistant-engine upgrade — implemented in **PR #21**

@@ -22,9 +22,10 @@ export const site = {
 
   nav: [
     { label: "Services", href: "#services" },
-    { label: "AIOS", href: "#aios" },
-    { label: "Loop Audit", href: "#loop-audit" },
+    { label: "See it", href: "#aios" },
+    { label: "Audit", href: "#audit" },
     { label: "Ladder", href: "#ladder" },
+    { label: "Proof", href: "#case-studies" },
     { label: "About", href: "#about" },
     { label: "FAQ", href: "#faq" },
   ],
@@ -36,7 +37,7 @@ export const site = {
     subtitle:
       "I'm Damon Williams — 15 years in enterprise IT, now building practical AI automation for small-business owners who are out of hours, not out of ambition. We start by teaching you AI, then automate what's slowing you down.",
     primaryCta: "Book a free 30-min intro",
-    secondaryCta: "See AIOS in action",
+    secondaryCta: "See it in action",
   },
 
   credibility: {
@@ -47,7 +48,7 @@ export const site = {
   philosophy: {
     eyebrow: "The Harbormill difference",
     title: "Education first. Automation second.",
-    body: "Most shops sell you a black box. I'd rather teach you to fish. We start by getting you fluent with AI — set up Claude, learn the prompts and workflows your business actually needs — then automate the busywork on top of that foundation. You come out understanding your tools, not dependent on me.",
+    body: "Most shops sell you a black box. I'd rather teach you to fish. We start by getting you fluent with AI — set up Claude, learn the prompts and workflows your business actually needs — then automate the busywork on top of that foundation. You come out understanding your tools, not dependent on me. And your systems aren't tied to any one vendor's tool — we run them on whatever AI is best and upgrade as it improves, so they get better as the technology does instead of going stale.",
   },
 
   problem: {
@@ -79,26 +80,26 @@ export const site = {
 
   aios: {
     eyebrow: "The flagship",
-    title: "Harbormill AIOS — your operating deck",
+    title: "Your whole business, on one screen",
     subtitle:
-      "The signature build: one place to see your live metrics, read an AI-written weekly brief, and ask an assistant that actually knows your business. Take the tour.",
+      "Your live numbers at a glance, a plain-English weekly rundown of what changed, and an assistant you can ask anything — answered from your real numbers, not the internet. The repeating work runs itself in the background. Take the tour.",
     note: "Illustrative sample data — not a live client account.",
     featuresTitle: "More than a dashboard",
     features: [
       {
         icon: "LayoutDashboard",
-        title: "Live metrics & weekly briefings",
-        body: "Your KPIs at a glance with status colors, plus an AI-written weekly brief that tells you what actually changed and what to do about it.",
+        title: "Your numbers + a weekly rundown",
+        body: "Your key numbers at a glance with simple status colors, plus a plain-English weekly write-up of what changed and what to do about it.",
       },
       {
         icon: "FileText",
         title: "Meeting transcripts → action steps",
-        body: "Hand AIOS a meeting transcript and get back a clean summary and concrete next action steps for the business — nothing lost after the call.",
+        body: "Hand it a meeting transcript and get back a clean summary and concrete next action steps for the business — nothing lost after the call.",
       },
       {
         icon: "ListChecks",
         title: "Your top priorities, daily",
-        body: "AIOS reads your day-to-day operations and surfaces the top priorities to focus on — so you start every morning knowing what matters most.",
+        body: "It reads your day-to-day operations and surfaces the top priorities to focus on — so you start every morning knowing what matters most.",
       },
       {
         icon: "Bell",
@@ -108,12 +109,12 @@ export const site = {
       {
         icon: "Sparkles",
         title: "Ask Aria, anything",
-        body: "A business-aware assistant grounded in your live metrics, briefs, and knowledge base — ask in plain language, get grounded answers.",
+        body: "A business-aware assistant grounded in your real numbers, your briefs, and your playbooks — ask in plain language and get answers from your actual business, not the internet.",
       },
       {
         icon: "Puzzle",
         title: "Integrations & plugins",
-        body: "AIOS plugs into the business software you already use — CRM, accounting, support, messaging, and more. If it has an API, we can wire it in.",
+        body: "It plugs into the business software you already use — CRM, accounting, support, messaging, and more. If it has an API, we can wire it in.",
       },
     ],
   },
@@ -130,8 +131,8 @@ export const site = {
       },
       {
         icon: "LayoutDashboard",
-        title: "Reporting & operating decks",
-        body: "Automated weekly KPI reports, dashboards, and the Harbormill AIOS deck — live metrics plus an AI brief, so you stop flying blind.",
+        title: "Reporting & dashboards",
+        body: "Automated weekly reports and dashboards — your live numbers plus a plain-English weekly brief, so you stop flying blind.",
       },
       {
         icon: "UserPlus",
@@ -160,19 +161,13 @@ export const site = {
     eyebrow: "How we work together",
     title: "The Harbormill Ladder",
     subtitle:
-      "Start small and low-risk. We climb only as results prove out — you're never committing to a big build before you've seen ROI.",
+      "Start small and low-risk, and climb only as results prove out. It's a repeatable engine: an Audit finds the highest-ROI automation, a Focused Project ships it, and a Retainer keeps it compounding — so you never commit to a big build before you've seen ROI.",
     rungs: [
       {
-        name: "Get started",
-        price: "$100",
-        unit: "per hour",
-        body: "One-on-one consulting sessions — get your Claude setup running, solve a real problem, learn the ropes. We build the relationship before anything bigger.",
-      },
-      {
-        name: "Paid audit",
+        name: "Audit",
         price: "$500–$2,500",
-        unit: "fixed scope",
-        body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue.",
+        unit: "fixed scope · credited toward your build",
+        body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue — and if we do, the fee comes off the build.",
       },
       {
         name: "Focused project",
@@ -187,9 +182,15 @@ export const site = {
         body: "Ongoing automation and support — but only after trust and results. We expand what's working and keep your systems sharp.",
       },
     ],
-    footnote: "Every engagement starts with a free 30-minute intro. One-on-one consulting is $100/hour.",
+    footnote: "Every engagement starts with a free 30-minute intro. The Audit fee is credited toward your build if we go ahead.",
   },
 
+  // Client-facing name is **"Audit"** — never "Loop Audit" (2026-07-15).
+  // "Loop Audit" is internal vocabulary, like "Rung": prospects don't know what a
+  // Loop is, and the offer shouldn't ask them to learn one to read a price. Internal
+  // identifiers (this key, `LoopAudit.tsx`, docs/gtm, the wiki) keep the full name.
+  // Same rule as docs/wiki/concepts/harbormill-ladder.md's "'Rung' is internal
+  // vocabulary" decision. Rendered copy below must say "Audit".
   loopAudit: {
     eyebrow: "The signature audit",
     title: "Find the one automation worth building first",
@@ -227,7 +228,38 @@ export const site = {
     },
     priceNote: "$500–$2,500 · fixed scope",
     closer: "You leave understanding the method — not dependent on us.",
-    cta: "Book a Loop Audit",
+    cta: "Book an Audit",
+  },
+
+  trust: {
+    eyebrow: "Why it's safe to automate",
+    title: "Automation you can leave running",
+    body: "Black-box automation is unnerving — you can't tell when it's quietly gone wrong. So we only build automation where a clear rule decides when the job is done, and a wrong run is cheap to undo. That's what makes it safe to leave running without watching it. It's the same discipline we run on our own systems: loops that check their own work against a rule, fix what they safely can, and flag the rest for a human. We don't sell a black box we wouldn't run ourselves.",
+  },
+
+  caseStudies: {
+    eyebrow: "Proof",
+    title: "Results, not promises",
+    subtitle:
+      "The deck tracks the ROI of every automation we ship — value delivered against what you pay. Our first flagship case studies are publishing soon; here's the shape of what we measure.",
+    items: [
+      {
+        industry: "Marketing agency",
+        pain: "Invoices aging past 45 days because follow-up was manual and easy to forget.",
+        loop: "An AR follow-up Loop that chases receivables on a schedule and flags exceptions for a human.",
+        result: "Publishing soon",
+        roi: "Publishing soon",
+        comingSoon: true,
+      },
+      {
+        industry: "Restaurant group",
+        pain: "Guest follow-up and review requests handled by hand, so most never went out.",
+        loop: "A guest follow-up Loop that sends the right message at the right time, automatically.",
+        result: "Publishing soon",
+        roi: "Publishing soon",
+        comingSoon: true,
+      },
+    ],
   },
 
   about: {
@@ -247,7 +279,11 @@ export const site = {
   faqs: [
     {
       q: "How much does this cost?",
-      a: "It starts low and stays proportional to results. One-on-one consulting is $100/hour, and you only move to larger fixed-scope projects once we've proven value together. The intro call is always free.",
+      a: "It starts low and stays proportional to results. Everything begins with a free 30-minute intro. The first paid step is an Audit at $500–$2,500 fixed scope — and if we go ahead with the build, that fee comes off it. You only move to a larger project once we've proven value together, and to a retainer only after that.",
+    },
+    {
+      q: "Won't this be obsolete when the AI changes so fast?",
+      a: "No — that's exactly what you're protected from. Your automations aren't tied to any one tool or model: they run on the best AI available, and we swap in something better the moment it ships. As the technology leaps forward, your systems get faster and cheaper — you ride every advance instead of being left behind.",
     },
     {
       q: "Will AI replace my staff?",
@@ -294,3 +330,4 @@ export type LadderRungItem = (typeof site.ladder.rungs)[number];
 export type ProblemItem = (typeof site.problem.items)[number];
 export type AiosFeature = (typeof site.aios.features)[number];
 export type LoopAuditCondition = (typeof site.loopAudit.conditions)[number];
+export type CaseStudyItem = (typeof site.caseStudies.items)[number];

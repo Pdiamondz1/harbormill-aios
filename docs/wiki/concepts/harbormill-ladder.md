@@ -2,8 +2,8 @@
 title: The Harbormill Ladder
 type: concept
 created: 2026-06-17
-updated: 2026-06-20
-sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks]
+updated: 2026-07-15
+sources: [docs/PROJECT_CONTEXT.md, website/src/config/site.ts, external:land-and-expand-benchmarks, external:tool-wars-panel-2026, external:what-actually-matters-in-ai-2026]
 tags: [strategy, pricing, business-model, gtm]
 ---
 
@@ -12,18 +12,50 @@ tags: [strategy, pricing, business-model, gtm]
 Harbormill Automation's engagement model **and** pricing, in one ladder. Low-risk
 entry, climb only as ROI proves out:
 
-1. **Get started** — $100/hr one-on-one consulting (e.g. Claude setup).
-2. **Paid audit** — $500–$2,500, fixed scope; map workflows, scope the first build.
-   Now operationalized in-product by the [[ROI-Discovery Audit]] tool (Opportunity
-   Report → ROI vs the retainer), which is also the engine for selling Rung 4.
-3. **Focused project** — $2,500–$10,000; ship one workflow, prove ROI.
-4. **Retainer** — $3,000–$10,000/mo; ongoing, after trust and results.
+1. **Loop Audit** — $500–$2,500, fixed scope, **fee credited toward the build**; map
+   workflows, scope the first build. **This is the front door.** Operationalized
+   in-product by the [[ROI-Discovery Audit]] tool (Opportunity Report → ROI vs the
+   retainer), which is also the engine for selling Rung 3.
+2. **Focused project** — $2,500–$10,000; ship one workflow, prove ROI. The sub-$10k
+   ceiling is deliberate — it keeps the decision inside one owner's signature.
+3. **Retainer** — $3,000–$10,000/mo; ongoing, after trust and results.
+
+*(Hourly consulting was Rung 1 until 2026-07-15 — retired, see Key Decisions.)*
 
 Every climb starts with a free 30-min intro. Surfaced on the marketing site
 (`website/src/config/site.ts`) and in [[Project Context]].
 
 ## Key Decisions
 
+- **Hourly retired; the audit is the front door (2026-07-15).** Rung 1 ($100/hr) is
+  gone. The founder confirmed it was an unconsidered default, not a loss-leader. It
+  capped delivery at the calendar, crowded out the outbound hours that fill the
+  pipeline, and — the real defect — let an engagement be sold with *no defined
+  deliverable*, which a fixed price makes impossible. **Not replaced with a workshop
+  tier:** the $500 audit already is the low-friction entry, and it sits under any
+  plausible single-signature line. The website's own ladder subtitle already told a
+  three-rung story (audit → project → retainer), so Rung 1 was vestigial.
+- **The audit fee screens; it does not earn (2026-07-15).** Ashraf, Berry & Shapiro
+  (2010, *AER*), a field RCT built to separate the mechanisms, finds paying produces
+  "economically important screening effects… no consistent evidence of sunk-cost
+  effects." So the fee needs only be non-zero enough to filter tyre-kickers — raising
+  it toward $5k buys nothing the screen already provides and costs volume. Being paid
+  also preserves the right to say "AI is the wrong answer here," which a free audit
+  financially forbids. This overturns *both* earlier proposals: raising the audit and
+  making it free.
+- **No outcome guarantees (2026-07-15).** "If it isn't doing X by day 30, don't pay
+  me" was proposed as a substitute for missing case studies, and is rejected on three
+  independent grounds: a solo's refund forfeits 100% of sunk labour, so it fails as a
+  separating signal (Moorthy & Srinivasan 1995); consulting is a *credence* good, so
+  the model doesn't transfer; and it inverts adverse selection — the clients who
+  self-select in have the worst-instrumented processes and are likeliest to dispute.
+  In practice the argument is never "did it work," it is **"did you use it."**
+- **Sell against the labour line, never the "AI budget" (2026-07-15).** More than half
+  of firms expect ≤$200/employee/year on AI (Atlanta Fed 2026); Ramp's median across
+  70k+ businesses is $11.38/employee/month. A ~40-person firm's *entire* annual AI
+  budget is ~$1k–$8k, so any real build is multiples of the whole pocket. Priced
+  against a $4,500/mo hire not made, the same number is cheap. See
+  [[Tool Wars Panel 2026]] and `docs/vetting/2026-07-15-harbormill-entry-rung-reprice/`.
 - **"Rung" is internal vocabulary — never shown to or said to clients (2026-06-20).**
   The ladder/rung model is how Harbormill reasons about the engagement internally;
   client-facing surfaces refer to a tier by its **name** ("Paid audit") or a numeric
@@ -48,12 +80,109 @@ and the external evidence supports the design:
 - Productized consultants commonly serve **40–80 clients/yr** at $5k–$25k MRR as
   they scale ([Assembly](https://assembly.com/blog/productized-services)).
 
-## Flag (observation, not yet acted on)
+## Flag → RESOLVED 2026-07-15 (hourly retired)
 
-The productization literature stresses **clear fixed-scope deliverables** at each
-tier. Rungs 1–3 are fixed-scope; **Rung 0 is hourly**, which is less "productized."
-A future option is a fixed-price starter package (e.g. a named "AI setup session")
-to make the entry rung a cleaner product. Recorded as a strategy flag.
+The flag recorded 2026-06-24 — *"Rungs 2–4 are scoped engagements; Rung 1 is hourly, which
+is less productized"* — is closed. Rung 1 is gone. But **the reasoning that closed it is not
+the reasoning that opened it**, and the difference is worth keeping, because the obvious
+argument was wrong.
+
+**What triggered the review:** the [[Tool Wars Panel 2026]] appeared to show Harbormill
+pricing its entry rung 25–200x below market (Medin ~$20k/4-hr workshop; Kearns ~$5k;
+Ebbelaar $10–20k fixed prototype). The apparent conclusion — *raise everything* — did not
+survive an adversarial roast or primary-source verification.
+
+**What the evidence actually said** (full audit trail:
+`docs/vetting/2026-07-15-harbormill-entry-rung-reprice/`):
+
+- **The panel is audience rent, not market rate.** Medin has ~204k YouTube subscribers,
+  Ebbelaar ~257k. Verification could not independently confirm the panel or a single one of
+  its three prices. Three self-reported figures, from a stage, where stating a high price is
+  itself marketing.
+- **The "productize and raise your fees" evidence base is conflicted folklore.** Every
+  headline stat traces to a vendor selling fee coaching *to consultants*, on the same pages,
+  with no disclosed methodology and a convenience sample selected on the outcome variable.
+  **Independent corroboration: none found.**
+- **Price does not signal quality here.** Völckner & Hofmann (2007), 71 effects:
+  r = .286 (~9% of variance), *significantly weaker for services*. The "hourly anchors the
+  project price" argument is an extrapolation — anchors are demonstrated within one issue.
+- **Raising the audit was wrong, and so was making it free.** The audit works by
+  **screening** (Ashraf/Berry/Shapiro 2010, *AER*), so its fee should filter, not earn. It is
+  already the right instrument at the right price.
+- **The sub-$10k build ceiling is load-bearing**, not timid — single signature, 30–60 day cycle.
+- **The AI budget is the wrong pocket entirely.** >half of firms expect ≤$200/employee/year
+  (Atlanta Fed 2026); Ramp's median is $11.38/employee/month. A ~40-person firm's *whole*
+  annual AI budget is ~$1k–$8k. Sell against the labour line instead.
+
+**So hourly was retired for one reason that survived everything:** a fixed price forces a
+defined deliverable and hourly permits none. Not because $100 was too low a number — because
+hours were the wrong unit, and the low number was never the defect.
+
+**The constraint was never price.** Ten independent attacks (5 roast personas + 5 research
+lenses), including both bulls, converged on distribution. `docs/gtm/warm-50-tracker.md` still
+held only seed rows ("Jane Doe") when this was written.
+
+## Flag: the method we're adopting implies no published ladder at all (2026-07-15)
+
+A third flag, from [[Ditching Hourly (Jonathan Stark, 2026)]] — a pricing specialist, presenting
+method rather than market data. **Observation only — no repricing recommended from this source.**
+
+Two things it settles, and one it doesn't.
+
+**Settled: hourly is the wrong _unit_, not merely a low number.** The argument is incentive
+inversion — at one blended rate a slow worker out-earns a fast one for identical output, so you
+are paid more for being worse. This is a stronger case than the coherence argument already in
+`docs/gtm/`, and it lands hardest here because **Harbormill sells the elimination of billable
+hours**. Corroborates the 2026-07-15 retirement of hourly; changes nothing else.
+
+**Unsettled — the real tension: the method sets price _per client, live_, as a percentage of
+that client's first-year value (~10% floor, three options at ~10/25/50%). It implies no
+published rate card at all.** This ladder publishes fixed prices on a public site. The likely
+resolution is that **the published ladder is the _door_, not the price** — a lead-gen artifact,
+while the actual number is set in the sales interview. That is a hypothesis, recorded as such.
+
+The consequence is worth stating plainly: **arguments about the published entry-rung number are
+arguments about the door**, not about what any client should pay. The entry-rung number itself was
+settled separately on PR #39 (hourly retired; see the resolved flag above) — this *door-vs-price*
+tension is a distinct question and stays open. **Do not conflate them.** See [[Value-Based Pricing]]
+for the method in full.
+
+One caution that cuts against the small end: value pricing caps small clients by design — a
+small shop's whole upside may be modest, and by definition it will not pay more than the work is
+worth to it. The stated scale path for a soloist is **bigger clients for the same expertise**.
+That corroborates the $3–10M-revenue targeting and cautions against moving downmarket.
+
+## Flag: discovery is commoditizing — the audit can't sell the list (2026-07-15)
+
+A second, sharper flag on the same rung, from
+[[What Actually Matters in AI Right Now (2026)]]. **Observation only — no repricing recommended
+from this source.**
+
+Matt Wolfe's closing advice, given free to an audience of AI agency owners, is to dictate a full
+account of your business to a frontier model and ask what it can take off your plate — and he
+reports it doing exactly that for him, triaging his work into stop / hand off / automate.
+**That is the discovery half of the Paid Audit, self-serve, at zero marginal cost.**
+
+The implication for Rung 2 is narrow but real: if an owner can obtain *the list of their
+repeating work* for free, the audit's value cannot be the list. What does not commoditize, on
+the same evidence:
+
+- **Implementation** — Wolfe is a 17-year technologist with coding agents open all day; the SMB
+  owner is not, and by his own estimate the overwhelming majority of people build nothing with
+  these tools even when they can.
+- **Accountability** — he keeps a *human* accountant precisely for the answerable-party role.
+  The [[ROI-Discovery Audit]]'s scored, sourced Opportunity Report is an accountable artifact; a
+  chat transcript is not.
+- **Condition #2** — his setup has no objective done-rule; a human reads every draft. Harbormill
+  sells the closed loop, not the suggestion. See [[Four-Condition Loop Test]].
+
+**Deliberately not concluded here.** This says nothing about *price* — it is evidence about
+what the audit should be *sold as*. It is also n=1 and drawn from an agency-owner audience, not
+SMB buyers. It sits alongside, and is independent of, the entry-rung reprice resolved on PR #39
+(where a roast returned RESHAPE and storm-research found the supporting evidence absent — hourly
+was retired but no price was raised). **This is a question of positioning, not price**;
+`docs/gtm/case-studies/` is still empty. Cross-reference the contradiction flag on
+[[SMB AI-Automation Landscape]].
 
 ## See Also
 
@@ -63,3 +192,6 @@ to make the entry rung a cleaner product. Recorded as a strategy flag.
 - [[Project Context]]
 - [[SMB AI-Automation Landscape]]
 - [[Harbormill AIOS]]
+- [[Tool Wars Panel 2026]]
+- [[Education-First Philosophy]]
+- [[What Actually Matters in AI Right Now (2026)]]

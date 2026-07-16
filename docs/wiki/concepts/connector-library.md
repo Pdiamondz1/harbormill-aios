@@ -105,6 +105,7 @@ are set (see `docs/client-setup.md`, step 4).
 ## See Also
 
 - [[Report-Ingest Seam]]
+- [[AI Tool Registry]]
 - [[Extending AIOS]]
 - [[Operating Deck Data Model]]
 - [[AIOS Pages]]

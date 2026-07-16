@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Storm Research: What an Unknown Solo Can Charge SMBs for AI in 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --blue: #2563eb; --blue-dark: #1e3a8a; --ink: #16203a; --muted: #5b6677; --line: #e4e9f2;
+    --bg-soft: #f6f8fc; --green: #15803d; --green-bg: #e9f6ee; --amber: #b45309; --amber-bg: #fdf3e7;
+    --slate: #475569; --slate-bg: #eef1f6; --red: #b91c1c; --red-bg: #fdecec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', system-ui, sans-serif; color: var(--ink); background: #eef1f6; line-height: 1.62; font-weight: 400; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 900px; margin: 0 auto; background: #fff; padding: 64px 72px 80px; box-shadow: 0 1px 40px rgba(22,32,58,0.08); }
+  .eyebrow { font-family: 'Roboto Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+  h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 18px; }
+  .lede { font-size: 17px; color: var(--muted); max-width: 640px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 26px; padding-top: 22px; border-top: 2px solid var(--line); font-family: 'Roboto Mono', monospace; font-size: 12px; color: var(--muted); }
+  .meta-row b { color: var(--ink); font-weight: 600; }
+  .verify-banner { margin-top: 22px; background: var(--green-bg); border: 1px solid #bfe3cc; border-radius: 8px; padding: 13px 18px; font-size: 13px; color: #14532d; display: flex; gap: 10px; align-items: baseline; }
+  .verify-banner b { font-weight: 700; }
+  .verify-banner .tag { font-family: 'Roboto Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; background: var(--green); color: #fff; padding: 3px 8px; border-radius: 4px; flex-shrink: 0; }
+  .howto { margin-top: 18px; border: 1px solid var(--line); border-radius: 8px; padding: 18px 22px; background: var(--bg-soft); }
+  .howto h4 { font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .howto ul { list-style: none; }
+  .howto li { font-size: 13.5px; color: #2b3950; margin-bottom: 7px; padding-left: 16px; position: relative; }
+  .howto li::before { content: "›"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+  .section { margin-top: 56px; }
+  .section-num { font-family: 'Roboto Mono', monospace; font-size: 13px; font-weight: 600; color: var(--blue); letter-spacing: 0.05em; }
+  h2 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 25px; letter-spacing: -0.01em; color: var(--ink); margin: 6px 0 18px; line-height: 1.2; }
+  h2 .bar { display: inline-block; width: 38px; height: 4px; background: var(--blue); border-radius: 2px; vertical-align: middle; margin-right: 14px; }
+  p { margin-bottom: 14px; }
+  p.body-lg { font-size: 16.5px; }
+  .ceo { background: var(--bg-soft); border-left: 5px solid var(--blue); padding: 26px 30px; border-radius: 4px; font-size: 16.5px; }
+  .ceo strong { font-weight: 700; color: var(--blue-dark); }
+  .finding { border: 1px solid var(--line); border-radius: 10px; padding: 24px 26px; margin-bottom: 18px; position: relative; }
+  .finding-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 12px; }
+  .finding-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 18px; line-height: 1.3; color: var(--ink); flex: 1; }
+  .finding-rank { font-family: 'Roboto Mono', monospace; font-weight: 600; font-size: 13px; color: #fff; background: var(--ink); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .finding p { font-size: 15px; color: #283449; margin-bottom: 14px; }
+  .rel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .rel { display: inline-flex; align-items: center; gap: 9px; font-family: 'Roboto Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; }
+  .rel.high { background: #e7f0fe; color: var(--blue); }
+  .rel.medhigh { background: var(--green-bg); color: var(--green); }
+  .rel.medium { background: var(--amber-bg); color: var(--amber); }
+  .rel.low { background: var(--red-bg); color: var(--red); }
+  .score { font-family: 'Roboto Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .score b { font-size: 17px; }
+  .score span { color: var(--muted); font-weight: 400; }
+  .chips { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+  .chip-row { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; font-size: 13.5px; }
+  .chip-label { font-family: 'Roboto Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+  .chip-label.sup { background: var(--green-bg); color: var(--green); }
+  .chip-label.chal { background: var(--red-bg); color: var(--red); }
+  .chip-label.fix { background: var(--amber-bg); color: var(--amber); }
+  .chip-row span.who { color: #2b3950; }
+  .chip-row span.who b { font-weight: 600; }
+  .contested { border: 1px dashed var(--amber); background: #fffaf2; border-radius: 10px; padding: 22px 26px; margin-bottom: 18px; }
+  .contested .tag { font-family: 'Roboto Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+  .contested h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 16px; color: var(--ink); margin: 6px 0 10px; }
+  .contested p { font-size: 14px; color: #4a3a22; margin-bottom: 0; }
+  .connection { background: linear-gradient(135deg, #16203a 0%, #1e3a8a 100%); color: #eaf0fb; border-radius: 12px; padding: 34px 38px; }
+  .connection h2 { color: #fff; }
+  .connection h2 .bar { background: #6ea8ff; }
+  .connection .section-num { color: #9ec1ff; }
+  .connection p { color: #d3def3; font-size: 16px; }
+  .connection .punch { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 18px; color: #fff; line-height: 1.4; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.18); }
+  .assume { border: 1px solid var(--line); border-left: 5px solid var(--amber); border-radius: 6px; padding: 24px 28px; background: #fffdf9; }
+  .assume h3 { font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+  .assume p { font-size: 15px; color: #3a3320; }
+  .assume p:last-child { margin-bottom: 0; }
+  .action-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .action-item:last-child { border-bottom: none; }
+  .action-mark { font-family: 'Roboto Mono', monospace; font-weight: 600; font-size: 13px; color: var(--blue); flex-shrink: 0; width: 34px; }
+  .action-item .do { font-weight: 600; color: var(--ink); }
+  .action-item p { font-size: 14.5px; margin-bottom: 0; color: #2b3950; }
+  .frontier { border: 2px dashed var(--blue); border-radius: 12px; padding: 30px 34px; background: var(--bg-soft); }
+  .frontier .q { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 22px; line-height: 1.32; color: var(--blue-dark); margin-bottom: 16px; }
+  .frontier p { font-size: 15px; color: #2b3950; }
+  .oncam { margin-top: 18px; }
+  .oncam-col { border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; }
+  .oncam-col.safe { background: var(--green-bg); border: 1px solid #bfe3cc; }
+  .oncam-col.caveat { background: var(--amber-bg); border: 1px solid #f0d9b5; }
+  .oncam-col.avoid { background: var(--red-bg); border: 1px solid #f3c9c9; }
+  .oncam-col h4 { font-family: 'Roboto Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .oncam-col.safe h4 { color: var(--green); }
+  .oncam-col.caveat h4 { color: var(--amber); }
+  .oncam-col.avoid h4 { color: var(--red); }
+  .oncam-col ul { list-style: none; }
+  .oncam-col li { font-size: 14px; color: #233; margin-bottom: 8px; padding-left: 16px; position: relative; line-height: 1.5; }
+  .oncam-col li::before { content: "•"; position: absolute; left: 0; font-weight: 700; }
+  .oncam-col.safe li::before { color: var(--green); }
+  .oncam-col.caveat li::before { color: var(--amber); }
+  .oncam-col.avoid li::before { color: var(--red); }
+  .refs { margin-top: 56px; padding-top: 26px; border-top: 2px solid var(--line); }
+  .refs h3 { font-family: 'Roboto Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .refs ul { list-style: none; }
+  .refs li { font-size: 12.5px; color: var(--muted); margin-bottom: 11px; padding-left: 16px; position: relative; line-height: 1.5; }
+  .refs li::before { content: "›"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+  .refs a { color: #34507e; text-decoration: none; }
+  .refs a:hover { text-decoration: underline; }
+  .refs .vstat { font-family: 'Roboto Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-right: 6px; }
+  .vstat.ok { background: var(--green-bg); color: var(--green); }
+  .vstat.part { background: var(--amber-bg); color: var(--amber); }
+  .vstat.weak { background: var(--red-bg); color: var(--red); }
+  .footer { margin-top: 40px; font-family: 'Roboto Mono', monospace; font-size: 11px; color: #9aa6b8; text-align: center; }
+  @media (max-width: 640px) { .page { padding: 40px 24px 56px; } h1 { font-size: 30px; } }
+  @media print { body { background: #fff; } .page { box-shadow: none; max-width: 100%; padding: 0; } .connection, .oncam-col { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Storm Research &middot; v2 (verified)</div>
+    <h1>What an unknown solo can actually charge SMBs for AI in 2026</h1>
+    <p class="lede">A five-lens synthesis: practitioner, academic, skeptic, economist, and historian. Every claim independently checked against its primary source before publication. Most of them did not survive intact.</p>
+    <div class="meta-row">
+      <span><b>Date</b> &nbsp;2026-07-15</span>
+      <span><b>Method</b> &nbsp;5 author-built expert lenses + contradiction map + 6 verification agents</span>
+      <span><b>Audience</b> &nbsp;A solo AI-automation consultant with no public audience and no published case studies</span>
+    </div>
+    <div class="verify-banner">
+      <span class="tag">Verified</span>
+      <span>All 27 load-bearing claims independently checked against primary sources on 2026-07-15. <b>Result: 9 false or unsourced, 12 corrected, 6 survived clean.</b> A further 5 were demoted for undisclosed conflict of interest or method. Confidence scores reflect post-verification evidence quality.</span>
+    </div>
+    <div class="howto">
+      <h4>How to read this</h4>
+      <ul>
+        <li><b>The panel was author-constructed.</b> All five lenses share one framing, so where they agree, treat it as a strong hypothesis, not independent proof.</li>
+        <li><b>Confidence is scored 1-10</b> on evidence quality: peer-reviewed causal work &gt; official policy/financial data &gt; single commissioned survey &gt; analogy &gt; preprint.</li>
+        <li><b>Measured fact and interpretation are flagged separately.</b> A high score means the data is solid, not that the strategic reading is certain.</li>
+        <li><b>The headline finding of this briefing is negative.</b> The single most useful output is the list of numbers you must stop repeating — see &sect;04b.</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============ 01 CEO SUMMARY ============ -->
+  <section class="section">
+    <div class="section-num">01</div>
+    <h2><span class="bar"></span>The 60-Second Summary</h2>
+    <div class="ceo">
+      <p style="margin-bottom:0;">The settled facts are official and they are bleak: US small-business AI adoption sits near 18% and, per the Census Bureau, <em>did not change significantly among firms with fewer than 20 employees</em> while larger firms pulled away to 37% &mdash; adoption is diverging <em>away</em> from the SMB segment. More than half of firms expect to spend no more than <b>$200 per employee</b> on AI in 2026 (Atlanta Fed); Ramp's card data puts the median at <b>$11.38 per employee per month</b>. <strong>A 40-person business therefore has an entire annual AI budget somewhere between roughly $1k and $8k &mdash; meaning a $10,000 build is not a line item in their AI budget; it is several multiples of the whole thing.</strong> The contested interpretation is what follows from that. One reading says price low to buy proof; another says the AI budget is simply the wrong pocket, and the work must be priced against a labour line &mdash; the part-time hire not made &mdash; where $2.5k/mo reads as cheap rather than 200x over. What collapsed under verification is the entire pricing-advice literature that motivates repricing at all: the "productize and raise your fees" evidence base traces to a vendor selling coaching to consultants, with no disclosed methodology and no independent corroboration anywhere. The price-as-quality signal is real but small (r&nbsp;=&nbsp;.286) and <em>weakest for services</em>. The outcome guarantee fails as a signal for a solo, and inverts adverse selection onto the seller. The one instrument that survives all five lenses and the peer-reviewed evidence is the small <em>paid</em> diagnostic &mdash; and it works by <em>screening</em>, not by commitment.</p>
+    </div>
+  </section>
+
+  <!-- ============ 02 KEY FINDINGS ============ -->
+  <section class="section">
+    <div class="section-num">02</div>
+    <h2><span class="bar"></span>Five Key Findings, Ranked by Reliability</h2>
+
+    <div class="finding">
+      <div class="finding-head">
+        <div class="finding-title">The SMB "AI budget" is an order of magnitude smaller than the pitch assumes &mdash; and the widely-cited $18k figure is fabricated</div>
+        <div class="finding-rank">1</div>
+      </div>
+      <div class="rel-row">
+        <div class="rel high">Reliability: High &mdash; official statistical agencies + payments data</div>
+        <div class="score"><b>9</b><span>/10</span></div>
+      </div>
+      <p>Three independent instruments converge. The Atlanta Fed's Survey of Business Uncertainty (fielded March 2026) reports firms expect to spend $2,068 per employee in 2026 &mdash; but that is an <em>employment-weighted mean</em>, and the distribution underneath it is savage: <b>more than half of respondents expect to spend no more than $200 per employee</b>, top decile $2,800+. Ramp's card and bill-pay data across 70,000+ businesses puts the <b>median at $11.38 per employee per month</b> ($611 at the top decile, $7,449 at the top 1%). JPMorganChase Institute's payments research puts median small-business AI spend near <b>$78/month</b>. <b>Corrected: the "$18,000 median SMB AI spend" figure has no primary source.</b> AIStackHub attributes it only to itself, discloses no sample or method, and labels its own segments "modeled from industry patterns" &mdash; while citing the Atlanta Fed accurately for <em>other</em> numbers. A second site relabels the Fed's employment-weighted $2,068 as "SMB AI spending." Caps on the score: the Atlanta Fed's SBU panel is senior executives across <em>all</em> firm sizes, not an SMB panel, and Ramp measures Ramp customers, not US businesses.</p>
+      <div class="chips">
+        <div class="chip-row"><span class="chip-label sup">Supported by</span><span class="who"><b>Economist</b> (Atlanta Fed), <b>Practitioner</b> (Ramp), <b>Skeptic</b> (Census), <b>Academic</b></span></div>
+        <div class="chip-row"><span class="chip-label chal">Challenged by</span><span class="who">No one, post-verification. The only contrary figure was the $18k, which is unsourced.</span></div>
+        <div class="chip-row"><span class="chip-label fix">Corrected</span><span class="who">$18k median &rarr; unsourced, do not cite. Ramp adoption "46.6%" is the Dec 2025 reading, not June 2026. Atlanta Fed means are winsorized at the 99th percentile ($3,108 unwinsorized).</span></div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <div class="finding-title">AI adoption is diverging away from small firms &mdash; the buyer pool is shrinking relative to large firms, not growing</div>
+        <div class="finding-rank">2</div>
+      </div>
+      <div class="rel-row">
+        <div class="rel high">Reliability: High &mdash; Census + Federal Reserve</div>
+        <div class="score"><b>8</b><span>/10</span></div>
+      </div>
+      <p>The Census Bureau's BTOS states it plainly, and the wording is the finding: <em>"AI use increased among firms with at least 20 employees but didn't change significantly among firms with fewer than 20 employees."</em> Overall use hovered between 17% and 20% (Dec 2025&ndash;May 2026); firms with 250+ employees reached 37%. The Fed's FEDS Note (April 2026) independently triangulates ~18% of firms adopting AI as of year-end 2025. <b>Corrected: the "5.8% of 1&ndash;4 employee firms" statistic is false</b> &mdash; it appears nowhere in Census output, traces to a secondary blog, and matches the <em>retired</em> survey question ("producing goods or services") whose replacement wording reads 17.3%. Splicing it against the 17&ndash;20% figure mixes two incompatible instruments. Census actually says "less than 20% of firms with four or fewer employees." Also corrected: 32% is the 100&ndash;249 bucket, not part of a "250+ = 32&ndash;37%" range. The 1.2M sample is real but split across six panels, so any single wave is ~200k.</p>
+      <div class="chips">
+        <div class="chip-row"><span class="chip-label sup">Supported by</span><span class="who"><b>Skeptic</b>, <b>Economist</b>, <b>Academic</b> &mdash; Census BTOS (May 2026), Fed FEDS Note (Apr 2026)</span></div>
+        <div class="chip-row"><span class="chip-label chal">Challenged by</span><span class="who"><b>Demoted challengers:</b> business.com's "57% investing in AI" (n=1,009, opt-in panel, excludes 1-person firms) and Goldman Sachs' "67% expect increased revenue" (n=1,256, self-selected 10,000 Small Businesses cohort). Neither is a probability sample; both measure <em>intent</em>, not use. Not like-for-like with BTOS.</span></div>
+        <div class="chip-row"><span class="chip-label fix">Corrected</span><span class="who">"5.8% for 1&ndash;4 employee firms" &rarr; FALSE, from a retired series. "250+ grew to 32&ndash;37%" &rarr; 250+ is 37%; 32% is the 100&ndash;249 bucket.</span></div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <div class="finding-title">Price does not reliably signal quality &mdash; and the effect is weakest precisely for services sold by unknowns</div>
+        <div class="finding-rank">3</div>
+      </div>
+      <div class="rel-row">
+        <div class="rel medhigh">Reliability: Medium-high &mdash; peer-reviewed meta-analysis</div>
+        <div class="score"><b>7</b><span>/10</span></div>
+      </div>
+      <p>The folk theory that a higher price makes an unknown seller look more credible is the load-bearing assumption behind almost every "raise your rates" argument. The meta-analytic evidence does not support it at useful strength. V&ouml;lckner &amp; Hofmann (2007, <em>Marketing Letters</em>), pooling 71 effects, put the price&harr;perceived-quality correlation at <b>r = .286</b> &mdash; roughly 9% of variance &mdash; and report it is <em>significantly weaker for services</em>, weaker for familiar buyers, and <em>declining over time</em>. The related claim that a published hourly rate anchors a differently-denominated project price is an extrapolation: anchoring itself is real and large (Petrowsky et al. 2025, <em>OBHDP</em>: 374 effects, N=16,334; first-offer&harr;final-agreement r = 0.62), but anchors are demonstrated <em>within a single issue</em>, and no study shows a rate anchoring a project price. Anchoring also attenuates with professional experience &mdash; i.e. in experienced buyers. Score capped at 7 because these two meta-analyses were surfaced by the Academic lens but were <b>not independently re-verified</b> by this run's verification agents; the citations are checkable but were not checked here.</p>
+      <div class="chips">
+        <div class="chip-row"><span class="chip-label sup">Supported by</span><span class="who"><b>Academic</b> (V&ouml;lckner &amp; Hofmann 2007; Petrowsky et al. 2025), <b>Logician</b> (independently called the anchoring argument folk psychology)</span></div>
+        <div class="chip-row"><span class="chip-label chal">Challenged by</span><span class="who">No lens defends price-as-signal for services. The pricing-advice industry asserts it without evidence.</span></div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <div class="finding-title">A paid diagnostic works &mdash; but by screening, not by commitment. The mechanism everyone cites is the wrong one</div>
+        <div class="finding-rank">4</div>
+      </div>
+      <div class="rel-row">
+        <div class="rel medhigh">Reliability: Medium-high &mdash; field RCT, but transfer to consulting untested</div>
+        <div class="score"><b>7</b><span>/10</span></div>
+      </div>
+      <p>Consultants justify paid discovery with sunk cost: "if they pay, they're invested, so they follow through." That mechanism is rejected. Arkes &amp; Blumer (1985), the canonical study, was <b>n=54</b> and significant in the <em>first half of the season only</em>; it has never been replicated for this purpose. Foot-in-the-door (Freedman &amp; Fraser 1966; meta-analytic r&nbsp;&asymp;&nbsp;.17) actually argues <em>for</em> a free first ask, since its initial request is free and tiny. The decisive evidence is a field RCT designed precisely to separate the two mechanisms &mdash; Ashraf, Berry &amp; Shapiro (2010, <em>American Economic Review</em>) &mdash; which finds <b>"economically important screening effects... no consistent evidence of sunk-cost effects."</b> <b>The practical consequence is a reversal of purpose:</b> a paid audit's price should be set to <em>filter</em> serious buyers, not to earn revenue or to manufacture commitment. Non-zero is what matters; large is not. This also means raising a screening price past the point where it screens buys nothing and costs volume.</p>
+      <div class="chips">
+        <div class="chip-row"><span class="chip-label sup">Supported by</span><span class="who"><b>Academic</b> (Ashraf/Berry/Shapiro RCT), <b>Practitioner</b> (a paid audit lets you say "AI is the wrong answer" without torching the pipeline), <b>Economist</b> (the small rungs are the only ones an unreferred stranger can reach)</span></div>
+        <div class="chip-row"><span class="chip-label chal">Challenged by</span><span class="who">The "free audits convert best" claim &mdash; which verification found <b>FALSE as sourced</b> (see &sect;04b)</span></div>
+        <div class="chip-row"><span class="chip-label fix">Corrected</span><span class="who">Sunk-cost/commitment rationale &rarr; rejected. The real mechanism is selection. No study tests paid vs free discovery <em>in consulting</em> specifically &mdash; the transfer is inference.</span></div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-head">
+        <div class="finding-title">The "productize and raise your prices" evidence base is conflicted folklore with no independent corroboration</div>
+        <div class="finding-rank">5</div>
+      </div>
+      <div class="rel-row">
+        <div class="rel medium">Reliability: Medium &mdash; the <em>absence</em> of evidence is the finding</div>
+        <div class="score"><b>6</b><span>/10</span></div>
+      </div>
+      <p>Every headline statistic in this debate traces to Consulting Success, which sells coaching programs <em>to consultants</em> on the same pages that host the statistics &mdash; including "Over 80% of our clients raise their rates." No methodology is disclosed anywhere: no sampling frame, no response rate, no recruitment description. The demographics confirm a convenience sample of their own audience &mdash; consultants already seeking fee coaching &mdash; which makes "value-based pricing wins" partly tautological: <b>respondents are selected on the outcome variable.</b> Specific corrections: the "51% vs 39% land $10k+ projects" stat measures <em>average project value</em>, not landing anything, and contains no close-rate measure at all; their own pages contradict each other on hourly billing (29% vs 23%). Two supporting stats are outright false &mdash; see &sect;04b. The verifier's conclusion: <b>"Independent corroboration: NONE FOUND. No academic, government, or non-conflicted source tests close rate or deal size by pricing model for solo consultants."</b> Scored 6 rather than lower because the direction may still be right; it is simply unevidenced.</p>
+      <div class="chips">
+        <div class="chip-row"><span class="chip-label sup">Supported by</span><span class="who"><b>Economist</b> (predicted the conflict before verification: "in the AI pricing guide market, <em>you</em> are the customer"), plus the verification pass itself</span></div>
+        <div class="chip-row"><span class="chip-label chal">Challenged by</span><span class="who"><b>Practitioner</b> and the original brief both leaned on these stats. Post-verification, that reliance is unsafe.</span></div>
+        <div class="chip-row"><span class="chip-label fix">Corrected</span><span class="who">"51% land $10k+" &rarr; <em>average project value</em>, cross-sectional, no causal claim available. "29% bill hourly" &rarr; internally contradicted by their own 23% figure.</span></div>
+      </div>
+    </div>
+
+    <div class="contested">
+      <div class="tag">Contested signal &middot; monitor, do not assert &middot; confidence 3/10</div>
+      <h4>MIT NANDA's "95% of AI pilots fail"</h4>
+      <p>The most quoted number in enterprise AI, and it does not hold up &mdash; but the debunking does not help you. The primary report is <b>not peer-reviewed</b>, self-labels as "Preliminary Findings," and lists a co-author as its sole reviewer. Its actual claim is "95% of organizations are getting <em>zero return</em>," not "95% of pilots fail" &mdash; two different propositions fused by the press. The famous "150 interviews" appears <b>nowhere in the primary</b> (it reports 52 organizational interviews and 153 senior-leader surveys); it is a press artifact. The report concedes its figures are "directionally accurate based on individual interviews rather than official company reporting." The strongest critique (Raynovich, <em>Futuriom</em>) notes the 95% is asserted in a single sentence with no supporting data and appears back-derived; Wharton's Kevin Werbach says MIT should release the data "or it should retract the report." The claim that NANDA sells a "$250k membership" is <b>commentary, not fact</b>: NANDA is an MIT Media Lab group founded by a co-author and Media Lab corporate membership runs &ge;$250k/yr, but no primary source prices a NANDA membership. <b>Why it still matters:</b> the headline already reached your buyers. You inherit the skepticism without the truth.</p>
+    </div>
+  </section>
+
+  <!-- ============ 03 HIDDEN CONNECTION ============ -->
+  <section class="section">
+    <div class="connection">
+      <div class="section-num">03</div>
+      <h2><span class="bar"></span>The Hidden Connection</h2>
+      <p>Two findings look like they cancel out. The Skeptic shows that incumbents are absorbing exactly the workflows an automation consultant sells &mdash; Intuit Assist already does AP/AR, HubSpot bundles agents into plans SMBs already pay for &mdash; so any build has a replacement cost falling toward zero on someone else's roadmap. The Historian shows the opposite survived: in the RPA wave, boutiques selling "bots" were crushed between the Big Four and the vendors, while those selling <em>"AP invoice cycle time"</em> lived. Same workflow. Opposite outcomes.</p>
+      <p>They are not in conflict. They are the same workflow described at two altitudes, and the altitude is the entire business. A vendor can ship the <em>feature</em>; a vendor cannot be accountable for <em>your</em> number. And this is where the fifth lens closes the loop: the Academic's reason an outcome guarantee is uninsurable is that <em>nobody can measure AI's revenue effect</em> &mdash; the Federal Reserve itself declines to. Which means the measurement instrument is not the paperwork before the product. It <em>is</em> the product. The paid audit that establishes the baseline is simultaneously the screen (per the Ashraf RCT), the only credible signal available to an unknown, and the sole thing that could ever make an outcome-based deal underwritable later.</p>
+      <p class="punch">The rung you are tempted to give away or raise &mdash; the audit &mdash; is the only durable asset on the ladder. The rung you are tempted to charge more for &mdash; the build &mdash; is what Intuit ships free next quarter.</p>
+    </div>
+  </section>
+
+  <!-- ============ 03b KEY ASSUMPTION / MISSING 6TH LENS ============ -->
+  <section class="section">
+    <div class="assume">
+      <h3>The assumption this briefing rests on (and the missing 6th lens)</h3>
+      <p>All five lenses priced <b>services</b> &mdash; a person's time, packaged. None modelled a software product with clone-per-client economics, which is the asset actually in hand. The missing sixth lens is the <b>software economist</b>, and it could invert the arithmetic: if the marginal cost of the tenth deployment approaches zero, then "the SMB AI budget is only $8k/year" stops binding, because the offer is no longer competing for the tooling line at $200/employee &mdash; it is competing with a $4,500/month hire not made. Every price in this briefing is derived from a services frame that may be the wrong frame entirely.</p>
+      <p>The omission that could invert the findings outright is <b>churn</b>. No lens modelled retention. A $3&ndash;10k/month retainer sold to a firm whose entire annual AI spend is $1k&ndash;$8k is definitionally not an AI purchase &mdash; it is labour substitution, and it will be re-evaluated against a salary every year. If that retainer churns at six months, the ladder is not a ladder; it is a treadmill, and every finding above is optimising the wrong loop.</p>
+    </div>
+  </section>
+
+  <!-- ============ 04 ACTIONABLE INSIGHT ============ -->
+  <section class="section">
+    <div class="section-num">04</div>
+    <h2><span class="bar"></span>What To Actually Do Differently</h2>
+    <p class="body-lg" style="color:var(--muted);">For a solo operator with real expertise, no public audience, no published case studies, and an un-activated warm network. These are moves, not principles.</p>
+
+    <div class="action-item">
+      <div class="action-mark">01</div>
+      <div><span class="do">Stop repricing. The price card is not the constraint and never was.</span><p>Every lens here, and every persona in the preceding adversarial roast &mdash; including the 9/10 bull &mdash; converged on distribution. A price with zero transactions is unfalsifiable, which is exactly why it is comfortable to debate. Tuning it feels like progress and produces none.</p></div>
+    </div>
+    <div class="action-item">
+      <div class="action-mark">02</div>
+      <div><span class="do">Price against the labour line, never the AI line. Delete the phrase "AI budget" from every conversation.</span><p>Finding 1 is the whole argument: more than half of firms expect to spend &le;$200/employee. Against a tooling budget a $2,500/month retainer is 200x over and the conversation is dead. Against a $4,500/month part-time hire it is cheap. Same number, different pocket &mdash; and the second pocket is 20x deeper.</p></div>
+    </div>
+    <div class="action-item">
+      <div class="action-mark">03</div>
+      <div><span class="do">Keep the audit paid and small. Set its price to screen, not to earn.</span><p>Per Finding 4, the mechanism is selection, not commitment &mdash; so the price only needs to be non-zero enough to filter tyre-kickers. Raising it toward $5k buys nothing the screen already provides and costs volume you cannot spare. A paid audit also preserves the right to say "AI is the wrong answer here," which a free audit financially forbids.</p></div>
+    </div>
+    <div class="action-item">
+      <div class="action-mark">04</div>
+      <div><span class="do">Do not offer an outcome guarantee. It fails three ways, independently.</span><p>Moorthy &amp; Srinivasan's model requires the seller's transaction cost to be mid-range; for a solo a refund forfeits 100% of sunk labour. It also presupposes an experience good &mdash; consulting is a <em>credence</em> good, where quality is unverifiable even after delivery. And it inverts adverse selection onto you: the clients who self-select into a guarantee are those with the worst-instrumented processes, i.e. the ones most likely to dispute. The practitioner's version is blunter &mdash; the argument is never "did it work," it is <b>"did you use it,"</b> and you cannot invoice "your receptionist ignored it."</p></div>
+    </div>
+    <div class="action-item">
+      <div class="action-mark">05</div>
+      <div><span class="do">Sell one vertical's number, not the automation.</span><p>The RPA precedent is exact: "bots" got commoditized, "AP invoice cycle time" survived. Intuit can ship an AR feature; it cannot own a named customer's DSO. Note the historian's warning on the other half of the strategy &mdash; training is bait, not business. The vendor always gives training away eventually (HubSpot Academy killed paid social-media training; Salesforce and HubSpot are thinning their partner programs <em>right now</em>, effective July&ndash;August 2026).</p></div>
+    </div>
+    <div class="action-item">
+      <div class="action-mark">06</div>
+      <div><span class="do">Do not hire, and do not scale headcount into this boom.</span><p>Viant's revenue fell 73% in one year ($127.2M &rarr; $34.6M, audited). Scient's stock peaked roughly six months <em>before</em> its revenue did &mdash; the market repriced first. Those firms died because they had a bench. A solo taking the same cut has a slow quarter. Structural uncollapsibility is the solo's only real edge over funded competitors; spending it on headcount is the one unforced error available.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 04b CLAIM SAFETY GUIDE ============ -->
+  <section class="section">
+    <div class="section-num">04b</div>
+    <h2><span class="bar"></span>What's Safe to Assert</h2>
+    <div class="oncam">
+      <div class="oncam-col safe">
+        <h4>&#10003; Safe &mdash; verified against primary source</h4>
+        <ul>
+          <li>Census (verbatim): "AI use increased among firms with at least 20 employees but didn't change significantly among firms with fewer than 20 employees." Overall 17&ndash;20%; 250+ employees = 37%.</li>
+          <li>Federal Reserve FEDS Note: about 18% of firms had adopted AI as of year-end 2025.</li>
+          <li>Atlanta Fed: more than half of firms expect to spend no more than $200 per employee on AI in 2026; top decile $2,800+.</li>
+          <li>Viant's revenue fell 73%, from $127.2M (FY2000) to $34.6M (FY2001) &mdash; audited 10-K.</li>
+          <li>SS&amp;C acquired Blue Prism on 16 March 2022 for approximately $1.6 billion &mdash; per SS&amp;C's 10-K.</li>
+          <li>Ashraf, Berry &amp; Shapiro (2010, <em>AER</em>): paying screens buyers; there is no consistent evidence of sunk-cost effects.</li>
+          <li>marchFIRST filed Chapter 11 on 12 April 2001 and converted to Chapter 7 liquidation on 26 April 2001.</li>
+        </ul>
+      </div>
+      <div class="oncam-col caveat">
+        <h4>&#9888; Say with a caveat</h4>
+        <ul>
+          <li>Ramp's $11.38/employee/month median &mdash; say <b>"Ramp customers,"</b> not "US businesses." Ramp does not concede the selection bias; that caveat is yours to add.</li>
+          <li>The Atlanta Fed's $2,068/employee &mdash; it is an <em>employment-weighted mean</em> across all firm sizes from a senior-executive panel, winsorized at the 99th percentile ($3,108 unwinsorized). It is not an SMB figure.</li>
+          <li>S&amp;P Global's "42% abandoned most AI initiatives" (n=1,006) &mdash; real, but dated <b>March 2025</b>, not October, and the primary is gated.</li>
+          <li>V&ouml;lckner &amp; Hofmann's r&nbsp;=&nbsp;.286 and the Petrowsky anchoring meta-analysis &mdash; surfaced by one lens and <b>not re-verified in this run</b>. Checkable, unchecked.</li>
+          <li>EY's "30&ndash;50% of RPA projects failed" &mdash; not a study. A consultancy observation, phrased "as many as" (an upper bound), from a firm called in <em>after</em> failures. Deloitte's "3% scaled" is n&asymp;424, so 3% &asymp; 13 organizations.</li>
+          <li>Consulting Success's "60% of first clients are referrals" and "52% of specialists charge $10k+" &mdash; quoted accurately, but from an undisclosed-method convenience sample sold alongside fee coaching. Directional folklore at best.</li>
+        </ul>
+      </div>
+      <div class="oncam-col avoid">
+        <h4>&#10005; Don't assert &mdash; false, unsourced, or laundered</h4>
+        <ul>
+          <li><b>"Median SMB AI spend is ~$18,000/year."</b> No primary source. Unsourced and self-attributed; JPMC payments data suggests ~19x lower.</li>
+          <li><b>"5.8% of firms with 1&ndash;4 employees use AI."</b> False &mdash; appears nowhere in Census; comes from a retired survey question. Census says "less than 20%."</li>
+          <li><b>"85% of professional-services new business is referral-sourced."</b> False &mdash; no such Hinge figure. The real stat is 81.5% of firms have <em>received</em> a non-client referral (n=523). Different construct.</li>
+          <li><b>"Cold email closes at 0.2% &mdash; one deal per 464 emails."</b> Misattributed; the 464 is Focus Digital's, not Belkins'. Belkins' own 7.5M-email study shows a 0.46% reply rate and ~0.016% booking.</li>
+          <li><b>"$5,000 is the SMB signature-authority threshold."</b> False. A content-marketing post that contradicts itself within the same article ($500/$1,000/$5,000/$7,500). The peer-reviewed B2B buying literature contains no dollar thresholds; audit standards require entity-specific ones.</li>
+          <li><b>"Free audits are the highest-converting lead magnet."</b> False as sourced &mdash; traces to one uncited sentence on a prospecting vendor's blog. And "1&ndash;3% visitor&rarr;lead" is the ordinary B2B baseline (~1.9% median), cited as if exceptional.</li>
+          <li><b>"48% of SEO agencies bill $1,500&ndash;$5,000/mo; technical audits fetch $10k+."</b> False &mdash; Backlinko surveyed 300+ <em>professionals</em>, not agencies; no 48% figure and no audit price exist in the source.</li>
+          <li><b>"MIT: 95% of AI pilots fail, from 150 interviews, promoting a $250k membership."</b> Every clause is wrong or unsupported. See the contested-signal box.</li>
+          <li><b>"Raise your price to signal quality."</b> Not supported for services (r&nbsp;=&nbsp;.286 overall, significantly weaker for services).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 FRONTIER QUESTION ============ -->
+  <section class="section">
+    <div class="section-num">05</div>
+    <h2><span class="bar"></span>The Frontier Question</h2>
+    <div class="frontier">
+      <div class="q">When the vendors give away both the training and the automation &mdash; which every prior cycle says happens within about 36 months, and which Salesforce and HubSpot are executing right now &mdash; what is a small business still willing to pay a human for?</div>
+      <p>No lens addressed this, because each was asked what the market pays <em>today</em>. But the historian's pattern and the skeptic's roadmap point at the same date. HubSpot terminates its Provider Program in August 2026 and imposes a $400/month membership; Salesforce collapsed four partner tiers into two. The generalist implementation partner is being deliberately thinned out of existence, on a published schedule.</p>
+      <p>If the answer is "nothing," the entire category is a bridge trade and the correct play is to maximize cash now and exit. If the answer is <b>"accountability for a number"</b> &mdash; the thing a vendor structurally cannot sell, because Intuit cannot be liable for your DSO &mdash; then the durable asset was never the automation or the teaching. It is the measurement instrument and the person who signs their name under the result. That reading is consistent with every surviving finding here. But no lens tested whether an SMB will actually buy accountability from a solo operator with no bench, no brand, and no insurer standing behind them &mdash; and that, not the price card, is the question the business rests on.</p>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCES ============ -->
+  <div class="refs">
+    <h3>Evidence base &middot; verification status</h3>
+    <ul>
+      <li><span class="vstat ok">Confirmed</span> Grundy, A., Breaux, C., &amp; Khatiwoda, D. (2026). "Large Firms With at Least 20 Employees Biggest AI Users." U.S. Census Bureau, May 26, 2026. Overall AI use 17&ndash;20% (Dec 14 2025&ndash;May 3 2026); no significant change for firms &lt;20 employees; 250+ = 37%. Limit: ~1.2M sample split across six panels (~200k/wave); question wording changed Nov 2025 to "any business function." <a href="https://www.census.gov/library/stories/2026/05/ai-use-businesses.html">census.gov</a></li>
+      <li><span class="vstat ok">Confirmed</span> Allen, J. S. (2026). "Monitoring AI Adoption in the US Economy." FEDS Notes, Board of Governors of the Federal Reserve System, April 3, 2026. ~18% of firms adopted AI as of year-end 2025. Author-stated limits include question framing, materiality, and social-desirability bias. <a href="https://www.federalreserve.gov/econres/notes/feds-notes/monitoring-ai-adoption-in-the-u-s-economy-20260403.html">federalreserve.gov</a></li>
+      <li><span class="vstat ok">Confirmed</span> Barrero, Bloom, Davis, Foster, Meyer, Mihaylov &amp; Navarrete (2026). "How Much Are Firms Spending on AI (and What Will Happen to Headcounts)?" <em>Policy Hub: Macroblog</em>, Federal Reserve Bank of Atlanta, May 6, 2026. $2,068/employee (2026, employment-weighted); &gt;half of firms expect &le;$200/employee; top 10% &ge;$2,800. Limits: winsorized at 99th pct ($3,108 unwinsorized); fielded March 2026; senior-executive panel across all firm sizes, not SMB-specific. <a href="https://www.atlantafed.org/research-and-data/publications/policy-hub-macroblog/2026/05/06/how-much-firms-spending-on-ai-and-what-will-happen-to-headcounts">atlantafed.org</a></li>
+      <li><span class="vstat part">Corrected</span> Ramp Economics Lab (2026). "How much does it cost to be AI-pilled?" Ramp AI Index, June 26, 2026. Median $11.38/employee/month; top 10% $611; top 1% $7,449; 70,000+ businesses, aggregated card and bill-pay data. <b>Corrected:</b> the "46.6% adoption" figure is the December 2025 reading, not June 2026 (47.6% by Feb 2026). Ramp never concedes selection bias &mdash; cite as "Ramp customers." <a href="https://ramp.com/data/ai-index-june-2026">ramp.com</a></li>
+      <li><span class="vstat weak">False</span> AIStackHub, "AI Spending by Industry" &mdash; source of the "$18,000 median SMB AI spend" claim. No sample, no methodology, self-attributed; own note says segments are "modeled from industry patterns." Launders Atlanta Fed data for adjacent figures while leaving its headline unsourced. <b>Do not cite.</b> Primary substitute: JPMorganChase Institute, "Understanding the use of AI among small businesses," May 28, 2026. <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/understanding-ai-use-by-small-businesses">jpmorganchase.com</a></li>
+      <li><span class="vstat ok">Confirmed</span> Ashraf, N., Berry, J., &amp; Shapiro, J. M. (2010). "Can Higher Prices Stimulate Product Use? Evidence from a Field Experiment in Zambia." <em>American Economic Review</em> 100(5): 2383&ndash;2413. Peer-reviewed field RCT separating screening from sunk cost: economically important screening effects; no consistent sunk-cost effects. <a href="https://www.aeaweb.org/articles?id=10.1257/aer.100.5.2383">aeaweb.org</a></li>
+      <li><span class="vstat part">Corrected</span> Moorthy, S. &amp; Srinivasan, K. (1995). "Signaling Quality with a Money-Back Guarantee: The Role of Transaction Costs." <em>Marketing Science</em> 14(4): 442&ndash;466. Peer-reviewed. <b>Correction:</b> a pure analytical model &mdash; no data, no effect sizes; any number attributed to it is fabricated. Transaction costs act non-monotonically. Mechanism presupposes an experience good; consulting is a credence good (Dulleck &amp; Kerschbamer, <em>JEL</em> 44(1)), so transfer is unproven. Failure modes: Meyer, Gremler &amp; Hogreve (2014, <em>JSR</em>) &mdash; guarantees do not raise firm value; Wirtz &amp; Kum (2004, <em>JAMS</em>) &mdash; one-shot buyers cheat most. <a href="https://pubsonline.informs.org/doi/10.1287/mksc.14.4.442">informs.org</a></li>
+      <li><span class="vstat part">Unverified in this run</span> V&ouml;lckner, F. &amp; Hofmann, J. (2007). "The price-perceived quality relationship: A meta-analytic review." <em>Marketing Letters</em> 18: 181&ndash;196. 71 effects; r = .286; significantly weaker for services; declining over time. Surfaced by the Academic lens; <b>not independently re-verified by this run's verification agents.</b> <a href="https://ideas.repec.org/a/kap/mktlet/v18y2007i3p181-196.html">ideas.repec.org</a></li>
+      <li><span class="vstat weak">Demoted</span> Consulting Success, "Consulting Fees" and "Consulting Statistics" (2023), n&asymp;1,000 self-selected. Source of "51% vs 39% $10k+ projects" (<b>corrected:</b> average project value, not landing; no close-rate measure exists), "60% first client is a referral," "52% vs 18% specialists." <b>Severe conflict of interest:</b> sells Clarity Coaching on the same pages ("Over 80% of our clients raise their rates"); no methodology disclosed; convenience sample selected on the outcome variable; internally inconsistent (29% vs 23% hourly). <b>Independent corroboration: none found.</b> <a href="https://www.consultingsuccess.com/consulting-fees">consultingsuccess.com</a></li>
+      <li><span class="vstat weak">False</span> Hinge Research Institute &mdash; the claim "85% of professional-services new business is referral-sourced" does not exist. Actual: 81.5% of firms have <em>received</em> a referral from a non-client (n=523); 71% of buyers ask friends/colleagues when searching. Different construct. <a href="https://hingemarketing.com/research-institute">hingemarketing.com</a></li>
+      <li><span class="vstat weak">False</span> "0.2% cold-email close / 1 deal per 464 emails" &mdash; misattributed to Belkins; the figure is Focus Digital's. Belkins' 2025 study (7,530,489 emails) reports a 0.46% reply rate and ~0.016% booking &mdash; ~30x below the claimed meeting rate. The claim fuses two vendors' incompatible numbers. <a href="https://belkins.io/blog/cold-email-response-rates">belkins.io</a></li>
+      <li><span class="vstat weak">Contested</span> Challapally, A., Pease, C., Raskar, R., &amp; Chari, P. (2025). <em>The GenAI Divide: State of AI in Business 2025</em>. MIT NANDA, v0.1, 26pp. <b>Not peer-reviewed; self-labeled "Preliminary Findings"; sole listed reviewer is a co-author.</b> Actual claim: "95% of organizations are getting zero return." Method: 300+ public initiatives, 52 organizational interviews, 153 senior-leader surveys &mdash; the widely-repeated "150 interviews" is a press artifact. Critique: Raynovich, <em>Futuriom</em>, Aug 26 2025. <a href="https://www.futuriom.com/articles/news/why-we-dont-believe-mit-nandas-werid-ai-study/2025/08">futuriom.com</a></li>
+      <li><span class="vstat part">Corrected</span> 451 Research / S&amp;P Global Market Intelligence, <em>Voice of the Enterprise: AI &amp; Machine Learning, Use Cases 2025</em>, n=1,006 (North America + Europe). 42% abandoned most AI initiatives before production (from 17%); 46% of PoCs scrapped. <b>Corrected:</b> reported March 2025, not October 2025. Primary is gated; verified via CIO Dive quoting verbatim. <a href="https://www.ciodive.com/news/AI-project-fail-data-SPGlobal/742590/">ciodive.com</a></li>
+      <li><span class="vstat weak">Demoted</span> EY (2016). <em>Get ready for robots</em>. Source of "30&ndash;50% of initial RPA projects fail" &mdash; <b>not a study</b>: a consultancy observation with no sample or method, phrased "as many as" (upper bound), selection-biased (EY is engaged after failures). Deloitte (2017), <em>The robots are ready. Are you?</em> &mdash; "3% scaled to 50+ robots"; <b>corrected:</b> n&asymp;424, not 478 (the 478 confuses Deloitte's 2022 survey of 479 execs), so 3% &asymp; 13 organizations. <a href="https://eyfs.ie/wp-content/uploads/2016/11/ey-get-ready-for-robots.pdf">eyfs.ie</a></li>
+      <li><span class="vstat ok">Confirmed</span> Viant Corporation, Form 10-K (FY2001). "Net revenues decreased 73% from $127.2 million... to $34.6 million." Audited: $34,606K / $127,162K. <a href="https://www.sec.gov/Archives/edgar/data/1028122/000091205702013097/a2075172z10-k.htm">sec.gov</a></li>
+      <li><span class="vstat ok">Confirmed</span> SS&amp;C Technologies, Form 10-K (FY2022), Note 8: "On March 16, 2022, we purchased all of the outstanding stock of Blue Prism Group plc... for approximately $1.6 billion" ($1,645M). "Far below peak" is inference, not in the filing. <a href="https://www.sec.gov/Archives/edgar/data/1402436/000095017023005072/ssnc-20221231.htm">sec.gov</a></li>
+      <li><span class="vstat part">Corrected</span> USWeb/CKS, Form 10-K405 (FY1998), Note 2. <b>Corrected:</b> 38 acquisitions Aug 1996&ndash;Dec 1998 (not "37, Mar 1997&ndash;Sep 1998"); merged with Whittman-Hart 1 Mar 2000 as marchFIRST; Chapter 11 12 Apr 2001; <b>converted to Chapter 7 on 26 Apr 2001 &mdash; not "dissolved May 2001"</b> (Case No. 01 B 24742, N.D. Ill.). <a href="https://www.sec.gov/Archives/edgar/data/1010724/0001012870-99-000906.txt">sec.gov</a></li>
+      <li><span class="vstat part">Corrected</span> Scient Corporation, Form 10-K (FY2001). Revenue peaked in the quarter ended 30 Sept 2000 (~$100M), then fell 22% and 66%. <b>Corrected: the "$133 stock in fall 2000" is wrong</b> &mdash; the high was $130.00 in the quarter ended 31 Mar 2000; by fall 2000 the high was $71.50. The stock peaked ~6 months <em>before</em> revenue. "1,180 staff / 675 laid off" appear nowhere in the 10-K (which cites ~460 cuts + up to 850 more) &mdash; Wikipedia-only, unverified. Scient and iXL combined 7 Nov 2001 under the <em>Scient</em> name; Chapter 11 17 July 2002. <a href="https://www.sec.gov/Archives/edgar/data/1081394/000095014901500987/f73765e10-k.txt">sec.gov</a></li>
+      <li><span class="vstat part">Corrected</span> von Hoffman, C. "Salesforce and HubSpot reshape partner programs for the AI era." <em>MarTech</em>, 9 March 2026. Salesforce: 4 tiers &rarr; 2 (Select/Summit) + 28 badges. HubSpot: $400/mo membership from 15 July 2026; Provider Program terminated 15 Aug 2026; "the great thinning." <b>Corrected:</b> the article specializes partners by <em>discipline</em> (strategy, data architecture, platform engineering), <b>not by vertical</b> &mdash; that detail was unsupported. <a href="https://martech.org/salesforce-and-hubspot-reshape-partner-programs-for-the-ai-era/">martech.org</a></li>
+      <li><span class="vstat weak">False</span> Backlinko, "SEO Pricing" &mdash; the claims "48% of agencies bill $1,500&ndash;$5,000/mo (300+ agencies polled Apr&ndash;May 2026)" and "technical audits fetch $10k+" are <b>not in the source</b>. Backlinko surveyed 300+ SEO <em>professionals</em>, not agencies; no field dates published; the page states an average of $1,000&ndash;$2,500/mo and prices no audits. <a href="https://backlinko.com/seo-pricing">backlinko.com</a></li>
+      <li><span class="vstat weak">False</span> "Free audits are the highest-converting lead magnet (1&ndash;3% visitor&rarr;lead, 50&ndash;70% MQL&rarr;SQL)" &mdash; traces to one uncited sentence on a prospecting-software vendor's blog, zero methodology. Insites (which does sell white-label audit tools) never made the claim &mdash; the conflict-of-interest reasoning was sound but aimed at the wrong company. 1&ndash;3% is the ordinary B2B baseline (~1.9% median); 50&ndash;70% MQL&rarr;SQL sits far above the ~15&ndash;38% benchmark. No peer-reviewed evidence exists. <a href="https://www.zeliq.com/blog/lead-magnet-2026">zeliq.com</a></li>
+      <li><span class="vstat weak">False</span> "&gt;$5,000 triggers SMB finance review" &mdash; a content-marketing post by a vendor's Senior Content Marketing Manager, no citations, closing in a product pitch, <b>self-contradicting within the same article</b> ($500/$1,000/$5,000/$7,500; $50&ndash;$7,500 across their corpus). Webster &amp; Wind (1972) and Johnston &amp; Bonoma (1981) are peer-reviewed but contain <em>no</em> dollar thresholds. COSO/AICPA/IIA require entity-specific thresholds &mdash; evidence against a universal number. 81.9% of US firms have no employees at all. <a href="https://relayfi.com/blog/company-spending-control/">relayfi.com</a></li>
+      <li><span class="vstat weak">Demoted</span> business.com, "2026 Small Business AI Outlook Report," Jan 20 2026 &mdash; "57% investing in AI"; n=1,009 leaders <em>or employees</em>, 2&ndash;250 employee firms, opt-in online panel, excludes 1-person firms. And Goldman Sachs, Mar 17 2026 &mdash; "67% expect increased revenue from AI"; n=1,256 <em>10,000 Small Businesses program participants</em> (self-selected cohort). Neither is a probability sample; both measure intent, not use. <b>Do not contrast with Census BTOS as like-for-like.</b> <a href="https://www.goldmansachs.com/community-transformation/10000-small-businesses-voices/insights/ai-presents-a-major-opportunity-for-small-businesses">goldmansachs.com</a></li>
+    </ul>
+  </div>
+
+  <div class="footer">Storm Research v2 &middot; 27/27 load-bearing claims independently verified against primary sources, 2026-07-15 &middot; 9 false or unsourced, 12 corrected, 6 survived clean, 5 demoted &middot; Reliability = evidence quality, not author confidence</div>
+
+</div>
+</body>
+</html>

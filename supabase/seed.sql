@@ -55,3 +55,19 @@ on conflict (path) do nothing;
 -- clone. Set the CONNECTOR_STRIPE_SECRET_KEY secret and enable it to go live.
 insert into public.connectors (type, name, enabled, config) values
   ('stripe', 'Stripe', false, '{}'::jsonb);
+
+-- Loop Engine demo: an enabled ar_followup loop so the Loops page renders a
+-- live-looking approve queue on a fresh clone. The cadence_days config drives
+-- the reminder schedule (day-7, day-14, day-30 after due date). The sender_name
+-- is merged into the draft email body. Safe to delete.
+insert into public.loops (type, enabled, config) values
+  ('ar_followup', true, '{"cadence_days":[7,14,30],"sender_name":"Accounts Receivable"}'::jsonb);
+
+-- Sample AR invoices: two overdue (triggers reminder proposals on first loop run),
+-- one current (suppressed — not yet past any cadence threshold). Keyed on
+-- external_id so re-seeding is idempotent.
+insert into public.ar_invoices (external_id, customer_name, customer_email, amount_cents, due_date, status) values
+  ('INV-1041', 'Apex Roofing LLC',    'billing@apexroofing.example', 850000,  (now() - interval '16 days')::date, 'open'),
+  ('INV-1042', 'Crestline Interiors', 'ap@crestline.example',        325000,  (now() - interval '9 days')::date,  'open'),
+  ('INV-1043', 'Waverly Group',       'finance@waverlygroup.example', 510000, (now() + interval '12 days')::date, 'open')
+on conflict (external_id) do nothing;

@@ -2,8 +2,8 @@
 title: Four-Condition Loop Test
 type: concept
 created: 2026-06-20
-updated: 2026-06-20
-sources: [.claude/skills/autoresearch/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, docs/PROJECT_CONTEXT.md]
+updated: 2026-07-15
+sources: [.claude/skills/autoresearch/SKILL.md, .claude/skills/validator-forge/SKILL.md, supabase/migrations/20260617000800_audits.sql, src/lib/audit.ts, website/src/sections/LoopAudit.tsx, website/src/sections/TrustStrip.tsx, supabase/functions/kpi-watch/index.ts, docs/PROJECT_CONTEXT.md, external:what-actually-matters-in-ai-2026]
 tags: [automation, methodology, loops, autoresearch, audits, framework]
 ---
 
@@ -32,7 +32,7 @@ A task is a **loop candidate** only if it passes all four:
 | # | Condition | Meaning | Maps to (in this repo) |
 |---|-----------|---------|------------------------|
 | 1 | **Repeats** | Recurs on a predictable cadence (daily / weekly / per-event). Frequency × time-per-run is the prize. | `findings.occurrences`, `metric_snapshots` cadence |
-| 2 | **A rule decides "done"** | An objective acceptance check exists — the `val_bpb` analog. If "done" needs human taste/judgment, it is not loop-ready. | the `autoresearch` acceptance gate |
+| 2 | **A rule decides "done"** | An objective acceptance check exists — the `val_bpb` analog. If "done" needs human taste/judgment, it is not loop-ready. | the `autoresearch` gate, run as an independent `loop-verify` subagent |
 | 3 | **Afford wasted runs** | Failure is cheap and reversible; the loop is advisory or easily reverted, not high-blast-radius. | guardrail design (advisory-only) |
 | 4 | **AI has data + tools** | The inputs are reachable and the actions exist as tools/integrations. Locked-away data or a missing API blocks it. | [[AI Tool Registry]], [[Connector Library]] |
 
@@ -44,6 +44,14 @@ echoing autoresearch's `kept` / `discarded` / `flagged`:
 - **`candidate`** — passes all four; proceed to ranking.
 - **`blocked`** — fails #2 or #4; record the one thing that would unblock it.
 - **`not-a-loop`** — fails #1 or #3 enough that it should stay manual.
+
+When condition #2's done-rule is an LLM judgment rather than a deterministic check (e.g.
+"is this research finding good enough?"), it should run as an **independent, fresh-context
+verifier** — a separate subagent that did not produce the work, scoring the output and gating
+on a threshold — not the producing agent grading its own homework. The reusable form is the
+`loop-verify` skill (`.claude/skills/loop-verify/SKILL.md`); `autoresearch` is its first
+adopter. A deterministic comparison (like the [[KPI-Watch Loop]]'s `status != on_track`) needs
+no such subagent — it is already objective.
 
 ### Stage 2 — the ranking (among gate-passers)
 
@@ -61,6 +69,31 @@ This is the same high-value / low-effort ordering the Opportunity Report already
 uses — a loop candidate is just an automation opportunity scored for *loop-ability*
 first.
 
+## External corroboration (2026-07-15)
+
+The method was arrived at independently, by someone with no exposure to Harbormill. In
+[[What Actually Matters in AI Right Now (2026)]], Matt Wolfe describes dictating an unstructured
+~20-minute account of his business to a frontier model and getting his work back triaged three
+ways: **stop doing it / hand it to a person / let the model do it**. He then connected the model
+to his messaging, mail, file storage, and meeting-notes tools so it reviews those surfaces
+continuously, points out the work he repeats, and offers to take it over.
+
+Mapped onto this page: that is **condition #1 (repeats)** detected from live surface data, and
+an **approve-first action queue** as the guardrail for **condition #3 (afford wasted runs)** —
+he approves, rewords, or archives each draft. Notably his setup has **no condition #2** at all:
+no objective done-rule, no independent verifier. A human reads every draft. That is a coherent
+design — it trades automation for taste — and it is the honest comparison point for Harbormill's
+insistence on a validator. Harbormill's claim is not *we thought of this*; it is *we close the
+loop where he leaves a human in it.*
+
+Two cautions, recorded so this isn't read as a win:
+
+- **He needed no consultant to build it.** The same evidence corroborating the method threatens
+  the business model around it — see the contradiction flag on [[SMB AI-Automation Landscape]].
+- **Discovery is the commoditizing half.** His closing advice to an audience of AI agency owners
+  was to run that same self-dictated audit themselves. The Loop Audit's *finding* step is now
+  free; see [[The Harbormill Ladder]].
+
 ## Why it fits Harbormill
 
 - **Education-first, not a black box.** The test is teachable: an operator can learn
@@ -77,7 +110,11 @@ first.
 
 1. **Dev skill (`loop-audit`)** — audits the Harbormill workspace itself (repo, git
    history, Claude Code transcripts) to decide what dev automation to build next. The
-   dogfood; also the tool used to prioritize surfaces 2 and 3.
+   dogfood; also the tool used to prioritize surfaces 2 and 3. Its condition-#2
+   companion is **`validator-forge`** (`.claude/skills/validator-forge/SKILL.md`),
+   which analyzes existing capabilities to identify which can become the objective
+   validator that unblocks a blocked loop candidate — the forge that turns a
+   `blocked` finding into a `candidate`.
 2. **Sales deliverable (shipped)** — the 4-Condition Test packaged as a paid "Loop
    Audit": run an in-deck audit in **Loop Audit** mode (`is_loop_audit`), score each
    opportunity against the four conditions, and export a branded build-first
@@ -92,12 +129,27 @@ first.
    ranked candidates. Deferred until the data contract is known — today it fails
    condition #4 (the per-client task data is not yet ingested).
 
+**A first in-product loop has shipped** (distinct from surface 3's Aria-scoring
+feature): the [[KPI-Watch Loop]] — a deterministic, no-LLM scheduled loop that
+watches `metric_latest` and files a finding for any breached KPI. It is the
+textbook condition-#2 loop: the `status != on_track` comparison *is* the
+validator, so no human taste decides when a run is done. It is live on both
+Supabase projects and is the live proof point behind the [[Marketing Site]] trust
+strip.
+
 ## See Also
 
 - [[Self-Improving App]]
+- [[Independent Verification]]
+- [[Loop Memory]]
 - [[ROI-Discovery Audit]]
 - [[The Harbormill Ladder]]
 - [[AI Tool Registry]]
 - [[Extending AIOS]]
 - [[Marketing Site]]
 - [[Harbormill AIOS]]
+- [[KPI-Watch Loop]]
+- [[SMB AI-Automation Landscape]]
+- [[What Actually Matters in AI Right Now (2026)]]
+- Condition-#2 companion skill: `.claude/skills/validator-forge/SKILL.md`
+- Independent condition-#2 verifier skill: `.claude/skills/loop-verify/SKILL.md`
