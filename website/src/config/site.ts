@@ -48,7 +48,7 @@ export const site = {
   philosophy: {
     eyebrow: "The Harbormill difference",
     title: "Education first. Automation second.",
-    body: "Most shops sell you a black box. I'd rather teach you to fish. We start by getting you fluent with AI — set up Claude, learn the prompts and workflows your business actually needs — then automate the busywork on top of that foundation. You come out understanding your tools, not dependent on me.",
+    body: "Most shops sell you a black box. I'd rather teach you to fish. We start by getting you fluent with AI — set up Claude, learn the prompts and workflows your business actually needs — then automate the busywork on top of that foundation. You come out understanding your tools, not dependent on me. And your systems aren't tied to any one vendor's tool — we run them on whatever AI is best and upgrade as it improves, so they get better as the technology does instead of going stale.",
   },
 
   problem: {
@@ -280,6 +280,10 @@ export const site = {
     {
       q: "How much does this cost?",
       a: "It starts low and stays proportional to results. Everything begins with a free 30-minute intro. The first paid step is an Audit at $500–$2,500 fixed scope — and if we go ahead with the build, that fee comes off it. You only move to a larger project once we've proven value together, and to a retainer only after that.",
+    },
+    {
+      q: "Won't this be obsolete when the AI changes so fast?",
+      a: "No — that's exactly what you're protected from. Your automations aren't tied to any one tool or model: they run on the best AI available, and we swap in something better the moment it ships. As the technology leaps forward, your systems get faster and cheaper — you ride every advance instead of being left behind.",
     },
     {
       q: "Will AI replace my staff?",
