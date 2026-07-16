@@ -18,6 +18,12 @@ export interface AriaContextValue {
   pending: string | null;
   isThinking: boolean;
   error: string | null;
+  /** Incremental text accumulated during the current streaming reply. */
+  streamingText: string;
+  /** Human-readable label for the tool currently running (null when idle). */
+  statusLabel: string | null;
+  /** Route-based action chips surfaced by the last assistant reply. */
+  actions: { label: string; route: string }[];
   /** Send a message (does not change stage). */
   sendMessage: (text: string) => void;
   /** Open into chat and send a prompt in one step (used by quick chips). */
