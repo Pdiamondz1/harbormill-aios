@@ -95,7 +95,13 @@ group, not its buyers. Read it as competitor and practitioner signal, **not cust
 - [[Independent Verification]]
 - [[Media Ingest]]
 - [[Project Context]]
+- [[The Client Didn't Ask for AI (2026)]] — sibling Day 2 session. Independently reaches the same
+  pricing conclusion (efficiency is not a discount), from the same agency-owner audience — which
+  is why it is *corroboration and not evidence*, exactly as this page's item 4 says. It also
+  flags what neither session's method would have found: see the scope flag on
+  [[Four-Condition Loop Test]].
 
-**Pending cross-reference:** a *Tool Wars Panel 2026* source page covering the sibling session
-(Kearns / Ebbelaar / Medin, same cohort, same week) exists on the unmerged PR #39 branch, not on
-`main`. If that lands, wikilink it from here — and apply this page's no-quotes rule to it first.
+**Related session:** [[Tool Wars Panel 2026]] (Kearns / Ebbelaar / Medin, same cohort, same week)
+covers what clients buy and what practitioners charge. Its price table was demoted to unverifiable
+audience rent by the PR #39 roast + storm-research pass — **superseded, do not cite** — but its
+practitioner corroboration of the ladder shape stands.
