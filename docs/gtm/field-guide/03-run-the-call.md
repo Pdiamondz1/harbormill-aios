@@ -8,11 +8,21 @@
 > this file is the deeper toolkit for doing exactly that — for **any** pain, not just the three
 > loops the script already listens for.
 
-This is file 3 in the [Field Guide](00-index.md). Where this and `docs/gtm/` ever disagree on
-pricing, **`docs/gtm/` wins.** Pricing used here: Loop Audit **$500–$2,500** (fee fully credited),
-Focused Project **$5,000** fixed (audit credited, 50/50), Retainer **Operate $3,000 / Operate+Build
-$5,000 / Embedded $8–10k** — all from [`../retainer-tiers.md`](../retainer-tiers.md) and
+This is file 3 in the [Field Guide](00-index.md). **Jurisdiction:** `docs/PROJECT_CONTEXT.md` §8
+owns the ladder and every published price; `docs/gtm/` (this file included) owns **call
+mechanics** — scripts, objection handling, payment terms, retainer-tier structure. Where those
+disagree on *mechanics*, `docs/gtm/` wins; where they disagree on a *price*, **§8 wins.**
+
+Mechanics used here: fee fully credited on the audit; 50/50 on the project; Retainer tiers
+**Operate $3,000 / Operate+Build $5,000 / Embedded $8–10k** — from
+[`../retainer-tiers.md`](../retainer-tiers.md) and
 [`../project-proposal-template.md`](../project-proposal-template.md).
+
+> **⚠️ Price discrepancy to resolve (2026-07-16).** This file and `docs/gtm/` describe the
+> **Focused Project as `$5,000` fixed**, but the canonical §8 ladder (rewritten by PR #39) lists it
+> as **`$2,500–$10,000`**. Both are live. This is a pricing decision, not a docs fix — surfaced
+> here, deliberately **not** silently reconciled. Until it's settled, quote the §8 range on a call.
+> The Audit (**$500–$2,500**, fee credited) is unaffected — both sources agree.
 
 ---
 
