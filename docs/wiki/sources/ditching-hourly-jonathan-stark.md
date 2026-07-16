@@ -85,7 +85,8 @@ value is the method, not evidence about buyers.
 1. **The published ladder is the *door*, not the price.** This method implies **no published
    rate card at all** — the number is derived per client, live, from their value. Harbormill
    publishes fixed prices. That tension is real and is **flagged, not resolved**, on
-   [[The Harbormill Ladder]]. It does not adjudicate the entry-rung reprice under review.
+   [[The Harbormill Ladder]]. It is separate from the entry-rung reprice, which PR #39 already
+   settled (hourly retired, prices held).
 
 2. **The [[ROI-Discovery Audit]] already computes the input this method needs.** The framework's
    hard step is obtaining a credible value number; his answer is a careful interview. Our audit
@@ -119,7 +120,7 @@ value is the method, not evidence about buyers.
 - [[Media Ingest]]
 - [[Project Context]]
 
-**Pending cross-reference:** a *Tool Wars Panel 2026* source page (Kearns / Ebbelaar / Medin —
-same cohort, same week, and the session carrying the actual market rates) exists on the unmerged
-PR #39 branch, not on `main`. If it lands, wikilink it from here — and apply this page's
-no-quotes rule to it first.
+**Related session:** [[Tool Wars Panel 2026]] (Kearns / Ebbelaar / Medin — same cohort, same
+week) covers the *market-rate* side this session leaves out. Note its price table was demoted to
+unverifiable audience rent by the PR #39 roast + storm-research pass — **superseded, do not
+cite** — but its practitioner corroboration of the ladder shape stands.

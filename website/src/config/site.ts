@@ -164,16 +164,10 @@ export const site = {
       "Start small and low-risk, and climb only as results prove out. It's a repeatable engine: a Loop Audit finds the highest-ROI automation, a Focused Project ships it, and a Retainer keeps it compounding — so you never commit to a big build before you've seen ROI.",
     rungs: [
       {
-        name: "Get started",
-        price: "$100",
-        unit: "per hour",
-        body: "One-on-one consulting sessions — get your Claude setup running, solve a real problem, learn the ropes. We build the relationship before anything bigger.",
-      },
-      {
         name: "Loop Audit",
         price: "$500–$2,500",
-        unit: "fixed scope",
-        body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue.",
+        unit: "fixed scope · credited toward your build",
+        body: "We map your workflows, find the highest-ROI automation, and scope the first real build. You leave with a concrete plan whether or not we continue — and if we do, the fee comes off the build.",
       },
       {
         name: "Focused project",
@@ -188,7 +182,7 @@ export const site = {
         body: "Ongoing automation and support — but only after trust and results. We expand what's working and keep your systems sharp.",
       },
     ],
-    footnote: "Every engagement starts with a free 30-minute intro. One-on-one consulting is $100/hour.",
+    footnote: "Every engagement starts with a free 30-minute intro. The Loop Audit fee is credited toward your build if we go ahead.",
   },
 
   loopAudit: {
@@ -279,7 +273,7 @@ export const site = {
   faqs: [
     {
       q: "How much does this cost?",
-      a: "It starts low and stays proportional to results. One-on-one consulting is $100/hour, and you only move to larger fixed-scope projects once we've proven value together. The intro call is always free.",
+      a: "It starts low and stays proportional to results. Everything begins with a free 30-minute intro. The first paid step is a Loop Audit at $500–$2,500 fixed scope — and if we go ahead with the build, that fee comes off it. You only move to a larger project once we've proven value together, and to a retainer only after that.",
     },
     {
       q: "Will AI replace my staff?",

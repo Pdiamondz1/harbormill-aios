@@ -216,10 +216,20 @@ lose. The price is justified when the **problem is costly enough that the return
 audit is the qualifier:
 
 - Prize is multiples of the fee → no-brainer; press toward the build.
-- Business too small for the math to clear → the **$100/hr consulting or the audit itself** is the
-  right door, not a retainer. **Qualifying out is part of the system, not a failure** — it protects
-  your time and your proof. (Mirrors the BANT-lite budget check in the
-  [intro-call script](../intro-call-script.md).)
+- Business too small for the math to clear → **the audit is the only door**, not a retainer, and
+  "AI is the wrong answer for you right now" is a legitimate audit finding. **Qualifying out is part
+  of the system, not a failure** — it protects your time and your proof. (Mirrors the BANT-lite
+  budget check in the [intro-call script](../intro-call-script.md).) There is no hourly rung to fall
+  back to: hourly was retired 2026-07-15, and the paid audit is what does this job — its fee exists
+  to *screen*, not to earn.
+
+**Never price into their "AI budget."** More than half of firms expect to spend ≤$200/employee/year
+on AI (Atlanta Fed 2026) — a 40-person business has a *total* AI budget of roughly $1k–$8k, so any
+real build is several multiples of the whole pocket and the answer is no before you finish the
+sentence. Price against the **labour line** instead: the part-time hire they didn't make, the 15
+hrs/week of retyping, the collections person they keep almost hiring. Against a $4,500/mo hire, a
+$2,500/mo retainer is cheap. Same number, 20x deeper pocket. The worksheet above already computes
+this — it lands in the labour pocket, so say so out loud.
 
 > **The throughline:** you're not selling software hours — you're selling **cash recovered and hours
 > back, with proof.** Price to the value; justify with *their* number. If the number is big and the

@@ -90,7 +90,8 @@ Two consequences:
 
 - **A project price can be derived from the audit's own number** rather than any fixed figure on
   the ladder. Not proposed as a change here — the ladder's published prices are canon in
-  [[Project Context]] §8, and the reprice under review on PR #39 / PR #40 is a separate thread.
+  [[Project Context]] §8, and the entry-rung reprice was already settled on PR #39 (hourly
+  retired, prices unchanged); this is a separate idea about how the project rung could be priced.
 - **The estimate gets checked.** The promised-vs-delivered reconciliation (spec
   `2026-06-22-aios-outcome-edition-design.md`, `value_events_audit_link`) compares the audit's
   promise against delivered `value_events`. Most consultants talk their way to a value number and

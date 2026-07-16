@@ -92,8 +92,9 @@ door, not the price**: a lead-generation artifact that sets expectations and low
 while the real number is set in the sales interview. But that is a hypothesis.
 
 **Consequence worth noting:** debates about the published entry-rung number are debates about
-the *door*. They do not settle what any given client should pay. See the reprice under review on
-PR #39 / PR #40 — **deliberately not adjudicated here.**
+the *door*. They do not settle what any given client should pay. The entry-rung question was
+resolved separately on PR #39 (hourly retired, the audit is the front door) — this *door-vs-price*
+tension is a different question and remains open.
 
 ## Known limits
 
