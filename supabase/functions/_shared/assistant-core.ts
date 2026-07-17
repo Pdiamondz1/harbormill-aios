@@ -1,12 +1,26 @@
-// Aria's chat turn, shared by assistant-chat (deck UI) and external front-ends
-// (e.g. google-chat-webhook). Owns everything AFTER auth + conversation
-// resolution: validate, persist the user message, load history, run the tool
-// loop, log cost, persist the reply, return the text. Callers handle their own
-// auth, conversation ownership/creation, and response formatting.
+// Aria's chat turn engine — the ONE streaming core shared by assistant-chat
+// (deck UI) and external front-ends (e.g. google-chat-webhook). Owns everything
+// AFTER auth + conversation resolution: validate, persist the user message, load
+// history, run the STREAMING Anthropic tool loop, log cost, persist the reply,
+// return the final text (+ deck action chips). Callers handle their own auth,
+// conversation ownership/creation, transport, and response formatting.
+//
+// The core ALWAYS streams from Anthropic (stream:true) and assembles the message
+// via StreamAccumulator, whose finalize() returns the same {content, stop_reason,
+// usage} shape the tool loop already consumes. The optional `emit` callback is the
+// only difference between surfaces:
+//   - emit PRESENT (deck): forwards {type:"text",delta} per token and
+//     {type:"status",tool,label} per tool exec — the thin deck caller enqueues each
+//     as one NDJSON line.
+//   - emit ABSENT (Chat): streams internally, emits nothing; caller uses the
+//     returned TurnResult.content only.
+// `emit` is OPTIONAL — every call is guarded as emit?.(...).
 
 import { logCost } from "./cost-ledger.ts";
 import { anthropicFetch } from "./anthropic-fetch.ts";
 import { TOOLS, type ToolContext } from "../assistant-chat/tools.ts";
+import { reconstructHistory, type StoredRow } from "./history.ts";
+import { StreamAccumulator, parseSseLines } from "./stream-accumulator.ts";
 
 const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
 const ANTHROPIC_MODEL = Deno.env.get("ANTHROPIC_MODEL") ?? "claude-sonnet-4-6";
@@ -18,20 +32,45 @@ const ASSISTANT_PERSONA =
   Deno.env.get("ASSISTANT_PERSONA") ??
   "the operator's AI co-pilot — concise, candid, and grounded in this business's live metrics and knowledge base";
 
-const MAX_INPUT_LENGTH = 20_000;
-const MAX_TOOL_ROUNDS = 8;
+// Exported so the deck caller imports it for its pre-stream 400 (the two never drift).
+export const MAX_INPUT_LENGTH = 20_000;
+// #21 wins where #21 and #35 both define a constant: tool-round cap 12 (not #35's 8).
+const MAX_TOOL_ROUNDS = 12;
+const TOKEN_SAFETY_NET = 300_000;
+
+// Extended thinking + output budget. Thinking budget of 0 disables it.
+const THINKING_BUDGET = Number(Deno.env.get("ANTHROPIC_THINKING_BUDGET") ?? "0") || 0;
+const MAX_OUTPUT_TOKENS = Number(Deno.env.get("ANTHROPIC_MAX_TOKENS") ?? "4096") || 4096;
 
 // Per-deployment tool toggle (plug-and-play): comma-separated tool names to hide.
 const DISABLED_TOOLS = new Set(
   (Deno.env.get("DISABLED_TOOLS") ?? "")
     .split(",")
     .map((s) => s.trim())
-    .filter(Boolean)
+    .filter(Boolean),
 );
 
 // Thrown when the user message exceeds MAX_INPUT_LENGTH or is blank; callers map
 // it to their own error shape (assistant-chat → 400, webhook → friendly text).
 export class AssistantInputError extends Error {}
+
+// Friendly per-tool status labels surfaced to the UI while a tool runs.
+const STATUS_LABELS: Record<string, string> = {
+  search_knowledge: "Searching the knowledge base…",
+  read_metrics: "Reading the latest metrics…",
+  get_latest_briefing: "Pulling the latest briefing…",
+  get_value_summary: "Calculating value delivered…",
+  get_document: "Reading the document…",
+  get_weight_trend: "Checking the growth trend…",
+  get_cost_stats: "Reviewing AI spend…",
+  create_finding: "Logging the finding…",
+  propose_correction: "Queuing the correction…",
+  compose_email_link: "Drafting the email…",
+  export_to_drive: "Exporting to Drive…",
+  list_drive_files: "Listing Drive files…",
+  suggest_actions: "Suggesting next steps…",
+  // unmatched tools fall back to "Working on <name>…" below.
+};
 
 const INJECTION_PATTERNS = [
   /ignore\s+(all\s+)?previous/gi,
@@ -109,6 +148,29 @@ function extractText(content: any): string {
   return "";
 }
 
+// Build a streaming Anthropic request body. Always streams, never sets
+// temperature (incompatible with extended thinking), and enables extended
+// thinking when THINKING_BUDGET > 0 — bumping max_tokens to leave room for the
+// thinking budget plus the visible answer. The cache breakpoint rides on the
+// last message via withHistoryCacheBreakpoint.
+// deno-lint-ignore no-explicit-any
+function buildRequest(system: any, messages: any[], tools: any[]): Record<string, unknown> {
+  // deno-lint-ignore no-explicit-any
+  const body: Record<string, any> = {
+    model: ANTHROPIC_MODEL,
+    max_tokens: MAX_OUTPUT_TOKENS,
+    stream: true,
+    system,
+    messages: withHistoryCacheBreakpoint(messages),
+    tools,
+  };
+  if (THINKING_BUDGET > 0) {
+    body.thinking = { type: "enabled", budget_tokens: THINKING_BUDGET };
+    body.max_tokens = Math.max(MAX_OUTPUT_TOKENS, THINKING_BUDGET + 1024);
+  }
+  return body;
+}
+
 async function anthropic(body: unknown): Promise<Response> {
   return anthropicFetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -121,20 +183,52 @@ async function anthropic(body: unknown): Promise<Response> {
   });
 }
 
-export interface RunTurnOptions {
-  userId: string;
-  conversationId: string; // must already exist and be owned by userId
-  message: string;
-  isAdmin: boolean;
-  edgeFunction: string; // cost-ledger label
-  toolAllowlist?: ReadonlySet<string>; // when set, only these tool names are exposed
+// Stream one model call: feed the SSE accumulator and forward text deltas via the
+// OPTIONAL `emit`. Returns the assembled message (same shape as the non-streaming
+// JSON) so the tool loop is agnostic to streaming.
+// deno-lint-ignore no-explicit-any
+async function callModelStreaming(body: any, emit?: (e: unknown) => void) {
+  const resp = await anthropic(body); // anthropic() JSON.stringifies; body.stream === true
+  if (!resp.ok || !resp.body) {
+    throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
+  }
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  const acc = new StreamAccumulator();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    const { events, buffer: rest } = parseSseLines(buffer, decoder.decode(value, { stream: true }));
+    buffer = rest;
+    for (const ev of events) {
+      const { textDelta } = acc.push(ev);
+      if (textDelta) emit?.({ type: "text", delta: textDelta });
+    }
+  }
+  return acc.finalize();
 }
 
+export interface RunTurnOptions {
+  userId: string;
+  conversationId: string; // must already exist and be owned by userId (caller enforces)
+  message: string;
+  isAdmin: boolean;
+  edgeFunction: string; // cost-ledger label: "assistant-chat" | "google-chat-webhook"
+  toolAllowlist?: ReadonlySet<string>; // when set, only these tool names are exposed (Chat bot)
+}
+
+// Run one Aria turn. Streams to Anthropic internally; forwards text/status events
+// through `emit` when present (deck), otherwise silently returns the final text
+// (Chat). The tool loop persists #21's replay-safe shape so reconstructHistory
+// replays multi-tool conversations correctly on the next turn.
 // deno-lint-ignore no-explicit-any
 export async function runAssistantTurn(
+  // deno-lint-ignore no-explicit-any
   supabase: any,
   opts: RunTurnOptions,
-): Promise<{ content: string }> {
+  emit?: (e: unknown) => void,
+): Promise<{ content: string; actions?: unknown[] }> {
   if (!ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY not configured");
   const { userId, conversationId, isAdmin, edgeFunction, toolAllowlist } = opts;
 
@@ -146,23 +240,26 @@ export async function runAssistantTurn(
   }
 
   const sanitized = sanitize(opts.message);
+  // Persist the user message BEFORE loading history (so history includes it).
   await supabase.from("messages").insert({ conversation_id: conversationId, role: "user", content: sanitized });
 
+  // Tool-aware history: replay text + tool_use + tool_result rows so prior tool
+  // turns survive. reconstructHistory enforces tool_use/tool_result pairing so a
+  // cut window never reaches the API malformed.
   const { data: history } = await supabase
     .from("messages")
-    .select("role, content")
+    .select("role, content, tool_calls, tool_result")
     .eq("conversation_id", conversationId)
-    .in("role", ["user", "assistant"])
-    .not("content", "is", null)
+    .in("role", ["user", "assistant", "tool"])
     .order("created_at", { ascending: true })
-    .limit(40);
+    .limit(60);
 
   // deno-lint-ignore no-explicit-any
-  const claudeMessages: any[] = (history ?? []).map((m: { role: string; content: string }) => ({
-    role: m.role,
-    content: m.content,
-  }));
+  const claudeMessages: any[] = reconstructHistory((history ?? []) as StoredRow[]);
 
+  // Admin-only tools (requiresAdmin) are hidden from stakeholders; DISABLED_TOOLS
+  // are hidden for the whole deployment; a toolAllowlist (Chat bot) further
+  // restricts to a read-only set. Filter applies to both the list and execution.
   const availableTools = TOOLS.filter(
     (t) =>
       (isAdmin || !t.requiresAdmin) &&
@@ -173,14 +270,6 @@ export async function runAssistantTurn(
   const toolDefs = availableTools.map((t) => t.definition);
   const toolCtx: ToolContext = { supabase, userId, openaiKey: OPENAI_API_KEY, isAdmin };
 
-  const callModel = () =>
-    anthropic({
-      model: ANTHROPIC_MODEL,
-      max_tokens: 4096,
-      system,
-      messages: withHistoryCacheBreakpoint(claudeMessages),
-      tools: toolDefs,
-    });
   const ledger = (result: { usage?: { input_tokens?: number; output_tokens?: number } }) =>
     logCost(supabase, {
       userId,
@@ -190,19 +279,49 @@ export async function runAssistantTurn(
       outputTokens: result.usage?.output_tokens ?? 0,
     });
 
-  let resp = await callModel();
-  if (!resp.ok) throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
-  let result = await resp.json();
+  // deno-lint-ignore no-explicit-any
+  let capturedActions: any[] = [];
+
+  let result = await callModelStreaming(buildRequest(system, claudeMessages, toolDefs), emit);
   await ledger(result);
 
   let rounds = 0;
-  while (result.stop_reason === "tool_use" && rounds < MAX_TOOL_ROUNDS) {
+  let totalTokens = (result.usage?.input_tokens ?? 0) + (result.usage?.output_tokens ?? 0);
+  while (
+    result.stop_reason === "tool_use" &&
+    rounds < MAX_TOOL_ROUNDS &&
+    totalTokens < TOKEN_SAFETY_NET
+  ) {
     rounds++;
     // deno-lint-ignore no-explicit-any
     const toolUses = (result.content as any[]).filter((b) => b.type === "tool_use");
     // deno-lint-ignore no-explicit-any
     const toolResults: any[] = [];
+
+    // Persist the assistant tool-use turn for FUTURE replay. Strip thinking /
+    // redacted_thinking blocks — only text + tool_use are replay-safe; stale
+    // thinking signatures risk validation errors on later requests. The live
+    // loop (below) still pushes the unmodified content with thinking intact.
+    const persistedToolCalls = (result.content as Array<Record<string, unknown>>).filter(
+      (b) => b.type !== "thinking" && b.type !== "redacted_thinking",
+    );
+    await supabase.from("messages").insert({
+      conversation_id: conversationId,
+      role: "assistant",
+      content: extractText(result.content),
+      tool_calls: persistedToolCalls,
+    });
+
     for (const tu of toolUses) {
+      emit?.({
+        type: "status",
+        tool: tu.name,
+        label: STATUS_LABELS[tu.name] ?? `Working on ${tu.name}…`,
+      });
+      // Deck action chips come from the suggest_actions tool-use INPUT, not its result.
+      if (tu.name === "suggest_actions") {
+        capturedActions = (tu.input?.actions ?? []).slice(0, 3);
+      }
       const tool = availableTools.find((t) => t.definition.name === tu.name);
       let output: unknown;
       try {
@@ -210,6 +329,7 @@ export async function runAssistantTurn(
       } catch (err) {
         output = { error: err instanceof Error ? err.message : "tool failed" };
       }
+      // Audit the tool turn (tool_result row): content = tool_use_id, tool_result = output.
       await supabase.from("messages").insert({
         conversation_id: conversationId,
         role: "tool",
@@ -218,20 +338,49 @@ export async function runAssistantTurn(
       });
       toolResults.push({ type: "tool_result", tool_use_id: tu.id, content: JSON.stringify(output) });
     }
+
+    // Live loop: push the assistant turn VERBATIM (thinking blocks first and
+    // unmodified) so the thinking block immediately precedes the tool_use it
+    // reasoned about when the matching tool_results are sent in this request.
     claudeMessages.push({ role: "assistant", content: result.content });
     claudeMessages.push({ role: "user", content: toolResults });
 
-    resp = await callModel();
-    if (!resp.ok) throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
-    result = await resp.json();
+    result = await callModelStreaming(buildRequest(system, claudeMessages, toolDefs), emit);
+    // Cache-read tokens are intentionally excluded — this only underestimates, so the loop errs toward MORE rounds (safe backstop direction).
+    totalTokens += (result.usage?.input_tokens ?? 0) + (result.usage?.output_tokens ?? 0);
     await ledger(result);
   }
 
+  // Loop hardening: budget hit with a pending tool_use and no text → one no-tools
+  // "answer now" call so the user always gets a reply. The assistant turn is still
+  // pushed verbatim (thinking intact) to satisfy the API.
   let content = extractText(result.content);
-  if (!content.trim()) {
-    content = "I gathered the data but ran out of room composing the answer. Ask me again, more specifically if you can.";
+  if (result.stop_reason === "tool_use" && !content.trim()) {
+    // Build a tool_result for EVERY tool_use in the budget-terminating turn —
+    // Anthropic requires one tool_result per tool_use or it returns a 400.
+    // deno-lint-ignore no-explicit-any
+    const pendingToolResults = (result.content as any[])
+      .filter((b: any) => b.type === "tool_use")
+      .map((b: any) => ({
+        type: "tool_result",
+        tool_use_id: b.id,
+        content: "Tool budget reached — answer now from what you have.",
+      }));
+    claudeMessages.push({ role: "assistant", content: result.content });
+    claudeMessages.push({ role: "user", content: pendingToolResults });
+    const finalBody = buildRequest(system, claudeMessages, []); // no tools
+    result = await callModelStreaming(finalBody, emit);
+    await ledger(result);
+    content = extractText(result.content);
   }
+  if (!content.trim()) {
+    content = "I gathered the data but couldn't compose an answer. Ask again, more specifically if you can.";
+  }
+
   await supabase.from("messages").insert({ conversation_id: conversationId, role: "assistant", content });
-  await supabase.from("conversations").update({ last_message_at: new Date().toISOString() }).eq("id", conversationId);
-  return { content };
+  await supabase
+    .from("conversations")
+    .update({ last_message_at: new Date().toISOString() })
+    .eq("id", conversationId);
+  return { content, actions: capturedActions };
 }
