@@ -40,5 +40,8 @@ supabase/.branches
 # Knowledge wiki: user-dropped external sources stay local-only
 docs/wiki/raw/external/
 
+# Vercel CLI (linked-project dir; .env*.local is covered by *.local above)
 .vercel
-.env*
+
+# Deno edge-function lockfile (deps resolved at deploy)
+deno.lock
