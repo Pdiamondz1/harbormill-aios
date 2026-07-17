@@ -145,7 +145,9 @@ Intended; not a contract change.
 ### 3.5 Shared pieces live in the core / `_shared`
 
 `systemPrompt`, `sanitize`/`INJECTION_PATTERNS`, `DISABLED_TOOLS`, `MAX_TOOL_ROUNDS`,
-`MAX_INPUT_LENGTH`, `withHistoryCacheBreakpoint`, `extractText`, `anthropic()` wrapper, cost ledger,
+`MAX_INPUT_LENGTH` (**`export`ed** — the deck imports it for its pre-stream 400 so the two never
+drift), `STATUS_LABELS` (the per-tool status-event labels, consumed inside the tool loop that now
+lives in the core), `withHistoryCacheBreakpoint`, `extractText`, `anthropic()` wrapper, cost ledger,
 and #21's `THINKING_BUDGET`/`MAX_OUTPUT_TOKENS`/`TOKEN_SAFETY_NET` — all move into (or stay in)
 `assistant-core.ts`. **Where #21 and #35 both define a constant, #21's value wins** (the deck is the
 reference engine): notably `MAX_TOOL_ROUNDS = 12` (not #35's 8). `stream-accumulator.ts` and
