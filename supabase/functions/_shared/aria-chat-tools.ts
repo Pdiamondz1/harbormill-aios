@@ -23,6 +23,7 @@ export const CHAT_EXCLUDED_TOOL_NAMES: readonly string[] = [
   "export_to_drive",
   "list_drive_files",
   "compose_email_link",
+  "suggest_actions", // deck-only: drives action chips, meaningless to the read-only Chat surface
 ];
 
 export const READ_ONLY_TOOLS: ReadonlySet<string> = new Set(READ_ONLY_TOOL_NAMES);
