@@ -208,7 +208,25 @@ VITE_SUPABASE_URL=https://<project-ref>.supabase.co
 VITE_SUPABASE_ANON_KEY=<anon/publishable key>
 ```
 
-Build command `npm run build`, output `dist/`. (SPA — route all paths to `index.html`.)
+Build command `npm run build`, output `dist/`. (SPA — route all paths to `index.html`;
+`vercel.json` at the repo root already does this via a catch-all rewrite.) The
+`VITE_SUPABASE_ANON_KEY` is a **publishable** key — it ships in the browser bundle by
+design and is gated by RLS, so it is safe to set as a plain build-time env var.
+
+### Vercel (recommended)
+
+1. **Add New → Project → import your fork.**
+2. **Root Directory: `.` (repo root).** This is the deck. ⚠️ If your fork also carries the
+   Harbormill marketing site (it lives in `website/` as a *separate* Vite app), that is a
+   **different** Vercel project with Root Directory `website/`. Importing the same repo into
+   two projects is fine and intended — just don't point the deck at `website/` or vice-versa.
+3. Framework preset **Vite** (auto-detected); build/output defaults are correct.
+4. Add the two env vars above, then **Deploy**.
+5. (Optional) Settings → Domains → add a subdomain (e.g. `app.<client>.com`) and point the DNS.
+
+**Access is provisioned, not self-serve** (§2) — there is no public signup, so hand the
+operator their login. For a founder-driven *demo* deck, deploying as-is + one admin account is
+enough; a prospect-facing self-serve demo would need a guest/sample-data mode (not built).
 
 For local dev: `cp .env.example .env`, fill those two values, `npm run dev`.
 
