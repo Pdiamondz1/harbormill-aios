@@ -14,8 +14,8 @@ import { corsHeaders } from "../_shared/cors.ts";
 import { logCost } from "../_shared/cost-ledger.ts";
 import { anthropicFetch } from "../_shared/anthropic-fetch.ts";
 import { TOOLS, type ToolContext } from "./tools.ts";
-import { reconstructHistory, type StoredRow } from "./history.ts";
-import { StreamAccumulator, parseSseLines } from "./stream-accumulator.ts";
+import { reconstructHistory, type StoredRow } from "../_shared/history.ts";
+import { StreamAccumulator, parseSseLines } from "../_shared/stream-accumulator.ts";
 
 const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
 const ANTHROPIC_MODEL = Deno.env.get("ANTHROPIC_MODEL") ?? "claude-sonnet-4-6";
