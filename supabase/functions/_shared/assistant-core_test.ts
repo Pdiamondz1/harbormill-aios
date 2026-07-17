@@ -7,7 +7,7 @@
 //
 // Run as (the key MUST be in the launch env — Deno.env.set in the body is too late):
 //   ANTHROPIC_API_KEY=test deno test --allow-env supabase/functions/_shared/assistant-core_test.ts
-import { assert, assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
+import { assert, assertEquals, assertRejects } from "https://deno.land/std@0.224.0/assert/mod.ts";
 import { runAssistantTurn } from "./assistant-core.ts";
 
 const encoder = new TextEncoder();
@@ -85,21 +85,30 @@ const OPTS = {
   edgeFunction: "assistant-chat",
 };
 
-function installFetch(responses: Response[]): () => void {
+// Override globalThis.fetch to return canned SSE responses in order, and capture
+// each request's parsed JSON body (so tests can assert what was sent to Anthropic,
+// e.g. that round 2 carries the accumulated tool_result).
+// deno-lint-ignore no-explicit-any
+function installFetch(responses: Response[]): { restore: () => void; requests: any[] } {
   let i = 0;
+  // deno-lint-ignore no-explicit-any
+  const requests: any[] = [];
   const real = globalThis.fetch;
-  globalThis.fetch = ((..._args: unknown[]) => {
+  globalThis.fetch = ((_url: unknown, init?: { body?: unknown }) => {
+    try {
+      requests.push(typeof init?.body === "string" ? JSON.parse(init.body) : null);
+    } catch {
+      requests.push(null);
+    }
     const r = responses[i++];
     if (!r) return Promise.reject(new Error("unexpected extra fetch call"));
     return Promise.resolve(r);
   }) as unknown as typeof fetch;
-  return () => {
-    globalThis.fetch = real;
-  };
+  return { restore: () => { globalThis.fetch = real; }, requests };
 }
 
 Deno.test("runAssistantTurn streams a two-round tool turn: final text, text+status emits, #21 persistence shape", async () => {
-  const restore = installFetch([sseResponse(ROUND1), sseResponse(ROUND2)]);
+  const { restore } = installFetch([sseResponse(ROUND1), sseResponse(ROUND2)]);
   const { supabase, inserts } = makeSupabase([{ role: "user", content: "how are we doing?" }]);
   // deno-lint-ignore no-explicit-any
   const events: any[] = [];
@@ -144,11 +153,95 @@ Deno.test("runAssistantTurn streams a two-round tool turn: final text, text+stat
 });
 
 Deno.test("runAssistantTurn resolves without an emit callback (emit is optional)", async () => {
-  const restore = installFetch([sseResponse(ROUND1), sseResponse(ROUND2)]);
+  const { restore } = installFetch([sseResponse(ROUND1), sseResponse(ROUND2)]);
   const { supabase } = makeSupabase([{ role: "user", content: "how are we doing?" }]);
   try {
     const result = await runAssistantTurn(supabase, OPTS); // no emit — must not throw
     assertEquals(result.content, FINAL_TEXT);
+  } finally {
+    restore();
+  }
+});
+
+// A mid-stream Anthropic error event: HTTP 200, a couple of text deltas, then an
+// {"type":"error",...} event (e.g. overloaded_error). The turn must REJECT so the
+// deck surfaces {type:"error"} rather than a silently truncated success.
+const ERROR_MID_STREAM = [
+  { type: "message_start", message: { usage: { input_tokens: 10, output_tokens: 0 } } },
+  { type: "content_block_start", index: 0, content_block: { type: "text", text: "" } },
+  { type: "content_block_delta", index: 0, delta: { type: "text_delta", text: "partial " } },
+  { type: "content_block_delta", index: 0, delta: { type: "text_delta", text: "answer" } },
+  { type: "error", error: { type: "overloaded_error", message: "Overloaded" } },
+];
+
+Deno.test("runAssistantTurn throws on a mid-stream Anthropic error event (no silent truncation)", async () => {
+  const { restore } = installFetch([sseResponse(ERROR_MID_STREAM)]);
+  const { supabase } = makeSupabase([{ role: "user", content: "how are we doing?" }]);
+  try {
+    await assertRejects(
+      () => runAssistantTurn(supabase, OPTS),
+      Error,
+      "Anthropic stream error",
+    );
+  } finally {
+    restore();
+  }
+});
+
+// Round 1 as a REAL suggest_actions tool_use (with input.actions) exercises the
+// tool registry, the real tool_result payload, and the deck action-chip capture.
+const ACTIONS_ROUND1 = [
+  { type: "message_start", message: { usage: { input_tokens: 10, output_tokens: 0 } } },
+  {
+    type: "content_block_start",
+    index: 0,
+    content_block: { type: "tool_use", id: "tu_sa", name: "suggest_actions", input: {} },
+  },
+  {
+    type: "content_block_delta",
+    index: 0,
+    delta: {
+      type: "input_json_delta",
+      // 4 actions on purpose — the core must slice to 3.
+      partial_json: JSON.stringify({
+        actions: [
+          { label: "Open Projects", route: "/projects" },
+          { label: "Open Briefings", route: "/briefings" },
+          { label: "Open Findings", route: "/findings" },
+          { label: "Open Strategy", route: "/strategy" },
+        ],
+      }),
+    },
+  },
+  { type: "content_block_stop", index: 0 },
+  { type: "message_delta", delta: { stop_reason: "tool_use" }, usage: { output_tokens: 5 } },
+];
+
+Deno.test("runAssistantTurn captures suggest_actions chips (sliced to 3) and sends the tool_result on round 2", async () => {
+  const { restore, requests } = installFetch([sseResponse(ACTIONS_ROUND1), sseResponse(ROUND2)]);
+  const { supabase } = makeSupabase([{ role: "user", content: "what next?" }]);
+  try {
+    const result = await runAssistantTurn(supabase, OPTS);
+
+    // Actions come from the tool-use INPUT and are capped at 3.
+    assertEquals(result.content, FINAL_TEXT);
+    // deno-lint-ignore no-explicit-any
+    const actions = result.actions as any[];
+    assertEquals(actions.length, 3);
+    assertEquals(actions[0], { label: "Open Projects", route: "/projects" });
+    assertEquals(actions[2], { label: "Open Findings", route: "/findings" });
+
+    // Round 2's request body must carry the accumulated tool_result for tu_sa.
+    assertEquals(requests.length, 2);
+    const round2 = requests[1];
+    // deno-lint-ignore no-explicit-any
+    const hasToolResult = (round2.messages as any[]).some(
+      (m) =>
+        Array.isArray(m.content) &&
+        // deno-lint-ignore no-explicit-any
+        (m.content as any[]).some((b: any) => b?.type === "tool_result" && b.tool_use_id === "tu_sa"),
+    );
+    assert(hasToolResult, "round 2 request must include the tool_result for tu_sa");
   } finally {
     restore();
   }

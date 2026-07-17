@@ -190,23 +190,42 @@ async function anthropic(body: unknown): Promise<Response> {
 async function callModelStreaming(body: any, emit?: (e: unknown) => void) {
   const resp = await anthropic(body); // anthropic() JSON.stringifies; body.stream === true
   if (!resp.ok || !resp.body) {
+    // resp.text() drains the body; nothing to release (reader not yet acquired).
     throw new Error(`Anthropic error: ${resp.status} ${await resp.text()}`);
   }
   const reader = resp.body.getReader();
   const decoder = new TextDecoder();
   const acc = new StreamAccumulator();
   let buffer = "";
-  for (;;) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    const { events, buffer: rest } = parseSseLines(buffer, decoder.decode(value, { stream: true }));
-    buffer = rest;
-    for (const ev of events) {
-      const { textDelta } = acc.push(ev);
-      if (textDelta) emit?.({ type: "text", delta: textDelta });
+  try {
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      const { events, buffer: rest } = parseSseLines(buffer, decoder.decode(value, { stream: true }));
+      buffer = rest;
+      for (const ev of events) {
+        // Anthropic can return HTTP 200, start streaming, then emit a mid-stream
+        // error event (e.g. overloaded_error). The accumulator ignores it, so
+        // detect it here and THROW — it must propagate to the caller's catch
+        // ({type:"error"} + clean close) rather than silently truncate the answer.
+        if (ev?.type === "error") {
+          throw new Error("Anthropic stream error: " + JSON.stringify(ev.error));
+        }
+        const { textDelta } = acc.push(ev);
+        if (textDelta) emit?.({ type: "text", delta: textDelta });
+      }
+    }
+    return acc.finalize();
+  } finally {
+    // Release the reader/connection on every path — normal completion, a
+    // mid-stream error throw, or a malformed-SSE JSON throw from acc.push — so a
+    // failed stream never leaks the reader or the underlying connection.
+    try {
+      await reader.cancel();
+    } catch {
+      // reader already closed/released — nothing to do
     }
   }
-  return acc.finalize();
 }
 
 export interface RunTurnOptions {
