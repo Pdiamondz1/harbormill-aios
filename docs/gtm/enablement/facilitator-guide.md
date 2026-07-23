@@ -12,6 +12,9 @@ own "What / why" and "Do it" sections; this guide only tells you *when* and *for
 > **Only have one hour?** This guide is the full two-session, everyone-does-every-step workshop. For a
 > single ~52-min **demo-driven** session (install moved to prework, attendees complete the hands-on
 > themselves afterward), use `one-hour-edition-run-sheet.md` + `prework-sheet.md` instead.
+>
+> **Delivering for the first time?** Run `rehearsal-walkthrough.md` on yourself first — it walks you
+> through the whole thing as if you were an attendee, so you feel every beat before you're in the room.
 
 ---
 
