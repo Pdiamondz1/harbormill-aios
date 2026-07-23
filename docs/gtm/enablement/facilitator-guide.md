@@ -27,6 +27,8 @@ Confirm every line below is true **before the day of the session**, not during i
   Module 1).
 - **`az login` done.** The Azure CLI is installed and signed in once per machine — or you're
   prepared to walk one attendee through it live. Modules 5 and 7 both depend on it working.
+- **Azure DevOps MCP server connected** for the target project (a one-time setup done before
+  Session 2). Module 7 only confirms this connection live — it isn't set up during the session.
 - **A copy of the kit.** The `docs/gtm/enablement/` folder (or the client's private copy of it) is
   reachable on every attendee's machine before the session starts.
 

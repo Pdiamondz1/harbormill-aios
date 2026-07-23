@@ -23,7 +23,7 @@ from pathlib import Path
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.text import PP_ALIGN
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_IN = HERE / "deck.md"
@@ -32,7 +32,6 @@ DEFAULT_LOGO = HERE / "assets" / "harbormill-logo.png"
 
 # Harbormill brand: black wordmark on a warm light plate. Light reads better projected.
 INK = RGBColor(0x0A, 0x0A, 0x0A)
-MUTED = RGBColor(0x55, 0x55, 0x55)
 BG = RGBColor(0xF7, 0xF6, 0xF2)
 
 EMU_W = Inches(13.333)
@@ -61,6 +60,8 @@ def parse_deck(md: str) -> list[Slide]:
                 continue
             if in_notes:
                 note_lines.append(line)
+                continue
+            if re.match(r"^\s*<!--.*-->\s*$", line):
                 continue
             layout_m = re.match(r"@layout:\s*(\w+)", line.strip())
             if layout_m:

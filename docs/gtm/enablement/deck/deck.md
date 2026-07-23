@@ -1,3 +1,4 @@
+<!-- After editing this file, regenerate the deck: cd docs/gtm/enablement/deck && python build_deck.py -->
 # Directing Claude
 @layout: title
 - Building Software You Don't Have to Babysit
@@ -177,10 +178,10 @@ Picks up from Session 1's project-aware Claude and ends with a real Azure DevOps
 run, and a live tool connection.
 ---
 # The daily loop
-- Talk it out → get a plan → build it → check it → save it
+- Talk it out → get a plan → let Claude build it → check it → save it
 - Talk it out: describe the outcome, plain English
 - Get a plan: what Claude will do, before any code
-- Build it: only once you've approved the plan
+- Let Claude build it: only once you've approved the plan
 - Check it: open the result yourself — don't take Claude's word
 - Save it: commit + open a PR so the work is on the record
 @notes:

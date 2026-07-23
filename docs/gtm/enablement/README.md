@@ -29,6 +29,8 @@ Read in this order:
 3. `workflow-runbook.md` (**Session 2**) — the daily loop: talk, plan, build, check, save.
 4. `continuity-governance.md` — a shorter briefing for stakeholders and leadership: how this method
    survives a team member leaving.
+5. `microsoft-stack-translation.md` — the Microsoft-stack reference: the command cheat-sheet
+   `setup-guide.md` and `workflow-runbook.md` lean on to translate every step into familiar terms.
 
 Facilitators running the live sessions also read `facilitator-guide.md` (session agendas, timing,
 what to check for). Everyone — not just facilitators — keeps `first-week-cheat-sheet.md`: the one
