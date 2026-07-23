@@ -16,14 +16,16 @@ install. Three small functions: read the server list, check one server, write th
 ## Step 1 — Write `servers.txt` (sample content, for testing)
 
 ```
-\\SVR-CONTOSO-01\C$
-\\SVR-CONTOSO-02\C$
-\\SVR-CONTOSO-03\D$
+C:\
+C:\Windows
+C:\Windows\System32
 ```
 
-Each line is a path `shutil.disk_usage` can read directly — here, the administrative share of
-a server's drive. Checking a longer fleet over WinRM/WMI is explicitly out of scope for v1
-(see `sample-spec.md`'s non-goals).
+Each line is a path `shutil.disk_usage` can read directly — here, local paths so this
+walkthrough runs on any Windows machine with no setup. In real use, each line is instead a
+server's administrative share, e.g. `\\SERVERNAME\C$` — substitute your own server names when
+you point this at an actual fleet. Checking a longer fleet over WinRM/WMI is explicitly out of
+scope for v1 (see `sample-spec.md`'s non-goals).
 
 ## Step 2 — Write `disk_report.py`
 

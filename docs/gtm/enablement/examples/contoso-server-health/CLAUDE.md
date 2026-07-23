@@ -2,8 +2,8 @@
 
 A tiny internal tool that checks a list of Contoso's Windows servers for low free disk space
 and writes a simple daily HTML report. This is a **fake training example** — no real Contoso
-company exists; the name is Microsoft's canonical demo-company placeholder, used here exactly
-the way this repo's own `CLAUDE.md` is used for the real Harbormill product.
+company exists; the name is a widely-used fictional company name in software documentation,
+used here exactly the way this repo's own `CLAUDE.md` is used for the real Harbormill product.
 
 **Project context:** the single source of truth is @PROJECT_CONTEXT.md (auto-imported).
 
