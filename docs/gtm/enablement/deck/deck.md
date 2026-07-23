@@ -42,23 +42,37 @@ The ask right now is just: can you repeat these five back in your own words? Ses
 the first two (rulebook, memory). Session 2 builds the other three (sandbox, skills, tool
 connections). Point out that this is also the checkpoint for Module 0 in the written kit.
 ---
-# The ~10 terms you need
+# The words you'll hear (1 of 2)
 - Claude Code — talk in English, get software built
 - Terminal — a plain text window you type into
 - Repo — a folder whose full history is tracked
 - Commit — a saved, labeled snapshot
 - Pull request (PR) — changes held for review
+@notes:
+Don't read these aloud word for word — that's what the printed glossary (00-glossary.md) is for,
+and every attendee keeps it. Fuller definitions + Windows-admin analogies live there: Claude Code
+is like calling the help desk and describing what you need, instead of configuring it yourself by
+hand. A terminal is like a PowerShell window — same idea, just where you and Claude talk. A repo
+is like a shared network folder that remembers every version of every file. A commit is like a
+labeled system checkpoint — "before patch Tuesday" — you can always come back to. A pull request
+is like a change-request ticket in change management — nothing goes live until it's reviewed and
+approved. Nothing later in this deck uses a term without having introduced it here first.
+---
+# The words you'll hear (2 of 2)
 - Branch / worktree — a safe copy to try things in
 - `CLAUDE.md` — the rulebook Claude reads first
 - Memory (2nd brain) — notes across conversations
 - Skill — a saved, reusable job recipe
 - MCP — wired-up access to a real tool
 @notes:
-Don't read all ten aloud word for word — that's what the printed glossary (00-glossary.md) is
-for, and every attendee keeps it. Instead, reassure: every one of these has a plain-English
-definition and a Windows-admin analogy in the glossary, and nothing later in this deck uses a
-term without having introduced it here first. Point at the glossary page itself as the thing
-they'll actually flip back to, not this slide.
+Second half of the glossary — same rule: point at the printed glossary (00-glossary.md), don't
+read these aloud. Fuller definitions + Windows-admin analogies live there: a branch/worktree is
+like testing a change on a lab VM before you touch the production server. `CLAUDE.md` is like a
+runbook or standard operating procedure a new tech reads on day one — except Claude reads it every
+single time. Memory is like a ticketing system's notes field that follows the issue (or the
+person) across every future call. A skill is like a saved PowerShell script or a documented
+runbook recipe — write it once, run it every time after. MCP is like giving the help desk read
+access to your ticketing system, instead of you copy-pasting ticket details into an email.
 ---
 # Meet: Contoso Server Health Report
 - A tiny fake IT tool we'll build together today
@@ -168,6 +182,7 @@ run, and a live tool connection.
 - Get a plan: what Claude will do, before any code
 - Build it: only once you've approved the plan
 - Check it: open the result yourself — don't take Claude's word
+- Save it: commit + open a PR so the work is on the record
 @notes:
 ~15 minutes. This is the loop they'll repeat for every piece of work, big or small, from here
 on. The single most important habit to drill in this module: if Claude jumps straight to code,
