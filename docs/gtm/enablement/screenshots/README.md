@@ -60,6 +60,51 @@ assigned to me?" On a real machine that query returns **real internal work items
 2. **Redact** the item titles before committing, or
 3. Keep this one in the **client-only copy** and leave the placeholder in the reusable kit.
 
+## Capture-as-you-go (during the sessions)
+
+The easiest way to get all 19 is to grab each one **the moment it appears** while you demo — you're
+already on that screen. On Windows: **Win + Shift + S** → drag the region → paste into Paint or the
+Snipping Tool editor → crop any **🔒** chrome → **Save As** the exact filename into this folder.
+
+Follow this top to bottom; it matches the session flow.
+
+**Session 1 — "Set it up" (`setup-guide.md`)**
+
+- Module 1 — Get the tools
+  1. Installer running in PowerShell → `claude-code-installer.png`
+  2. 🔒 Browser sign-in prompt *(crop the email)* → `claude-code-sign-in.png`
+  3. Extensions panel with "Claude Code" searched → `vscode-extensions-search.png`
+  4. New terminal opened from the Terminal menu → `vscode-terminal-open.png`
+  5. ✅ "Hello" typed + Claude's reply → `claude-hello-reply.png`
+- Module 2 — Rulebook
+  6. Contoso `CLAUDE.md` open in the editor → `vscode-claude-md-example.png`
+  7. Claude's drafted `CLAUDE.md` shown for review → `vscode-new-file-claude-md.png`
+- Module 3 — Memory
+  8. 🔒 Memory folder with `MEMORY.md` *(crop the path)* → `vscode-memory-folder.png`
+  9. ✅ Fresh session recalling a saved memory → `claude-remembers-checkpoint.png`
+
+**Session 2 — "Work with it" (`workflow-runbook.md`)**
+
+- Module 4 — The loop
+  10. Claude presenting a written plan, no code yet → `vscode-plan-before-code.png`
+  11. Contoso `sample-plan.md` next to the drafted plan → `contoso-sample-plan-open.png`
+- Module 5 — Sandbox + save to Azure DevOps
+  12. 🔒 New worktree confirmed in the terminal *(crop path/hostname)* → `vscode-worktree-created.png`
+  13. 🔒 Completed commit for `disk_report.py` *(crop path/username)* → `terminal-git-commit.png`
+  14. 🔒 "Create Pull Request" button in the Azure Repos panel *(crop org/repo)* → `vscode-create-pull-request-button.png`
+  15. 🔒 ✅ `az repos pr list` output *(crop org URL)* → `azure-devops-pr-list.png`
+- Module 6 — Skills
+  16. `sample-skill/SKILL.md` open, numbered steps → `contoso-skill-file-open.png`
+  17. ✅ Claude running the skill's three steps → `claude-running-skill-steps.png`
+- Module 7 — Tool connections (MCP)
+  18. 🔒 Azure DevOps MCP shown connected in settings *(crop org)* → `mcp-azure-devops-added.png`
+  19. 🔒 ✅ Claude's work-items answer → `claude-work-items-answer.png`
+      *(use a test/Contoso Boards project or redact the item titles — see "The one to watch")*
+
+**Tip:** capture on the projected/shared screen during the run-through, so the shots match exactly
+what the team just watched. If a moment passes before you grab it, every step is repeatable — just
+re-run it after the session.
+
 ## When you're done
 
 Drop the finished `.png` files into this folder (`docs/gtm/enablement/screenshots/`) using the exact
