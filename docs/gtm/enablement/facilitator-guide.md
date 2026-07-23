@@ -9,6 +9,10 @@ Nothing here replaces the teaching content in those three docs — this is the r
 script to read aloud. When in doubt about *what* to say for a given module, go read that module's
 own "What / why" and "Do it" sections; this guide only tells you *when* and *for how long*.
 
+> **Only have one hour?** This guide is the full two-session, everyone-does-every-step workshop. For a
+> single ~52-min **demo-driven** session (install moved to prework, attendees complete the hands-on
+> themselves afterward), use `one-hour-edition-run-sheet.md` + `prework-sheet.md` instead.
+
 ---
 
 ## Before you start — prerequisites box
