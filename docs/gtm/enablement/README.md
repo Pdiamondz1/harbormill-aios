@@ -33,9 +33,10 @@ Read in this order:
    `setup-guide.md` and `workflow-runbook.md` lean on to translate every step into familiar terms.
 
 Facilitators running the live sessions also read `facilitator-guide.md` (session agendas, timing,
-what to check for) and keep `facilitator-run-sheet.md` (a one-page glance card) beside them. Everyone
-— not just facilitators — keeps `first-week-cheat-sheet.md`: the one page you'll actually reach for
-during your first week of real use.
+what to check for), rehearse with `rehearsal-walkthrough.md` (run the kit on yourself before you
+deliver), and keep `facilitator-run-sheet.md` (a one-page glance card) beside them. Everyone — not
+just facilitators — keeps `first-week-cheat-sheet.md`: the one page you'll actually reach for during
+your first week of real use.
 
 **Only have one hour?** There's a compressed, demo-driven single-session variant:
 `one-hour-edition-run-sheet.md` (the ~52-min running order) plus `prework-sheet.md` (the 15 minutes of
